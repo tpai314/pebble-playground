@@ -4,21 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Onboarding — Rippling</title>
+  <link rel="stylesheet" href="https://static-assets.ripplingcdn.com/webapp-static/rippling-fonts-rebrand.css">
   <style>
+    @font-face {
+      font-display: swap;
+      font-family: "BaselGrotesk";
+      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Regular.woff2") format("woff2");
+      font-weight: 400;
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "BaselGrotesk";
+      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Book.woff2") format("woff2");
+      font-weight: 500;
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "BaselGrotesk";
+      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Medium.woff2") format("woff2");
+      font-weight: 600;
+    }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      /* Pebble semantic color tokens */
-      --color-primary: #5B5FC7;
-      --color-primary-hover: #4B4FB7;
+      --color-primary: #6B2D7B;
+      --color-primary-hover: #5A2568;
+      --color-primary-container: #ede0f0;
       --color-on-primary: #fff;
+      --color-secondary: #1b6cd9;
       --color-surface: #fff;
-      --color-surface-dim: #f5f5f5;
-      --color-surface-bright: #fafafa;
-      --color-on-surface: #1c1c1e;
-      --color-on-surface-secondary: #6e6e73;
+      --color-surface-dim: #f7f5f3;
+      --color-surface-bright: #fbfafb;
+      --color-on-surface: #182433;
+      --color-on-surface-variant: #6b7280;
       --color-outline: #d1d1d6;
-      --color-outline-variant: #e8e8ed;
+      --color-outline-variant: #e5e5ea;
       --color-success: #34C759;
       --color-success-container: #e8f8ed;
       --color-on-success-container: #0a6b2a;
@@ -33,46 +54,34 @@
       --color-on-info-container: #003d80;
       --color-neutral-container: #f2f2f7;
       --color-on-neutral-container: #3a3a3c;
-
-      /* Pebble spacing tokens (4px grid) */
-      --space-100: 4px;
-      --space-200: 8px;
-      --space-300: 12px;
-      --space-400: 16px;
-      --space-500: 20px;
-      --space-600: 24px;
-      --space-800: 32px;
-
-      /* Pebble radius tokens */
-      --radius-100: 4px;
-      --radius-200: 8px;
-      --radius-300: 12px;
-      --radius-full: 9999px;
-
-      /* Pebble shadow tokens */
-      --shadow-100: 0 1px 3px rgba(0,0,0,0.08);
-      --shadow-200: 0 2px 8px rgba(0,0,0,0.08);
-      --shadow-300: 0 4px 16px rgba(0,0,0,0.1);
-
-      /* Layout */
+      --color-on-surface-inverse: #fff;
+      --color-surface-inverse: #182433;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0px 4px 4px rgba(0,0,0,0.16);
+      --shadow-xl: 0 4px 16px rgba(0,0,0,0.12);
+      --shape-corner-sm: 4px;
+      --shape-corner-md: 8px;
+      --shape-corner-lg: 12px;
+      --shape-corner-full: 9999px;
       --sidebar-width: 200px;
       --topbar-height: 56px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: "BaselGrotesk", "ripplingFontBook", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--color-on-surface);
-      background: var(--color-surface-dim);
+      background: var(--color-surface);
       display: flex;
       min-height: 100vh;
       font-size: 14px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* ─── Sidebar (AppNavBar pattern) ─── */
     .sidebar {
-      width: var(--sidebar-width); background: #1c1c1e; color: #fff;
+      width: var(--sidebar-width); background: var(--color-surface-inverse); color: #fff;
       display: flex; flex-direction: column; flex-shrink: 0;
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 10;
     }
@@ -82,7 +91,7 @@
       font-size: 17px; font-weight: 600; letter-spacing: -0.2px;
     }
     .sidebar-logo .logo-icon {
-      width: 28px; height: 28px; background: #FF9500; border-radius: var(--radius-200);
+      width: 28px; height: 28px; background: var(--color-primary); border-radius: var(--shape-corner-md);
       display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 15px;
     }
@@ -117,26 +126,26 @@
     }
     .search-box {
       display: flex; align-items: center; gap: var(--space-200);
-      background: var(--color-neutral-container); border-radius: var(--radius-200);
+      background: var(--color-neutral-container); border-radius: var(--shape-corner-md);
       padding: var(--space-200) var(--space-400); width: 260px;
-      color: var(--color-on-surface-secondary); font-size: 13px;
+      color: var(--color-on-surface-variant); font-size: 13px;
     }
     .topbar-right { position: absolute; right: var(--space-600); display: flex; align-items: center; gap: var(--space-400); }
     .topbar-icon {
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-      color: var(--color-on-surface-secondary); cursor: pointer; border-radius: var(--radius-200);
+      color: var(--color-on-surface-variant); cursor: pointer; border-radius: var(--shape-corner-md);
     }
     .topbar-icon:hover { background: var(--color-neutral-container); }
     .topbar-icon.has-badge { position: relative; }
     .topbar-icon .badge {
       position: absolute; top: 1px; right: 1px;
       width: 16px; height: 16px; background: var(--color-error); color: #fff;
-      font-size: 10px; font-weight: 600; border-radius: var(--radius-full);
+      font-size: 10px; font-weight: 600; border-radius: var(--shape-corner-full);
       display: flex; align-items: center; justify-content: center;
     }
     /* Pebble Avatar */
     .pb-avatar {
-      width: 32px; height: 32px; border-radius: var(--radius-full);
+      width: 32px; height: 32px; border-radius: var(--shape-corner-full);
       background: var(--color-primary); color: var(--color-on-primary);
       font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
       display: flex; align-items: center; justify-content: center;
@@ -150,19 +159,19 @@
     /* ─── Pebble Tabs (SWITCH type) ─── */
     .pb-tabs {
       display: inline-flex; background: var(--color-neutral-container);
-      border-radius: var(--radius-200); padding: 3px; gap: 2px;
+      border-radius: var(--shape-corner-md); padding: 3px; gap: 2px;
       margin-bottom: 0; flex-shrink: 0;
     }
     .pb-tab {
       padding: var(--space-200) var(--space-500); font-size: 13px; font-weight: 500;
-      color: var(--color-on-surface-secondary); cursor: pointer;
+      color: var(--color-on-surface-variant); cursor: pointer;
       border-radius: 6px; transition: all 0.15s; user-select: none;
-      border: none; background: none;
+      border: none; background: none; font-family: inherit;
     }
     .pb-tab:hover { color: var(--color-on-surface); }
     .pb-tab.active {
       background: var(--color-surface); color: var(--color-on-surface);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-sm);
       font-weight: 600;
     }
     .tab-panel { display: none; flex: 1; min-height: 0; }
@@ -171,19 +180,19 @@
     /* ─── Pebble Button ─── */
     .pb-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: var(--space-200) var(--space-400); border-radius: var(--radius-200);
+      padding: var(--space-200) var(--space-400); border-radius: var(--shape-corner-md);
       font-size: 13px; font-weight: 500; cursor: pointer;
       border: none; transition: all 0.12s; font-family: inherit;
     }
     .pb-btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
     .pb-btn-primary:hover { background: var(--color-primary-hover); }
     .pb-btn-outline { background: var(--color-surface); color: var(--color-on-surface); border: 1px solid var(--color-outline); }
-    .pb-btn-outline:hover { border-color: var(--color-on-surface-secondary); background: var(--color-surface-bright); }
-    .pb-btn-ghost { background: none; color: var(--color-on-surface-secondary); padding: var(--space-100); border-radius: var(--radius-100); }
+    .pb-btn-outline:hover { border-color: var(--color-on-surface-variant); background: var(--color-surface-bright); }
+    .pb-btn-ghost { background: none; color: var(--color-on-surface-variant); padding: var(--space-100); border-radius: var(--shape-corner-sm); }
     .pb-btn-ghost:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
     .pb-btn-sm { padding: var(--space-100) var(--space-300); font-size: 12px; }
     .pb-btn-send {
-      width: 36px; height: 36px; border-radius: var(--radius-200); border: none;
+      width: 36px; height: 36px; border-radius: var(--shape-corner-md); border: none;
       background: var(--color-primary); color: var(--color-on-primary); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.12s; flex-shrink: 0;
@@ -193,7 +202,7 @@
     /* ─── Pebble Status ─── */
     .pb-status {
       display: inline-flex; align-items: center; gap: var(--space-100);
-      padding: 2px var(--space-200); border-radius: var(--radius-full);
+      padding: 2px var(--space-200); border-radius: var(--shape-corner-full);
       font-size: 11px; font-weight: 600; letter-spacing: 0.2px;
       text-transform: uppercase;
     }
@@ -203,14 +212,14 @@
     .pb-status-primary { background: #ede9fe; color: #5B5FC7; }
     .pb-status-info { background: var(--color-info-container); color: var(--color-on-info-container); }
     .pb-status-neutral { background: var(--color-neutral-container); color: var(--color-on-neutral-container); }
-    .pb-status-dot { width: 6px; height: 6px; border-radius: var(--radius-full); }
+    .pb-status-dot { width: 6px; height: 6px; border-radius: var(--shape-corner-full); }
     .pb-status-success .pb-status-dot { background: var(--color-success); }
     .pb-status-warning .pb-status-dot { background: var(--color-warning); }
 
     /* ─── Pebble Label ─── */
     .pb-label {
       display: inline-flex; align-items: center; gap: var(--space-100);
-      padding: 2px var(--space-200); border-radius: var(--radius-100);
+      padding: 2px var(--space-200); border-radius: var(--shape-corner-sm);
       font-size: 11px; font-weight: 600;
     }
     .pb-label-error { background: var(--color-error-container); color: var(--color-on-error-container); }
@@ -230,18 +239,18 @@
     /* ─── Pebble Chip (suggestions) ─── */
     .pb-chip {
       display: inline-flex; align-items: center; gap: var(--space-100);
-      padding: 6px var(--space-300); border-radius: var(--radius-full);
+      padding: 6px var(--space-300); border-radius: var(--shape-corner-full);
       font-size: 12px; font-weight: 500; cursor: pointer;
       border: 1px solid var(--color-outline); background: var(--color-surface);
-      color: var(--color-on-surface-secondary); transition: all 0.12s;
+      color: var(--color-on-surface-variant); transition: all 0.12s;
       font-family: inherit;
     }
-    .pb-chip:hover { border-color: var(--color-primary); color: var(--color-primary); background: #f0effa; }
+    .pb-chip:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-container); }
 
     /* ─── Pebble Spinner ─── */
     .pb-spinner {
       width: 20px; height: 20px; border: 2.5px solid var(--color-outline-variant);
-      border-top-color: var(--color-primary); border-radius: var(--radius-full);
+      border-top-color: var(--color-primary); border-radius: var(--shape-corner-full);
       animation: pbSpin 0.7s linear infinite;
     }
     @keyframes pbSpin { to { transform: rotate(360deg); } }
@@ -253,8 +262,8 @@
       display: flex; flex: 1; min-height: 0;
       margin-top: var(--space-400);
       border: 1px solid var(--color-outline-variant);
-      border-radius: var(--radius-300); overflow: hidden;
-      box-shadow: var(--shadow-100);
+      border-radius: var(--shape-corner-lg); overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     /* Chat pane */
@@ -268,12 +277,12 @@
       display: flex; align-items: center; gap: var(--space-300); flex-shrink: 0;
     }
     .chat-header-icon {
-      width: 32px; height: 32px; border-radius: var(--radius-200);
-      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      width: 32px; height: 32px; border-radius: var(--shape-corner-md);
+      background: var(--color-primary);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .chat-header-title { font-size: 14px; font-weight: 600; }
-    .chat-header-sub { font-size: 12px; color: var(--color-on-surface-secondary); }
+    .chat-header-sub { font-size: 12px; color: var(--color-on-surface-variant); }
 
     .chat-messages {
       flex: 1; overflow-y: auto; padding: var(--space-500);
@@ -281,19 +290,19 @@
     }
     .chat-msg { display: flex; gap: var(--space-300); max-width: 92%; }
     .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
-    .chat-msg.ai .pb-avatar { background: linear-gradient(135deg, var(--color-primary), #7c3aed); }
-    .chat-msg.user .pb-avatar { background: #3a3a3c; }
+    .chat-msg.ai .pb-avatar { background: var(--color-primary); }
+    .chat-msg.user .pb-avatar { background: var(--color-surface-inverse); }
     .chat-msg-bubble {
-      padding: var(--space-300) var(--space-400); border-radius: var(--radius-300);
+      padding: var(--space-300) var(--space-400); border-radius: var(--shape-corner-lg);
       font-size: 13px; line-height: 1.55;
     }
     .chat-msg.ai .chat-msg-bubble {
       background: var(--color-surface-dim); color: var(--color-on-surface);
-      border-bottom-left-radius: var(--radius-100);
+      border-bottom-left-radius: var(--shape-corner-sm);
     }
     .chat-msg.user .chat-msg-bubble {
-      background: var(--color-primary); color: var(--color-on-primary);
-      border-bottom-right-radius: var(--radius-100);
+      background: var(--color-surface-inverse); color: var(--color-on-surface-inverse);
+      border-bottom-right-radius: var(--shape-corner-sm);
     }
     .chat-msg-bubble ul { margin: 6px 0 2px 16px; }
     .chat-msg-bubble li { margin-bottom: 2px; }
@@ -310,11 +319,11 @@
     }
     .chat-input {
       flex: 1; padding: var(--space-200) var(--space-300); border: 1px solid var(--color-outline);
-      border-radius: var(--radius-200); font-size: 13px; color: var(--color-on-surface);
+      border-radius: var(--shape-corner-md); font-size: 13px; color: var(--color-on-surface);
       background: var(--color-surface-dim); outline: none; font-family: inherit;
     }
     .chat-input:focus { border-color: var(--color-primary); background: var(--color-surface); box-shadow: 0 0 0 2px rgba(91,95,199,0.15); }
-    .chat-input::placeholder { color: var(--color-on-surface-secondary); }
+    .chat-input::placeholder { color: var(--color-on-surface-variant); }
 
     /* Templates pane */
     .templates-pane {
@@ -329,9 +338,9 @@
     .templates-header-left { display: flex; align-items: center; gap: var(--space-300); }
     .templates-header h2 { font-size: 14px; font-weight: 600; }
     .templates-count {
-      font-size: 11px; color: var(--color-on-surface-secondary);
+      font-size: 11px; color: var(--color-on-surface-variant);
       background: var(--color-neutral-container);
-      padding: 2px var(--space-200); border-radius: var(--radius-full); font-weight: 500;
+      padding: 2px var(--space-200); border-radius: var(--shape-corner-full); font-weight: 500;
     }
     .templates-grid {
       padding: var(--space-400) var(--space-500); display: flex; flex-direction: column; gap: var(--space-300);
@@ -341,25 +350,24 @@
     /* Pebble ExpansionPanel-style cards */
     .pb-panel {
       background: var(--color-surface); border: 1px solid var(--color-outline-variant);
-      border-radius: var(--radius-200); overflow: hidden; transition: box-shadow 0.15s;
+      border-radius: var(--shape-corner-md); overflow: hidden; transition: box-shadow 0.15s;
     }
-    .pb-panel:hover { box-shadow: var(--shadow-200); }
+    .pb-panel:hover { box-shadow: var(--shadow-md); }
     .pb-panel-header {
-      padding: var(--space-300) var(--space-400); display: flex; align-items: center;
-      justify-content: space-between; cursor: pointer; user-select: none;
-      gap: var(--space-300);
+      padding: var(--space-400); display: flex; align-items: center;
+      cursor: pointer; user-select: none; gap: var(--space-400);
     }
-    .pb-panel-header-left { display: flex; align-items: center; gap: var(--space-300); flex: 1; min-width: 0; }
-    .pb-panel-dot { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
-    .pb-panel-info { flex: 1; min-width: 0; }
-    .pb-panel-title { font-size: 14px; font-weight: 600; }
-    .pb-panel-meta { font-size: 12px; color: var(--color-on-surface-secondary); }
-    .pb-panel-stats { display: flex; gap: var(--space-400); align-items: center; flex-shrink: 0; }
-    .pb-panel-stat { text-align: center; }
+    .pb-panel-header-left { display: flex; align-items: center; gap: var(--space-300); flex: 1; min-width: 0; overflow: hidden; }
+    .pb-panel-dot { width: 8px; height: 8px; border-radius: var(--shape-corner-full); flex-shrink: 0; }
+    .pb-panel-info { flex: 1; min-width: 0; overflow: hidden; }
+    .pb-panel-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pb-panel-meta { font-size: 12px; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pb-panel-stats { display: flex; gap: var(--space-400); align-items: center; flex-shrink: 0; white-space: nowrap; }
+    .pb-panel-stat { text-align: center; min-width: 40px; }
     .pb-panel-stat-val { font-size: 16px; font-weight: 700; line-height: 1; color: var(--color-on-surface); }
-    .pb-panel-stat-lbl { font-size: 10px; color: var(--color-on-surface-secondary); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 1px; }
+    .pb-panel-stat-lbl { font-size: 10px; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
     .pb-panel-chevron {
-      transition: transform 0.2s; color: var(--color-on-surface-secondary);
+      transition: transform 0.2s; color: var(--color-on-surface-variant);
       flex-shrink: 0; width: 16px; height: 16px;
     }
     .pb-panel.expanded .pb-panel-chevron { transform: rotate(90deg); }
@@ -374,13 +382,13 @@
     .module-row:last-child { border-bottom: none; }
     .module-row-left { display: flex; align-items: center; gap: var(--space-200); }
     .module-icon {
-      width: 26px; height: 26px; border-radius: var(--radius-200);
+      width: 26px; height: 26px; border-radius: var(--shape-corner-md);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .module-name { font-weight: 500; }
     .module-steps {
-      font-size: 11px; color: var(--color-on-surface-secondary); background: var(--color-neutral-container);
-      padding: 2px var(--space-200); border-radius: var(--radius-full); font-weight: 500;
+      font-size: 11px; color: var(--color-on-surface-variant); background: var(--color-neutral-container);
+      padding: 2px var(--space-200); border-radius: var(--shape-corner-full); font-weight: 500;
     }
     .mod-hris { background: #ede9fe; color: #7c3aed; }
     .mod-workauth { background: var(--color-warning-container); color: var(--color-on-warning-container); }
@@ -398,20 +406,20 @@
       display: flex; flex-direction: column; flex: 1; min-height: 0;
       margin-top: var(--space-400);
       border: 1px solid var(--color-outline-variant);
-      border-radius: var(--radius-300); overflow: hidden;
-      background: var(--color-surface); box-shadow: var(--shadow-100);
+      border-radius: var(--shape-corner-lg); overflow: hidden;
+      background: var(--color-surface); box-shadow: var(--shadow-sm);
     }
 
     /* Pebble TableBasic inside chat */
     .pb-table-wrap {
-      margin: var(--space-300) 0 var(--space-100); border-radius: var(--radius-200);
+      margin: var(--space-300) 0 var(--space-100); border-radius: var(--shape-corner-md);
       overflow: hidden; border: 1px solid var(--color-outline-variant);
     }
     .pb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
     .pb-table th {
       text-align: left; font-size: 11px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.4px;
-      color: var(--color-on-surface-secondary); padding: var(--space-200) var(--space-300);
+      color: var(--color-on-surface-variant); padding: var(--space-200) var(--space-300);
       background: var(--color-surface-dim); border-bottom: 1px solid var(--color-outline-variant);
     }
     .pb-table td {
@@ -424,7 +432,7 @@
     .emp-cell { display: flex; align-items: center; gap: var(--space-300); }
     .emp-info {}
     .emp-name { font-weight: 600; font-size: 13px; display: block; }
-    .emp-role { font-size: 11px; color: var(--color-on-surface-secondary); }
+    .emp-role { font-size: 11px; color: var(--color-on-surface-variant); }
     .steps-cell { display: flex; align-items: center; gap: var(--space-200); }
     .steps-label { font-size: 12px; font-weight: 600; color: var(--color-on-surface); white-space: nowrap; }
     .start-date { font-size: 13px; color: var(--color-on-surface); white-space: nowrap; }
@@ -435,7 +443,7 @@
       display: flex; gap: var(--space-100); align-items: center; padding: var(--space-100) 0;
     }
     .typing-dot {
-      width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-on-surface-secondary);
+      width: 6px; height: 6px; border-radius: var(--shape-corner-full); background: var(--color-on-surface-variant);
       animation: typingBounce 1.2s infinite ease-in-out; opacity: 0.5;
     }
     .typing-dot:nth-child(2) { animation-delay: 0.15s; }
@@ -683,7 +691,7 @@
     const c = document.getElementById('tracker-chat-messages');
     const typing = document.createElement('div');
     typing.className = 'chat-msg ai';
-    typing.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div style="display:flex;align-items:center;gap:8px"><div class="pb-spinner"></div><span style="font-size:12px;color:var(--color-on-surface-secondary)">Pulling onboarding data for 6 active hires...</span></div></div>`;
+    typing.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div style="display:flex;align-items:center;gap:8px"><div class="pb-spinner"></div><span style="font-size:12px;color:var(--color-on-surface-variant)">Pulling onboarding data for 6 active hires...</span></div></div>`;
     c.appendChild(typing);
     c.scrollTop = c.scrollHeight;
 
