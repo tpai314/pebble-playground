@@ -399,45 +399,37 @@
     .mod-hub { background: #fff7ed; color: #c2410c; }
 
     /* ══════════════════════════════════════════════════
-       TRACKER TAB — Direct table view
+       TRACKER TAB — AI chat with embedded table
        ══════════════════════════════════════════════════ */
-    .tracker-content { margin-top: 28px; }
-
-    /* Filter pills */
-    .filter-pills { display: flex; gap: 10px; margin-bottom: 28px; }
-    .filter-pill {
-      padding: 6px 16px; border-radius: var(--shape-corner-full);
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      border: 1px solid var(--color-outline); background: var(--color-surface);
-      color: var(--color-on-surface); font-family: inherit; transition: all 0.12s;
-    }
-    .filter-pill:hover { border-color: var(--color-on-surface-variant); }
-    .filter-pill.active {
-      background: #0d9488; color: #fff; border-color: #0d9488;
+    .tracker-chat-full {
+      display: flex; flex-direction: column; flex: 1; min-height: 0;
+      margin-top: 24px;
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--shape-corner-lg); overflow: hidden;
+      background: var(--color-surface); box-shadow: var(--shadow-sm);
     }
 
-    .tracker-section-title {
-      font-size: 16px; font-weight: 600; margin-bottom: 16px;
-      color: var(--color-on-surface);
+    /* Table (inside chat bubble) */
+    .pb-table-wrap {
+      margin: 16px 0 12px; border-radius: var(--shape-corner-md);
+      overflow: hidden; border: 1px solid var(--color-outline-variant);
     }
-
-    /* Table */
-    .pb-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .pb-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
     .pb-table th {
-      text-align: left; font-size: 12px; font-weight: 600;
+      text-align: left; font-size: 11px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--color-on-surface-variant); padding: 14px 16px 14px 0;
-      border-bottom: 1px solid var(--color-outline-variant);
+      color: var(--color-on-surface-variant); padding: 12px 14px;
+      background: var(--color-surface-dim); border-bottom: 1px solid var(--color-outline-variant);
       white-space: nowrap;
     }
     .pb-table td {
-      padding: 16px 16px 16px 0; border-bottom: 1px solid var(--color-outline-variant);
+      padding: 14px; border-bottom: 1px solid var(--color-outline-variant);
       vertical-align: middle; line-height: 1.5;
     }
     .pb-table tr:last-child td { border-bottom: none; }
     .pb-table tr:hover td { background: var(--color-surface-bright); }
 
-    .hire-name { font-size: 14px; font-weight: 500; color: var(--color-on-surface); white-space: nowrap; }
+    .hire-name { font-size: 13.5px; font-weight: 500; color: var(--color-on-surface); white-space: nowrap; }
 
     /* Archetype badges */
     .archetype-badge {
@@ -460,22 +452,8 @@
     .progress-check { color: #16a34a; display: flex; align-items: center; }
 
     /* Blocker text */
-    .blocker-text { font-size: 14px; color: #e11d48; }
-    .blocker-none { font-size: 14px; color: var(--color-on-surface-variant); }
-
-    /* Recent activity */
-    .recent-activity {
-      margin-top: 36px; display: flex; align-items: center; gap: 12px;
-    }
-    .recent-activity-title { font-size: 16px; font-weight: 600; }
-    .recent-activity-badge {
-      display: inline-flex; align-items: center; padding: 4px 12px;
-      border-radius: var(--shape-corner-full); font-size: 13px; font-weight: 500;
-      background: var(--color-success-container); color: var(--color-on-success-container);
-    }
-    .recent-activity-chevron {
-      width: 18px; height: 18px; color: var(--color-on-surface-variant); cursor: pointer;
-    }
+    .blocker-text { font-size: 13px; color: #e11d48; }
+    .blocker-none { font-size: 13px; color: var(--color-on-surface-variant); }
 
     /* Typing indicator (Pebble Spinner alternative for chat) */
     .typing-indicator {
@@ -692,76 +670,24 @@
 
     <!-- TAB 2 — TRACKER -->
     <div id="tracker-panel" class="tab-panel">
-      <div class="tracker-content">
-        <div class="filter-pills">
-          <button class="filter-pill active">All (6)</button>
-          <button class="filter-pill">Engineering (3)</button>
-          <button class="filter-pill">Sales (1)</button>
-          <button class="filter-pill">Retail Hourly (2)</button>
+      <div class="tracker-chat-full">
+        <div class="chat-header">
+          <div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div>
+            <div class="chat-header-title">Onboarding Tracker</div>
+            <div class="chat-header-sub">AI-powered onboarding progress for all new hires</div>
+          </div>
         </div>
-
-        <div class="tracker-section-title">Active Onboardings</div>
-
-        <table class="pb-table">
-          <thead>
-            <tr>
-              <th>Hire</th>
-              <th>Archetype</th>
-              <th>Start Date</th>
-              <th>Progress</th>
-              <th>Blockers</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="hire-name">Alex Kim</span></td>
-              <td><span class="archetype-badge archetype-engineering">Engineering</span></td>
-              <td>Apr 14</td>
-              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:75%"></div></div><span class="progress-pct">75%</span></div></td>
-              <td><span class="blocker-text">Equipment delayed, buddy not assigned</span></td>
-            </tr>
-            <tr>
-              <td><span class="hire-name">Priya Sharma</span></td>
-              <td><span class="archetype-badge archetype-engineering">Engineering</span></td>
-              <td>Apr 14</td>
-              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:95%"></div></div><span class="progress-pct">95%</span></div></td>
-              <td><span class="blocker-text">Benefits enrollment pending</span></td>
-            </tr>
-            <tr>
-              <td><span class="hire-name">Marcus Cole</span></td>
-              <td><span class="archetype-badge archetype-engineering">Engineering</span></td>
-              <td>Apr 21</td>
-              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:40%"></div></div><span class="progress-pct">40%</span></div></td>
-              <td><span class="blocker-text">IT provisioning not started</span></td>
-            </tr>
-            <tr>
-              <td><span class="hire-name">Dani Reyes</span></td>
-              <td><span class="archetype-badge archetype-sales">Sales</span></td>
-              <td>Apr 14</td>
-              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:85%"></div></div><span class="progress-pct">85%</span></div></td>
-              <td><span class="blocker-text">Territory assignment pending</span></td>
-            </tr>
-            <tr>
-              <td><span class="hire-name">Jordan Lee</span></td>
-              <td><span class="archetype-badge archetype-retail">Retail Hourly</span></td>
-              <td>Apr 7</td>
-              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill green" style="width:100%"></div></div><span class="progress-pct">100%</span><span class="progress-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span></div></td>
-              <td><span class="blocker-none">—</span></td>
-            </tr>
-            <tr>
-              <td><span class="hire-name">Sam Ortiz</span></td>
-              <td><span class="archetype-badge archetype-retail">Retail Hourly</span></td>
-              <td>Apr 14</td>
-              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:60%"></div></div><span class="progress-pct">60%</span></div></td>
-              <td><span class="blocker-text">POS training not scheduled</span></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="recent-activity">
-          <span class="recent-activity-title">Recent Activity</span>
-          <span class="recent-activity-badge">3 auto-resolved</span>
-          <svg class="recent-activity-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="chat-messages" id="tracker-chat-messages"></div>
+        <div class="chat-suggestions" id="tracker-suggestions" style="display:none;">
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Which employees are blocked?</button>
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Escalate all overdue items</button>
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Show only Engineering hires</button>
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Who starts this week?</button>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" id="tracker-chat-input" placeholder="Ask about onboarding progress...">
+          <button class="pb-btn-send" onclick="sendTrackerMessage()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
         </div>
       </div>
     </div>
@@ -770,25 +696,92 @@
 </div>
 
 <script>
-  // Tab switching
+  let trackerLoaded = false;
+
   document.querySelectorAll('.pb-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.pb-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab + '-panel').classList.add('active');
+      if (tab.dataset.tab === 'tracker' && !trackerLoaded) {
+        trackerLoaded = true;
+        runTrackerPrompt();
+      }
     });
   });
 
-  // Filter pill toggling
-  document.querySelectorAll('.filter-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-    });
-  });
+  function runTrackerPrompt() {
+    const c = document.getElementById('tracker-chat-messages');
+    const typing = document.createElement('div');
+    typing.className = 'chat-msg ai';
+    typing.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div style="display:flex;align-items:center;gap:8px"><div class="pb-spinner"></div><span style="font-size:12px;color:var(--color-on-surface-variant)">Pulling onboarding data for 6 active hires...</span></div></div>`;
+    c.appendChild(typing);
+    c.scrollTop = c.scrollHeight;
 
-  // Explorer chat
+    setTimeout(() => {
+      typing.remove();
+      const r = document.createElement('div');
+      r.className = 'chat-msg ai';
+      r.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble" style="max-width:100%;">
+Here's the current onboarding status across all <strong>6 active new hires</strong> as of today.
+<div class="pb-table-wrap">
+<table class="pb-table">
+<thead><tr><th>Hire</th><th>Archetype</th><th>Start Date</th><th>Progress</th><th>Blockers</th></tr></thead>
+<tbody>
+<tr>
+<td><span class="hire-name">Alex Kim</span></td>
+<td><span class="archetype-badge archetype-engineering">Engineering</span></td>
+<td>Apr 14</td>
+<td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:75%"></div></div><span class="progress-pct">75%</span></div></td>
+<td><span class="blocker-text">Equipment delayed, buddy not assigned</span></td>
+</tr>
+<tr>
+<td><span class="hire-name">Priya Sharma</span></td>
+<td><span class="archetype-badge archetype-engineering">Engineering</span></td>
+<td>Apr 14</td>
+<td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:95%"></div></div><span class="progress-pct">95%</span></div></td>
+<td><span class="blocker-text">Benefits enrollment pending</span></td>
+</tr>
+<tr>
+<td><span class="hire-name">Marcus Cole</span></td>
+<td><span class="archetype-badge archetype-engineering">Engineering</span></td>
+<td>Apr 21</td>
+<td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:40%"></div></div><span class="progress-pct">40%</span></div></td>
+<td><span class="blocker-text">IT provisioning not started</span></td>
+</tr>
+<tr>
+<td><span class="hire-name">Dani Reyes</span></td>
+<td><span class="archetype-badge archetype-sales">Sales</span></td>
+<td>Apr 14</td>
+<td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:85%"></div></div><span class="progress-pct">85%</span></div></td>
+<td><span class="blocker-text">Territory assignment pending</span></td>
+</tr>
+<tr>
+<td><span class="hire-name">Jordan Lee</span></td>
+<td><span class="archetype-badge archetype-retail">Retail Hourly</span></td>
+<td>Apr 7</td>
+<td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill green" style="width:100%"></div></div><span class="progress-pct">100%</span><span class="progress-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span></div></td>
+<td><span class="blocker-none">—</span></td>
+</tr>
+<tr>
+<td><span class="hire-name">Sam Ortiz</span></td>
+<td><span class="archetype-badge archetype-retail">Retail Hourly</span></td>
+<td>Apr 14</td>
+<td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:60%"></div></div><span class="progress-pct">60%</span></div></td>
+<td><span class="blocker-text">POS training not scheduled</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<strong>Summary:</strong> 4 of 6 hires have blockers. Alex (equipment), Priya (benefits), Marcus (IT), Dani (territory), and Sam (training) need attention. Want me to escalate overdue items?
+</div>`;
+      c.appendChild(r);
+      c.scrollTop = c.scrollHeight;
+      document.getElementById('tracker-suggestions').style.display = 'flex';
+    }, 1800);
+  }
+
   function sendExplorerMessage() {
     const input = document.getElementById('explorer-chat-input');
     const text = input.value.trim();
@@ -797,6 +790,16 @@
     appendUserMsg(c, text); input.value = '';
     const t = appendTyping(c);
     setTimeout(() => { t.remove(); appendAiMsg(c, "I'll work on that. Let me analyze your existing templates and suggest the best configuration for your needs."); }, 800);
+  }
+
+  function sendTrackerMessage() {
+    const input = document.getElementById('tracker-chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    const c = document.getElementById('tracker-chat-messages');
+    appendUserMsg(c, text); input.value = '';
+    const t = appendTyping(c);
+    setTimeout(() => { t.remove(); appendAiMsg(c, "Let me look into that for you. I'm checking the latest status across all active onboardings."); }, 1200);
   }
 
   function appendUserMsg(c, text) {
@@ -819,9 +822,11 @@
     return t;
   }
   function addSuggestion(el) { document.getElementById('explorer-chat-input').value = el.textContent; sendExplorerMessage(); }
+  function addTrackerSuggestion(el) { document.getElementById('tracker-chat-input').value = el.textContent; sendTrackerMessage(); }
   function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   document.getElementById('explorer-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendExplorerMessage(); });
+  document.getElementById('tracker-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendTrackerMessage(); });
 </script>
 </body>
 </html>
