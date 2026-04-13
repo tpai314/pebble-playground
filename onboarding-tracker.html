@@ -153,14 +153,14 @@
     .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; }
 
     /* ─── Content ─── */
-    .content { padding: var(--space-800) 40px var(--space-800); display: flex; flex-direction: column; flex: 1; min-height: 0; }
-    .page-title { font-size: 24px; font-weight: 700; margin-bottom: var(--space-600); letter-spacing: -0.3px; }
+    .content { padding: 36px 48px 40px; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .page-title { font-size: 26px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.3px; }
 
     /* ─── Pebble Tabs (SWITCH type) ─── */
     .pb-tabs {
       display: inline-flex; background: var(--color-neutral-container);
-      border-radius: var(--shape-corner-md); padding: 3px; gap: 2px;
-      margin-bottom: 0; flex-shrink: 0;
+      border-radius: var(--shape-corner-md); padding: 4px; gap: 2px;
+      flex-shrink: 0;
     }
     .pb-tab {
       padding: var(--space-200) var(--space-500); font-size: 13px; font-weight: 500;
@@ -201,10 +201,10 @@
 
     /* ─── Pebble Status ─── */
     .pb-status {
-      display: inline-flex; align-items: center; gap: var(--space-100);
-      padding: 2px var(--space-200); border-radius: var(--shape-corner-full);
-      font-size: 11px; font-weight: 600; letter-spacing: 0.2px;
-      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: var(--shape-corner-full);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+      text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
     }
     .pb-status-success { background: var(--color-success-container); color: var(--color-on-success-container); }
     .pb-status-error { background: var(--color-error-container); color: var(--color-on-error-container); }
@@ -229,7 +229,7 @@
     .pb-label-neutral { background: var(--color-neutral-container); color: var(--color-on-neutral-container); }
 
     /* ─── Pebble ProgressBar ─── */
-    .pb-progress { width: 80px; height: 4px; background: var(--color-outline-variant); border-radius: 2px; overflow: hidden; }
+    .pb-progress { width: 100px; height: 4px; background: var(--color-outline-variant); border-radius: 2px; overflow: hidden; }
     .pb-progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
     .pb-progress-fill.success { background: var(--color-success); }
     .pb-progress-fill.error { background: var(--color-error); }
@@ -260,7 +260,7 @@
        ══════════════════════════════════════════════════ */
     .explorer-split {
       display: flex; flex: 1; min-height: 0;
-      margin-top: var(--space-600);
+      margin-top: 24px;
       border: 1px solid var(--color-outline-variant);
       border-radius: var(--shape-corner-lg); overflow: hidden;
       box-shadow: var(--shadow-sm);
@@ -268,33 +268,33 @@
 
     /* Chat pane */
     .chat-pane {
-      width: 50%; display: flex; flex-direction: column;
+      width: 45%; display: flex; flex-direction: column;
       border-right: 1px solid var(--color-outline-variant);
       background: var(--color-surface);
     }
     .chat-header {
-      padding: var(--space-500) var(--space-600); border-bottom: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; gap: var(--space-400); flex-shrink: 0;
+      padding: 18px 24px; border-bottom: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: 14px; flex-shrink: 0;
     }
     .chat-header-icon {
-      width: 32px; height: 32px; border-radius: var(--shape-corner-md);
+      width: 36px; height: 36px; border-radius: var(--shape-corner-md);
       background: var(--color-primary);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .chat-header-title { font-size: 14px; font-weight: 600; }
-    .chat-header-sub { font-size: 12px; color: var(--color-on-surface-variant); }
+    .chat-header-title { font-size: 15px; font-weight: 600; }
+    .chat-header-sub { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 1px; }
 
     .chat-messages {
-      flex: 1; overflow-y: auto; padding: var(--space-600);
-      display: flex; flex-direction: column; gap: var(--space-500);
+      flex: 1; overflow-y: auto; padding: 24px;
+      display: flex; flex-direction: column; gap: 20px;
     }
-    .chat-msg { display: flex; gap: var(--space-300); max-width: 88%; }
+    .chat-msg { display: flex; gap: 12px; max-width: 85%; }
     .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
     .chat-msg.ai .pb-avatar { background: var(--color-primary); }
     .chat-msg.user .pb-avatar { background: var(--color-surface-inverse); }
     .chat-msg-bubble {
-      padding: var(--space-300) var(--space-400); border-radius: var(--shape-corner-lg);
-      font-size: 13px; line-height: 1.55;
+      padding: 14px 18px; border-radius: var(--shape-corner-lg);
+      font-size: 13.5px; line-height: 1.6;
     }
     .chat-msg.ai .chat-msg-bubble {
       background: var(--color-surface-dim); color: var(--color-on-surface);
@@ -309,17 +309,17 @@
     .chat-msg-bubble strong { font-weight: 600; }
 
     .chat-suggestions {
-      display: flex; flex-wrap: wrap; gap: var(--space-300); padding: var(--space-200) var(--space-600) var(--space-400);
+      display: flex; flex-wrap: wrap; gap: 10px; padding: 4px 24px 16px;
       flex-shrink: 0;
     }
     .chat-input-area {
-      padding: var(--space-400) var(--space-500); border-top: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; gap: var(--space-300); flex-shrink: 0;
+      padding: 16px 24px; border-top: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
       background: var(--color-surface);
     }
     .chat-input {
-      flex: 1; padding: var(--space-300) var(--space-400); border: 1px solid var(--color-outline);
-      border-radius: var(--shape-corner-md); font-size: 13px; color: var(--color-on-surface);
+      flex: 1; padding: 10px 16px; border: 1px solid var(--color-outline);
+      border-radius: var(--shape-corner-md); font-size: 13.5px; color: var(--color-on-surface);
       background: var(--color-surface-dim); outline: none; font-family: inherit;
     }
     .chat-input:focus { border-color: var(--color-primary); background: var(--color-surface); box-shadow: 0 0 0 2px rgba(91,95,199,0.15); }
@@ -327,45 +327,45 @@
 
     /* Templates pane */
     .templates-pane {
-      width: 50%; display: flex; flex-direction: column;
+      width: 55%; display: flex; flex-direction: column;
       background: var(--color-surface-bright); overflow-y: auto;
     }
     .templates-header {
-      padding: var(--space-500) var(--space-600); display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid var(--color-outline-variant); background: var(--color-surface);
       flex-shrink: 0;
     }
-    .templates-header-left { display: flex; align-items: baseline; gap: var(--space-300); }
-    .templates-header h2 { font-size: 15px; font-weight: 600; }
+    .templates-header-left { display: flex; align-items: baseline; gap: 10px; }
+    .templates-header h2 { font-size: 16px; font-weight: 600; }
     .templates-count {
-      font-size: 11px; color: var(--color-on-surface-variant);
+      font-size: 12px; color: var(--color-on-surface-variant);
       background: var(--color-neutral-container);
-      padding: 2px var(--space-200); border-radius: var(--shape-corner-full); font-weight: 500;
+      padding: 3px 10px; border-radius: var(--shape-corner-full); font-weight: 500;
     }
     .templates-grid {
-      padding: var(--space-500) var(--space-600); display: flex; flex-direction: column; gap: var(--space-400);
+      padding: 12px; display: flex; flex-direction: column; gap: 12px;
       flex: 1; overflow-y: auto;
     }
 
     /* Pebble ExpansionPanel-style cards */
     .pb-panel {
       background: var(--color-surface); border: 1px solid var(--color-outline-variant);
-      border-radius: var(--shape-corner-md); overflow: hidden; transition: box-shadow 0.15s;
+      border-radius: var(--shape-corner-md); transition: box-shadow 0.15s;
     }
     .pb-panel:hover { box-shadow: var(--shadow-md); }
     .pb-panel-header {
-      padding: var(--space-400) var(--space-500); display: flex; align-items: center;
-      cursor: pointer; user-select: none; gap: var(--space-400);
+      padding: 12px 14px; display: flex; align-items: center;
+      cursor: pointer; user-select: none; gap: 10px;
     }
-    .pb-panel-header-left { display: flex; align-items: center; gap: var(--space-300); flex: 1; min-width: 0; overflow: hidden; }
+    .pb-panel-header-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; overflow: hidden; }
     .pb-panel-dot { width: 8px; height: 8px; border-radius: var(--shape-corner-full); flex-shrink: 0; }
     .pb-panel-info { flex: 1; min-width: 0; overflow: hidden; }
-    .pb-panel-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pb-panel-meta { font-size: 12px; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pb-panel-stats { display: flex; gap: var(--space-400); align-items: center; flex-shrink: 0; white-space: nowrap; }
-    .pb-panel-stat { text-align: center; min-width: 40px; }
+    .pb-panel-title { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pb-panel-meta { font-size: 12px; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    .pb-panel-stats { display: flex; gap: 12px; align-items: center; flex-shrink: 0; white-space: nowrap; }
+    .pb-panel-stat { text-align: center; }
     .pb-panel-stat-val { font-size: 16px; font-weight: 700; line-height: 1; color: var(--color-on-surface); }
-    .pb-panel-stat-lbl { font-size: 10px; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+    .pb-panel-stat-lbl { font-size: 9px; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
     .pb-panel-chevron {
       transition: transform 0.2s; color: var(--color-on-surface-variant);
       flex-shrink: 0; width: 16px; height: 16px;
@@ -376,7 +376,7 @@
 
     .module-row {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-300) var(--space-500) var(--space-300) 44px;
+      padding: 10px 14px 10px 40px;
       border-bottom: 1px solid var(--color-outline-variant); font-size: 13px;
     }
     .module-row:last-child { border-bottom: none; }
@@ -404,7 +404,7 @@
        ══════════════════════════════════════════════════ */
     .tracker-chat-full {
       display: flex; flex-direction: column; flex: 1; min-height: 0;
-      margin-top: var(--space-600);
+      margin-top: 24px;
       border: 1px solid var(--color-outline-variant);
       border-radius: var(--shape-corner-lg); overflow: hidden;
       background: var(--color-surface); box-shadow: var(--shadow-sm);
@@ -412,30 +412,30 @@
 
     /* Pebble TableBasic inside chat */
     .pb-table-wrap {
-      margin: var(--space-400) 0 var(--space-300); border-radius: var(--shape-corner-md);
+      margin: 16px 0 12px; border-radius: var(--shape-corner-md);
       overflow: hidden; border: 1px solid var(--color-outline-variant);
     }
-    .pb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .pb-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
     .pb-table th {
       text-align: left; font-size: 11px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.4px;
-      color: var(--color-on-surface-variant); padding: var(--space-300) var(--space-400);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--color-on-surface-variant); padding: 12px 16px;
       background: var(--color-surface-dim); border-bottom: 1px solid var(--color-outline-variant);
     }
     .pb-table td {
-      padding: var(--space-400); border-bottom: 1px solid var(--color-outline-variant);
-      vertical-align: middle; line-height: 1.4;
+      padding: 16px; border-bottom: 1px solid var(--color-outline-variant);
+      vertical-align: middle; line-height: 1.5;
     }
     .pb-table tr:last-child td { border-bottom: none; }
     .pb-table tr:hover td { background: var(--color-surface-bright); }
 
-    .emp-cell { display: flex; align-items: center; gap: var(--space-300); }
+    .emp-cell { display: flex; align-items: center; gap: 12px; }
     .emp-info {}
-    .emp-name { font-weight: 600; font-size: 13px; display: block; }
-    .emp-role { font-size: 11px; color: var(--color-on-surface-variant); }
-    .steps-cell { display: flex; align-items: center; gap: var(--space-200); }
-    .steps-label { font-size: 12px; font-weight: 600; color: var(--color-on-surface); white-space: nowrap; }
-    .start-date { font-size: 13px; color: var(--color-on-surface); white-space: nowrap; }
+    .emp-name { font-weight: 600; font-size: 14px; display: block; }
+    .emp-role { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 2px; }
+    .steps-cell { display: flex; align-items: center; gap: 10px; }
+    .steps-label { font-size: 13px; font-weight: 600; color: var(--color-on-surface); white-space: nowrap; }
+    .start-date { font-size: 13.5px; color: var(--color-on-surface); white-space: nowrap; }
     .blockers-cell { display: flex; flex-wrap: wrap; gap: 6px; }
 
     /* Typing indicator (Pebble Spinner alternative for chat) */
@@ -566,8 +566,8 @@
             <div class="pb-panel expanded">
               <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
                 <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#7c3aed"></div><div class="pb-panel-info"><div class="pb-panel-title">Engineering</div><div class="pb-panel-meta">Full-time · Remote & On-site</div></div></div>
-                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">6</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">12</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
-                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">6</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">12</div><div class="pb-panel-stat-lbl">Steps</div></div></div>
+                <span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span>
               </div>
               <div class="pb-panel-body">
                 <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">4 steps</span></div>
@@ -584,8 +584,8 @@
             <div class="pb-panel">
               <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
                 <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#0d9488"></div><div class="pb-panel-info"><div class="pb-panel-title">Sales</div><div class="pb-panel-meta">Full-time · On-site</div></div></div>
-                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">10</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
-                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">10</div><div class="pb-panel-stat-lbl">Steps</div></div></div>
+                <span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span>
               </div>
               <div class="pb-panel-body">
                 <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">4 steps</span></div>
@@ -599,8 +599,8 @@
             <div class="pb-panel">
               <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
                 <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#991b1b"></div><div class="pb-panel-info"><div class="pb-panel-title">Retail Hourly</div><div class="pb-panel-meta">Hourly · On-site</div></div></div>
-                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">4</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">7</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
-                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">4</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">7</div><div class="pb-panel-stat-lbl">Steps</div></div></div>
+                <span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span>
               </div>
               <div class="pb-panel-body">
                 <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">3 steps</span></div>
@@ -613,8 +613,8 @@
             <div class="pb-panel">
               <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
                 <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#007AFF"></div><div class="pb-panel-info"><div class="pb-panel-title">Finance</div><div class="pb-panel-meta">Full-time · Remote & On-site</div></div></div>
-                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">9</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
-                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">9</div><div class="pb-panel-stat-lbl">Steps</div></div></div>
+                <span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span>
               </div>
               <div class="pb-panel-body">
                 <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">3 steps</span></div>
@@ -628,8 +628,8 @@
             <div class="pb-panel">
               <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
                 <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#FF9500"></div><div class="pb-panel-info"><div class="pb-panel-title">Customer Success</div><div class="pb-panel-meta">Full-time · Remote</div></div></div>
-                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">9</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-warning"><span class="pb-status-dot"></span>Draft</span></div>
-                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">9</div><div class="pb-panel-stat-lbl">Steps</div></div></div>
+                <span class="pb-status pb-status-warning"><span class="pb-status-dot"></span>Draft</span>
               </div>
               <div class="pb-panel-body">
                 <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">3 steps</span></div>
