@@ -8,330 +8,385 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --sidebar-bg: #1a1a2e;
+      /* Pebble semantic color tokens */
+      --color-primary: #5B5FC7;
+      --color-primary-hover: #4B4FB7;
+      --color-on-primary: #fff;
+      --color-surface: #fff;
+      --color-surface-dim: #f5f5f5;
+      --color-surface-bright: #fafafa;
+      --color-on-surface: #1c1c1e;
+      --color-on-surface-secondary: #6e6e73;
+      --color-outline: #d1d1d6;
+      --color-outline-variant: #e8e8ed;
+      --color-success: #34C759;
+      --color-success-container: #e8f8ed;
+      --color-on-success-container: #0a6b2a;
+      --color-error: #FF3B30;
+      --color-error-container: #ffebea;
+      --color-on-error-container: #991b1b;
+      --color-warning: #FF9500;
+      --color-warning-container: #fff4e0;
+      --color-on-warning-container: #7a4510;
+      --color-info: #007AFF;
+      --color-info-container: #e0f0ff;
+      --color-on-info-container: #003d80;
+      --color-neutral-container: #f2f2f7;
+      --color-on-neutral-container: #3a3a3c;
+
+      /* Pebble spacing tokens (4px grid) */
+      --space-100: 4px;
+      --space-200: 8px;
+      --space-300: 12px;
+      --space-400: 16px;
+      --space-500: 20px;
+      --space-600: 24px;
+      --space-800: 32px;
+
+      /* Pebble radius tokens */
+      --radius-100: 4px;
+      --radius-200: 8px;
+      --radius-300: 12px;
+      --radius-full: 9999px;
+
+      /* Pebble shadow tokens */
+      --shadow-100: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-200: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-300: 0 4px 16px rgba(0,0,0,0.1);
+
+      /* Layout */
       --sidebar-width: 200px;
       --topbar-height: 56px;
-      --text-primary: #1a1a2e;
-      --text-secondary: #6b7280;
-      --border-color: #e5e7eb;
-      --bg-page: #f9fafb;
-      --bg-content: #fff;
-      --purple: #7c3aed;
-      --green: #0d9488;
-      --teal: #0d9488;
-      --maroon: #991b1b;
-      --blue: #2563eb;
-      --amber: #d97706;
-      --bar-red: #b91c1c;
-      --bar-green: #16a34a;
-      --pill-active-bg: #1a1a2e;
-      --pill-active-text: #fff;
-      --chat-user-bg: #1a1a2e;
-      --chat-ai-bg: #f0f4ff;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: var(--text-primary);
-      background: var(--bg-page);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--color-on-surface);
+      background: var(--color-surface-dim);
       display: flex;
       min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── Sidebar ─── */
+    /* ─── Sidebar (AppNavBar pattern) ─── */
     .sidebar {
-      width: var(--sidebar-width);
-      background: var(--sidebar-bg);
-      color: #fff;
+      width: var(--sidebar-width); background: #1c1c1e; color: #fff;
       display: flex; flex-direction: column; flex-shrink: 0;
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 10;
     }
     .sidebar-logo {
-      display: flex; align-items: center; gap: 10px;
-      padding: 20px 20px 28px;
-      font-size: 18px; font-weight: 600; letter-spacing: 0.3px;
+      display: flex; align-items: center; gap: var(--space-200);
+      padding: var(--space-500) var(--space-500) var(--space-600);
+      font-size: 17px; font-weight: 600; letter-spacing: -0.2px;
     }
     .sidebar-logo .logo-icon {
-      width: 28px; height: 28px; background: #f97316; border-radius: 6px;
+      width: 28px; height: 28px; background: #FF9500; border-radius: var(--radius-200);
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 16px; color: #fff;
+      font-weight: 700; font-size: 15px;
     }
     .sidebar-section-label {
       font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; color: rgba(255,255,255,0.45); padding: 0 20px 8px;
+      letter-spacing: 0.8px; color: rgba(255,255,255,0.38); padding: 0 var(--space-500) var(--space-200);
     }
-    .sidebar-nav { list-style: none; margin-bottom: 24px; }
+    .sidebar-nav { list-style: none; margin-bottom: var(--space-600); }
     .sidebar-nav li a {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 20px; color: rgba(255,255,255,0.75);
-      text-decoration: none; font-size: 14px;
-      transition: background 0.15s, color 0.15s;
+      display: flex; align-items: center; gap: var(--space-300);
+      padding: var(--space-200) var(--space-500); color: rgba(255,255,255,0.65);
+      text-decoration: none; font-size: 14px; border-radius: 0;
+      transition: background 0.12s, color 0.12s;
     }
-    .sidebar-nav li a:hover { background: rgba(255,255,255,0.08); color: #fff; }
-    .sidebar-nav li a.active { background: rgba(255,255,255,0.12); color: #fff; font-weight: 500; }
-    .sidebar-nav li a .nav-icon { width: 18px; height: 18px; opacity: 0.7; flex-shrink: 0; }
+    .sidebar-nav li a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .sidebar-nav li a.active { background: rgba(255,255,255,0.1); color: #fff; font-weight: 500; }
+    .sidebar-nav li a .nav-icon { width: 18px; height: 18px; opacity: 0.65; flex-shrink: 0; }
     .sidebar-collapse {
-      margin-top: auto; padding: 16px 20px; cursor: pointer;
-      color: rgba(255,255,255,0.45); font-size: 14px;
+      margin-top: auto; padding: var(--space-400) var(--space-500); cursor: pointer;
+      color: rgba(255,255,255,0.38); font-size: 14px;
     }
 
-    /* ─── Main area ─── */
+    /* ─── Main ─── */
     .main { margin-left: var(--sidebar-width); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* ─── Top bar ─── */
+    /* ─── Topbar ─── */
     .topbar {
-      height: var(--topbar-height); background: var(--bg-content);
-      border-bottom: 1px solid var(--border-color);
+      height: var(--topbar-height); background: var(--color-surface);
+      border-bottom: 1px solid var(--color-outline-variant);
       display: flex; align-items: center; justify-content: center;
-      padding: 0 24px; position: sticky; top: 0; z-index: 5;
+      padding: 0 var(--space-600); position: sticky; top: 0; z-index: 5;
     }
     .search-box {
-      display: flex; align-items: center; gap: 8px;
-      background: #f3f4f6; border-radius: 8px;
-      padding: 8px 16px; width: 280px;
-      color: var(--text-secondary); font-size: 14px;
+      display: flex; align-items: center; gap: var(--space-200);
+      background: var(--color-neutral-container); border-radius: var(--radius-200);
+      padding: var(--space-200) var(--space-400); width: 260px;
+      color: var(--color-on-surface-secondary); font-size: 13px;
     }
-    .topbar-right { position: absolute; right: 24px; display: flex; align-items: center; gap: 16px; }
+    .topbar-right { position: absolute; right: var(--space-600); display: flex; align-items: center; gap: var(--space-400); }
     .topbar-icon {
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-      color: var(--text-secondary); cursor: pointer; border-radius: 6px;
+      color: var(--color-on-surface-secondary); cursor: pointer; border-radius: var(--radius-200);
     }
-    .topbar-icon:hover { background: #f3f4f6; }
+    .topbar-icon:hover { background: var(--color-neutral-container); }
     .topbar-icon.has-badge { position: relative; }
     .topbar-icon .badge {
-      position: absolute; top: 2px; right: 2px;
-      width: 16px; height: 16px; background: #ef4444; color: #fff;
-      font-size: 10px; font-weight: 600; border-radius: 50%;
+      position: absolute; top: 1px; right: 1px;
+      width: 16px; height: 16px; background: var(--color-error); color: #fff;
+      font-size: 10px; font-weight: 600; border-radius: var(--radius-full);
       display: flex; align-items: center; justify-content: center;
     }
-    .avatar {
-      width: 32px; height: 32px; border-radius: 50%; background: #6366f1;
-      color: #fff; font-size: 13px; font-weight: 600;
+    /* Pebble Avatar */
+    .pb-avatar {
+      width: 32px; height: 32px; border-radius: var(--radius-full);
+      background: var(--color-primary); color: var(--color-on-primary);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
       display: flex; align-items: center; justify-content: center;
     }
+    .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; }
 
     /* ─── Content ─── */
-    .content { padding: 24px 32px 0; display: flex; flex-direction: column; flex: 1; min-height: 0; }
-    .page-title { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+    .content { padding: var(--space-600) var(--space-800) 0; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .page-title { font-size: 22px; font-weight: 700; margin-bottom: var(--space-400); letter-spacing: -0.3px; }
 
-    /* ─── Tabs ─── */
-    .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); margin-bottom: 0; flex-shrink: 0; }
-    .tab {
-      padding: 8px 0 12px; font-size: 15px; color: var(--text-secondary);
-      cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s;
-      user-select: none;
+    /* ─── Pebble Tabs (SWITCH type) ─── */
+    .pb-tabs {
+      display: inline-flex; background: var(--color-neutral-container);
+      border-radius: var(--radius-200); padding: 3px; gap: 2px;
+      margin-bottom: 0; flex-shrink: 0;
     }
-    .tab:hover { color: var(--text-primary); }
-    .tab.active { color: var(--teal); border-bottom-color: var(--teal); font-weight: 500; }
+    .pb-tab {
+      padding: var(--space-200) var(--space-500); font-size: 13px; font-weight: 500;
+      color: var(--color-on-surface-secondary); cursor: pointer;
+      border-radius: 6px; transition: all 0.15s; user-select: none;
+      border: none; background: none;
+    }
+    .pb-tab:hover { color: var(--color-on-surface); }
+    .pb-tab.active {
+      background: var(--color-surface); color: var(--color-on-surface);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      font-weight: 600;
+    }
     .tab-panel { display: none; flex: 1; min-height: 0; }
     .tab-panel.active { display: flex; flex-direction: column; }
 
-    /* ─── Shared ─── */
-    .btn {
+    /* ─── Pebble Button ─── */
+    .pb-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 16px; border-radius: 8px; font-size: 14px;
-      font-weight: 500; cursor: pointer; border: none; transition: all 0.15s;
+      padding: var(--space-200) var(--space-400); border-radius: var(--radius-200);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: none; transition: all 0.12s; font-family: inherit;
     }
-    .btn-primary { background: var(--teal); color: #fff; }
-    .btn-primary:hover { background: #0f766e; }
-    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
-    .btn-outline:hover { border-color: #9ca3af; background: #f9fafb; }
-    .btn-sm { padding: 5px 10px; font-size: 13px; }
-    .btn-ghost { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 4px; border-radius: 4px; display: flex; align-items: center; }
-    .btn-ghost:hover { background: #f3f4f6; color: var(--text-primary); }
+    .pb-btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
+    .pb-btn-primary:hover { background: var(--color-primary-hover); }
+    .pb-btn-outline { background: var(--color-surface); color: var(--color-on-surface); border: 1px solid var(--color-outline); }
+    .pb-btn-outline:hover { border-color: var(--color-on-surface-secondary); background: var(--color-surface-bright); }
+    .pb-btn-ghost { background: none; color: var(--color-on-surface-secondary); padding: var(--space-100); border-radius: var(--radius-100); }
+    .pb-btn-ghost:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
+    .pb-btn-sm { padding: var(--space-100) var(--space-300); font-size: 12px; }
+    .pb-btn-send {
+      width: 36px; height: 36px; border-radius: var(--radius-200); border: none;
+      background: var(--color-primary); color: var(--color-on-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.12s; flex-shrink: 0;
+    }
+    .pb-btn-send:hover { background: var(--color-primary-hover); }
 
-    .status-pill {
-      font-size: 11px; font-weight: 600; padding: 3px 10px;
-      border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-      display: inline-block;
+    /* ─── Pebble Status ─── */
+    .pb-status {
+      display: inline-flex; align-items: center; gap: var(--space-100);
+      padding: 2px var(--space-200); border-radius: var(--radius-full);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2px;
+      text-transform: uppercase;
     }
-    .status-active { background: #dcfce7; color: #15803d; }
-    .status-draft { background: #fef3c7; color: #92400e; }
+    .pb-status-success { background: var(--color-success-container); color: var(--color-on-success-container); }
+    .pb-status-error { background: var(--color-error-container); color: var(--color-on-error-container); }
+    .pb-status-warning { background: var(--color-warning-container); color: var(--color-on-warning-container); }
+    .pb-status-primary { background: #ede9fe; color: #5B5FC7; }
+    .pb-status-info { background: var(--color-info-container); color: var(--color-on-info-container); }
+    .pb-status-neutral { background: var(--color-neutral-container); color: var(--color-on-neutral-container); }
+    .pb-status-dot { width: 6px; height: 6px; border-radius: var(--radius-full); }
+    .pb-status-success .pb-status-dot { background: var(--color-success); }
+    .pb-status-warning .pb-status-dot { background: var(--color-warning); }
 
-    .badge-sm {
-      display: inline-block; padding: 2px 8px; border-radius: 4px;
-      font-size: 11px; font-weight: 600; color: #fff;
+    /* ─── Pebble Label ─── */
+    .pb-label {
+      display: inline-flex; align-items: center; gap: var(--space-100);
+      padding: 2px var(--space-200); border-radius: var(--radius-100);
+      font-size: 11px; font-weight: 600;
     }
-    .badge-purple { background: var(--purple); }
-    .badge-green { background: var(--teal); }
-    .badge-maroon { background: var(--maroon); }
-    .badge-blue { background: var(--blue); }
+    .pb-label-error { background: var(--color-error-container); color: var(--color-on-error-container); }
+    .pb-label-warning { background: var(--color-warning-container); color: var(--color-on-warning-container); }
+    .pb-label-success { background: var(--color-success-container); color: var(--color-on-success-container); }
+    .pb-label-info { background: var(--color-info-container); color: var(--color-on-info-container); }
+    .pb-label-neutral { background: var(--color-neutral-container); color: var(--color-on-neutral-container); }
 
-    .pill {
-      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
-      cursor: pointer; border: 1px solid var(--border-color);
-      background: var(--bg-content); color: var(--text-primary); transition: all 0.15s;
-      user-select: none;
+    /* ─── Pebble ProgressBar ─── */
+    .pb-progress { width: 80px; height: 4px; background: var(--color-outline-variant); border-radius: 2px; overflow: hidden; }
+    .pb-progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+    .pb-progress-fill.success { background: var(--color-success); }
+    .pb-progress-fill.error { background: var(--color-error); }
+    .pb-progress-fill.warning { background: var(--color-warning); }
+    .pb-progress-fill.primary { background: var(--color-primary); }
+
+    /* ─── Pebble Chip (suggestions) ─── */
+    .pb-chip {
+      display: inline-flex; align-items: center; gap: var(--space-100);
+      padding: 6px var(--space-300); border-radius: var(--radius-full);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--color-outline); background: var(--color-surface);
+      color: var(--color-on-surface-secondary); transition: all 0.12s;
+      font-family: inherit;
     }
-    .pill:hover { border-color: #9ca3af; }
-    .pill.active { background: var(--pill-active-bg); color: var(--pill-active-text); border-color: var(--pill-active-bg); }
+    .pb-chip:hover { border-color: var(--color-primary); color: var(--color-primary); background: #f0effa; }
+
+    /* ─── Pebble Spinner ─── */
+    .pb-spinner {
+      width: 20px; height: 20px; border: 2.5px solid var(--color-outline-variant);
+      border-top-color: var(--color-primary); border-radius: var(--radius-full);
+      animation: pbSpin 0.7s linear infinite;
+    }
+    @keyframes pbSpin { to { transform: rotate(360deg); } }
 
     /* ══════════════════════════════════════════════════
        EXPLORER TAB — Split screen
        ══════════════════════════════════════════════════ */
     .explorer-split {
       display: flex; flex: 1; min-height: 0;
-      border-top: 1px solid var(--border-color);
+      margin-top: var(--space-400);
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--radius-300); overflow: hidden;
+      box-shadow: var(--shadow-100);
     }
 
-    /* ── Chat pane (left) ── */
+    /* Chat pane */
     .chat-pane {
       width: 50%; display: flex; flex-direction: column;
-      border-right: 1px solid var(--border-color);
-      background: var(--bg-content);
+      border-right: 1px solid var(--color-outline-variant);
+      background: var(--color-surface);
     }
     .chat-header {
-      padding: 16px 20px; border-bottom: 1px solid var(--border-color);
-      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+      padding: var(--space-400) var(--space-500); border-bottom: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: var(--space-300); flex-shrink: 0;
     }
     .chat-header-icon {
-      width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2563eb, #7c3aed);
+      width: 32px; height: 32px; border-radius: var(--radius-200);
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .chat-header-text { flex: 1; }
     .chat-header-title { font-size: 14px; font-weight: 600; }
-    .chat-header-sub { font-size: 12px; color: var(--text-secondary); }
+    .chat-header-sub { font-size: 12px; color: var(--color-on-surface-secondary); }
 
     .chat-messages {
-      flex: 1; overflow-y: auto; padding: 20px;
-      display: flex; flex-direction: column; gap: 16px;
+      flex: 1; overflow-y: auto; padding: var(--space-500);
+      display: flex; flex-direction: column; gap: var(--space-400);
     }
-    .chat-msg { display: flex; gap: 10px; max-width: 92%; }
+    .chat-msg { display: flex; gap: var(--space-300); max-width: 92%; }
     .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
-    .chat-msg-avatar {
-      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: #fff;
-    }
-    .chat-msg.ai .chat-msg-avatar { background: linear-gradient(135deg, #2563eb, #7c3aed); }
-    .chat-msg.user .chat-msg-avatar { background: var(--chat-user-bg); }
+    .chat-msg.ai .pb-avatar { background: linear-gradient(135deg, var(--color-primary), #7c3aed); }
+    .chat-msg.user .pb-avatar { background: #3a3a3c; }
     .chat-msg-bubble {
-      padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.55;
+      padding: var(--space-300) var(--space-400); border-radius: var(--radius-300);
+      font-size: 13px; line-height: 1.55;
     }
     .chat-msg.ai .chat-msg-bubble {
-      background: var(--chat-ai-bg); color: var(--text-primary);
-      border-bottom-left-radius: 4px;
+      background: var(--color-surface-dim); color: var(--color-on-surface);
+      border-bottom-left-radius: var(--radius-100);
     }
     .chat-msg.user .chat-msg-bubble {
-      background: var(--chat-user-bg); color: #fff;
-      border-bottom-right-radius: 4px;
+      background: var(--color-primary); color: var(--color-on-primary);
+      border-bottom-right-radius: var(--radius-100);
     }
-    .chat-msg-bubble ul { margin: 6px 0 0 16px; }
-    .chat-msg-bubble li { margin-bottom: 3px; }
+    .chat-msg-bubble ul { margin: 6px 0 2px 16px; }
+    .chat-msg-bubble li { margin-bottom: 2px; }
     .chat-msg-bubble strong { font-weight: 600; }
 
     .chat-suggestions {
-      display: flex; flex-wrap: wrap; gap: 6px; padding: 0 20px 12px;
+      display: flex; flex-wrap: wrap; gap: 6px; padding: 0 var(--space-500) var(--space-300);
       flex-shrink: 0;
     }
-    .chat-suggestion {
-      padding: 6px 12px; border-radius: 18px; font-size: 12px;
-      border: 1px solid var(--border-color); color: var(--text-secondary);
-      cursor: pointer; background: #fff; transition: all 0.15s;
-    }
-    .chat-suggestion:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
-
     .chat-input-area {
-      padding: 12px 16px; border-top: 1px solid var(--border-color);
-      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
-      background: #fff;
+      padding: var(--space-300) var(--space-400); border-top: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: var(--space-200); flex-shrink: 0;
+      background: var(--color-surface);
     }
     .chat-input {
-      flex: 1; padding: 10px 14px; border: 1px solid var(--border-color);
-      border-radius: 10px; font-size: 14px; color: var(--text-primary);
-      background: #f9fafb; outline: none;
+      flex: 1; padding: var(--space-200) var(--space-300); border: 1px solid var(--color-outline);
+      border-radius: var(--radius-200); font-size: 13px; color: var(--color-on-surface);
+      background: var(--color-surface-dim); outline: none; font-family: inherit;
     }
-    .chat-input:focus { border-color: var(--blue); background: #fff; box-shadow: 0 0 0 2px rgba(37,99,235,0.12); }
-    .chat-input::placeholder { color: #9ca3af; }
-    .chat-send {
-      width: 36px; height: 36px; border-radius: 10px; border: none;
-      background: var(--blue); color: #fff; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s; flex-shrink: 0;
-    }
-    .chat-send:hover { background: #1d4ed8; }
+    .chat-input:focus { border-color: var(--color-primary); background: var(--color-surface); box-shadow: 0 0 0 2px rgba(91,95,199,0.15); }
+    .chat-input::placeholder { color: var(--color-on-surface-secondary); }
 
-    /* ── Templates pane (right) ── */
+    /* Templates pane */
     .templates-pane {
       width: 50%; display: flex; flex-direction: column;
-      background: var(--bg-page); overflow-y: auto;
+      background: var(--color-surface-bright); overflow-y: auto;
     }
     .templates-header {
-      padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border-color); background: var(--bg-content);
+      padding: var(--space-400) var(--space-500); display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--color-outline-variant); background: var(--color-surface);
       flex-shrink: 0;
     }
-    .templates-header-left { display: flex; align-items: center; gap: 12px; }
-    .templates-header h2 { font-size: 16px; font-weight: 600; }
+    .templates-header-left { display: flex; align-items: center; gap: var(--space-300); }
+    .templates-header h2 { font-size: 14px; font-weight: 600; }
     .templates-count {
-      font-size: 12px; color: var(--text-secondary); background: #f3f4f6;
-      padding: 2px 8px; border-radius: 10px; font-weight: 500;
+      font-size: 11px; color: var(--color-on-surface-secondary);
+      background: var(--color-neutral-container);
+      padding: 2px var(--space-200); border-radius: var(--radius-full); font-weight: 500;
     }
-
     .templates-grid {
-      padding: 20px 24px; display: flex; flex-direction: column; gap: 16px;
+      padding: var(--space-400) var(--space-500); display: flex; flex-direction: column; gap: var(--space-300);
       flex: 1; overflow-y: auto;
     }
 
-    /* Template card */
-    .template-card {
-      background: var(--bg-content); border: 1px solid var(--border-color);
-      border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s;
+    /* Pebble ExpansionPanel-style cards */
+    .pb-panel {
+      background: var(--color-surface); border: 1px solid var(--color-outline-variant);
+      border-radius: var(--radius-200); overflow: hidden; transition: box-shadow 0.15s;
     }
-    .template-card:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-
-    .template-card-header {
-      padding: 16px 20px; display: flex; align-items: flex-start; justify-content: space-between;
-      cursor: pointer; user-select: none;
+    .pb-panel:hover { box-shadow: var(--shadow-200); }
+    .pb-panel-header {
+      padding: var(--space-300) var(--space-400); display: flex; align-items: center;
+      justify-content: space-between; cursor: pointer; user-select: none;
+      gap: var(--space-300);
     }
-    .template-card-header-left { display: flex; align-items: center; gap: 12px; flex: 1; }
-    .template-card-dot {
-      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+    .pb-panel-header-left { display: flex; align-items: center; gap: var(--space-300); flex: 1; min-width: 0; }
+    .pb-panel-dot { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+    .pb-panel-info { flex: 1; min-width: 0; }
+    .pb-panel-title { font-size: 14px; font-weight: 600; }
+    .pb-panel-meta { font-size: 12px; color: var(--color-on-surface-secondary); }
+    .pb-panel-stats { display: flex; gap: var(--space-400); align-items: center; flex-shrink: 0; }
+    .pb-panel-stat { text-align: center; }
+    .pb-panel-stat-val { font-size: 16px; font-weight: 700; line-height: 1; color: var(--color-on-surface); }
+    .pb-panel-stat-lbl { font-size: 10px; color: var(--color-on-surface-secondary); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 1px; }
+    .pb-panel-chevron {
+      transition: transform 0.2s; color: var(--color-on-surface-secondary);
+      flex-shrink: 0; width: 16px; height: 16px;
     }
-    .template-card-info { flex: 1; }
-    .template-card-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-    .template-card-meta { font-size: 12px; color: var(--text-secondary); }
+    .pb-panel.expanded .pb-panel-chevron { transform: rotate(90deg); }
+    .pb-panel-body { display: none; border-top: 1px solid var(--color-outline-variant); }
+    .pb-panel.expanded .pb-panel-body { display: block; }
 
-    .template-card-stats {
-      display: flex; gap: 16px; align-items: center; flex-shrink: 0;
-    }
-    .template-stat {
-      text-align: center;
-    }
-    .template-stat-value { font-size: 18px; font-weight: 700; line-height: 1; }
-    .template-stat-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-
-    .template-chevron { transition: transform 0.2s; color: var(--text-secondary); margin-left: 8px; margin-top: 2px; }
-    .template-card.expanded .template-chevron { transform: rotate(90deg); }
-
-    .template-card-body { display: none; border-top: 1px solid var(--border-color); }
-    .template-card.expanded .template-card-body { display: block; }
-
-    /* Module rows inside template */
     .module-row {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 20px 12px 42px; border-bottom: 1px solid #f3f4f6;
-      font-size: 14px;
+      padding: var(--space-300) var(--space-400) var(--space-300) 40px;
+      border-bottom: 1px solid var(--color-outline-variant); font-size: 13px;
     }
     .module-row:last-child { border-bottom: none; }
-    .module-row-left { display: flex; align-items: center; gap: 10px; }
+    .module-row-left { display: flex; align-items: center; gap: var(--space-200); }
     .module-icon {
-      width: 28px; height: 28px; border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; flex-shrink: 0;
+      width: 26px; height: 26px; border-radius: var(--radius-200);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .module-name { font-weight: 500; }
     .module-steps {
-      font-size: 12px; color: var(--text-secondary); background: #f3f4f6;
-      padding: 2px 8px; border-radius: 10px; font-weight: 500; white-space: nowrap;
+      font-size: 11px; color: var(--color-on-surface-secondary); background: var(--color-neutral-container);
+      padding: 2px var(--space-200); border-radius: var(--radius-full); font-weight: 500;
     }
-
-    /* Module icon colors */
     .mod-hris { background: #ede9fe; color: #7c3aed; }
-    .mod-workauth { background: #fef3c7; color: #92400e; }
-    .mod-benefits { background: #dcfce7; color: #15803d; }
-    .mod-lms { background: #dbeafe; color: #1d4ed8; }
-    .mod-devices { background: #f3f4f6; color: #374151; }
+    .mod-workauth { background: var(--color-warning-container); color: var(--color-on-warning-container); }
+    .mod-benefits { background: var(--color-success-container); color: var(--color-on-success-container); }
+    .mod-lms { background: var(--color-info-container); color: var(--color-on-info-container); }
+    .mod-devices { background: var(--color-neutral-container); color: var(--color-on-neutral-container); }
     .mod-apps { background: #fce7f3; color: #be185d; }
     .mod-payroll { background: #ccfbf1; color: #0d9488; }
     .mod-hub { background: #fff7ed; color: #c2410c; }
@@ -341,71 +396,58 @@
        ══════════════════════════════════════════════════ */
     .tracker-chat-full {
       display: flex; flex-direction: column; flex: 1; min-height: 0;
-      border-top: 1px solid var(--border-color);
-      background: var(--bg-content);
+      margin-top: var(--space-400);
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--radius-300); overflow: hidden;
+      background: var(--color-surface); box-shadow: var(--shadow-100);
     }
 
-    /* Table inside chat bubbles */
-    .chat-table-wrap {
-      margin: 10px 0 4px; border-radius: 8px; overflow: hidden;
-      border: 1px solid var(--border-color);
+    /* Pebble TableBasic inside chat */
+    .pb-table-wrap {
+      margin: var(--space-300) 0 var(--space-100); border-radius: var(--radius-200);
+      overflow: hidden; border: 1px solid var(--color-outline-variant);
     }
-    .chat-table {
-      width: 100%; border-collapse: collapse; font-size: 13px;
+    .pb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .pb-table th {
+      text-align: left; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.4px;
+      color: var(--color-on-surface-secondary); padding: var(--space-200) var(--space-300);
+      background: var(--color-surface-dim); border-bottom: 1px solid var(--color-outline-variant);
     }
-    .chat-table th {
-      text-align: left; font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--text-secondary); padding: 8px 12px;
-      background: #f9fafb; border-bottom: 1px solid var(--border-color);
+    .pb-table td {
+      padding: var(--space-300); border-bottom: 1px solid var(--color-outline-variant);
+      vertical-align: middle; line-height: 1.4;
     }
-    .chat-table td {
-      padding: 10px 12px; border-bottom: 1px solid #f3f4f6;
-      vertical-align: top; line-height: 1.4;
-    }
-    .chat-table tr:last-child td { border-bottom: none; }
-    .chat-table tr:hover td { background: #fafbfc; }
+    .pb-table tr:last-child td { border-bottom: none; }
+    .pb-table tr:hover td { background: var(--color-surface-bright); }
 
-    .emp-name { font-weight: 600; display: block; }
-    .emp-role { font-size: 11px; color: var(--text-secondary); }
-    .steps-bar {
-      display: flex; align-items: center; gap: 6px; white-space: nowrap;
-    }
-    .steps-track {
-      width: 80px; height: 6px; background: #e5e7eb; border-radius: 3px;
-      overflow: hidden;
-    }
-    .steps-fill { height: 100%; border-radius: 3px; }
-    .steps-label { font-size: 12px; font-weight: 600; }
-    .blocker-tag {
-      display: inline-block; padding: 2px 8px; border-radius: 4px;
-      font-size: 11px; font-weight: 600; margin: 1px 2px;
-    }
-    .blocker-tag.red { background: #fee2e2; color: #991b1b; }
-    .blocker-tag.amber { background: #fef3c7; color: #92400e; }
-    .blocker-tag.green { background: #dcfce7; color: #15803d; }
+    .emp-cell { display: flex; align-items: center; gap: var(--space-300); }
+    .emp-info {}
+    .emp-name { font-weight: 600; font-size: 13px; display: block; }
+    .emp-role { font-size: 11px; color: var(--color-on-surface-secondary); }
+    .steps-cell { display: flex; align-items: center; gap: var(--space-200); }
+    .steps-label { font-size: 12px; font-weight: 600; color: var(--color-on-surface); white-space: nowrap; }
+    .start-date { font-size: 13px; color: var(--color-on-surface); white-space: nowrap; }
+    .blockers-cell { display: flex; flex-wrap: wrap; gap: 3px; }
 
-    /* Typing indicator */
+    /* Typing indicator (Pebble Spinner alternative for chat) */
     .typing-indicator {
-      display: flex; gap: 4px; align-items: center; padding: 4px 0;
+      display: flex; gap: var(--space-100); align-items: center; padding: var(--space-100) 0;
     }
     .typing-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: #9ca3af;
-      animation: typingBounce 1.2s infinite ease-in-out;
+      width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-on-surface-secondary);
+      animation: typingBounce 1.2s infinite ease-in-out; opacity: 0.5;
     }
     .typing-dot:nth-child(2) { animation-delay: 0.15s; }
     .typing-dot:nth-child(3) { animation-delay: 0.3s; }
     @keyframes typingBounce {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-      30% { transform: translateY(-4px); opacity: 1; }
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+      30% { transform: translateY(-3px); opacity: 1; }
     }
-
-    .section-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
   </style>
 </head>
 <body>
 
-<!-- Sidebar -->
 <nav class="sidebar">
   <div class="sidebar-logo"><div class="logo-icon">R</div><span>Rippling</span></div>
   <div class="sidebar-section-label">HR</div>
@@ -413,7 +455,7 @@
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>HR Overview</a></li>
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>Org Chart</a></li>
     <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Onboarding</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Compliance 360</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Compliance</a></li>
   </ul>
   <div class="sidebar-section-label">Platform</div>
   <ul class="sidebar-nav">
@@ -423,48 +465,40 @@
   <div class="sidebar-collapse"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg></div>
 </nav>
 
-<!-- Main -->
 <div class="main">
   <header class="topbar">
     <div class="search-box">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <span>Search or jump to...</span>
     </div>
     <div class="topbar-right">
       <div class="topbar-icon has-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge">3</span></div>
-      <div class="avatar">WS</div>
+      <div class="pb-avatar">WS</div>
     </div>
   </header>
 
   <div class="content">
     <h1 class="page-title">Onboarding</h1>
 
-    <div class="tabs">
-      <div class="tab active" data-tab="explorer">Explorer</div>
-      <div class="tab" data-tab="tracker">Tracker</div>
+    <div class="pb-tabs">
+      <button class="pb-tab active" data-tab="explorer">Explorer</button>
+      <button class="pb-tab" data-tab="tracker">Tracker</button>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         TAB 1 — EXPLORER (split screen)
-         ══════════════════════════════════════════ -->
+    <!-- TAB 1 — EXPLORER -->
     <div id="explorer-panel" class="tab-panel active">
       <div class="explorer-split">
-
-        <!-- Chat pane -->
         <div class="chat-pane">
           <div class="chat-header">
-            <div class="chat-header-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="chat-header-text">
+            <div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div>
               <div class="chat-header-title">Onboarding Journey Designer</div>
               <div class="chat-header-sub">Build and customize journeys with AI</div>
             </div>
           </div>
-
           <div class="chat-messages" id="explorer-chat-messages">
             <div class="chat-msg ai">
-              <div class="chat-msg-avatar">AI</div>
+              <div class="pb-avatar sm">AI</div>
               <div class="chat-msg-bubble">
                 Hi! I can help you design onboarding journeys for your new hires. I see you already have <strong>5 templates</strong> set up. What would you like to do?
                 <ul>
@@ -475,14 +509,12 @@
                 </ul>
               </div>
             </div>
-
             <div class="chat-msg user">
-              <div class="chat-msg-avatar">WS</div>
+              <div class="pb-avatar sm">WS</div>
               <div class="chat-msg-bubble">I want to create a new journey for our Customer Success team. They're all remote and full-time.</div>
             </div>
-
             <div class="chat-msg ai">
-              <div class="chat-msg-avatar">AI</div>
+              <div class="pb-avatar sm">AI</div>
               <div class="chat-msg-bubble">
                 Got it. I'll scaffold a <strong>Customer Success</strong> journey for remote, full-time hires. Based on your existing templates, here's what I recommend:
                 <br><br>
@@ -495,364 +527,137 @@
                   <li><strong>Apps</strong> — CRM, Zendesk, Slack provisioning (1 step)</li>
                 </ul>
                 <br>
-                That's <strong>5 modules</strong> with <strong>9 steps</strong> total. Should I add this as a template? You can also see it compared to your existing ones on the right.
+                That's <strong>5 modules</strong> with <strong>9 steps</strong> total. Should I add this as a template?
               </div>
             </div>
           </div>
-
           <div class="chat-suggestions">
-            <div class="chat-suggestion" onclick="addSuggestion(this)">Add a Devices module</div>
-            <div class="chat-suggestion" onclick="addSuggestion(this)">Make LMS blocking</div>
-            <div class="chat-suggestion" onclick="addSuggestion(this)">Import from SOP</div>
-            <div class="chat-suggestion" onclick="addSuggestion(this)">Clone from Engineering</div>
+            <button class="pb-chip" onclick="addSuggestion(this)">Add a Devices module</button>
+            <button class="pb-chip" onclick="addSuggestion(this)">Make LMS blocking</button>
+            <button class="pb-chip" onclick="addSuggestion(this)">Import from SOP</button>
+            <button class="pb-chip" onclick="addSuggestion(this)">Clone from Engineering</button>
           </div>
-
           <div class="chat-input-area">
             <input type="text" class="chat-input" id="explorer-chat-input" placeholder="Describe your onboarding journey needs...">
-            <button class="chat-send" onclick="sendExplorerMessage()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            </button>
+            <button class="pb-btn-send" onclick="sendExplorerMessage()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
           </div>
         </div>
 
-        <!-- Templates pane -->
         <div class="templates-pane">
           <div class="templates-header">
             <div class="templates-header-left">
               <h2>Journey Templates</h2>
               <span class="templates-count">5 templates</span>
             </div>
-            <button class="btn btn-outline btn-sm" onclick="document.getElementById('explorer-chat-input').focus(); document.getElementById('explorer-chat-input').placeholder='Describe a new journey to create...';">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              New
+            <button class="pb-btn pb-btn-outline pb-btn-sm" onclick="document.getElementById('explorer-chat-input').focus();">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New
             </button>
           </div>
-
           <div class="templates-grid">
 
-            <!-- Engineering Template -->
-            <div class="template-card expanded">
-              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
-                <div class="template-card-header-left">
-                  <div class="template-card-dot" style="background:var(--purple)"></div>
-                  <div class="template-card-info">
-                    <div class="template-card-title">Engineering</div>
-                    <div class="template-card-meta">Full-time · Remote & On-site</div>
-                  </div>
-                </div>
-                <div class="template-card-stats">
-                  <div class="template-stat">
-                    <div class="template-stat-value">6</div>
-                    <div class="template-stat-label">Modules</div>
-                  </div>
-                  <div class="template-stat">
-                    <div class="template-stat-value">12</div>
-                    <div class="template-stat-label">Steps</div>
-                  </div>
-                  <span class="status-pill status-active" style="font-size:10px">Active</span>
-                </div>
-                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="pb-panel expanded">
+              <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#7c3aed"></div><div class="pb-panel-info"><div class="pb-panel-title">Engineering</div><div class="pb-panel-meta">Full-time · Remote & On-site</div></div></div>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">6</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">12</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
+                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
-              <div class="template-card-body">
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-hris">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
-                    </div>
-                    <span class="module-name">HRIS</span>
-                  </div>
-                  <span class="module-steps">4 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-workauth">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </div>
-                    <span class="module-name">Work Authorization</span>
-                  </div>
-                  <span class="module-steps">2 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-devices">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                    </div>
-                    <span class="module-name">Devices</span>
-                  </div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-apps">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-                    </div>
-                    <span class="module-name">Apps</span>
-                  </div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-payroll">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    </div>
-                    <span class="module-name">Payroll</span>
-                  </div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-benefits">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </div>
-                    <span class="module-name">Benefits</span>
-                  </div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-lms">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                    </div>
-                    <span class="module-name">Learning Management</span>
-                  </div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left">
-                    <div class="module-icon mod-hub">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                    </div>
-                    <span class="module-name">Hub (Custom Tasks)</span>
-                  </div>
-                  <span class="module-steps">1 step</span>
-                </div>
+              <div class="pb-panel-body">
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">4 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div><span class="module-steps">2 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-devices"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><span class="module-name">Devices</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-payroll"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="module-name">Payroll</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="module-name">Hub (Custom Tasks)</span></div><span class="module-steps">1 step</span></div>
               </div>
             </div>
 
-            <!-- Sales Template -->
-            <div class="template-card">
-              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
-                <div class="template-card-header-left">
-                  <div class="template-card-dot" style="background:var(--teal)"></div>
-                  <div class="template-card-info">
-                    <div class="template-card-title">Sales</div>
-                    <div class="template-card-meta">Full-time · On-site</div>
-                  </div>
-                </div>
-                <div class="template-card-stats">
-                  <div class="template-stat">
-                    <div class="template-stat-value">5</div>
-                    <div class="template-stat-label">Modules</div>
-                  </div>
-                  <div class="template-stat">
-                    <div class="template-stat-value">10</div>
-                    <div class="template-stat-label">Steps</div>
-                  </div>
-                  <span class="status-pill status-active" style="font-size:10px">Active</span>
-                </div>
-                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="pb-panel">
+              <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#0d9488"></div><div class="pb-panel-info"><div class="pb-panel-title">Sales</div><div class="pb-panel-meta">Full-time · On-site</div></div></div>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">10</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
+                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
-              <div class="template-card-body">
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
-                  <span class="module-steps">4 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (CRM)</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-payroll"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="module-name">Payroll</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
-                  <span class="module-steps">3 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
+              <div class="pb-panel-body">
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">4 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (CRM)</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-payroll"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="module-name">Payroll</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div><span class="module-steps">3 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div><span class="module-steps">1 step</span></div>
               </div>
             </div>
 
-            <!-- Retail Hourly Template -->
-            <div class="template-card">
-              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
-                <div class="template-card-header-left">
-                  <div class="template-card-dot" style="background:var(--maroon)"></div>
-                  <div class="template-card-info">
-                    <div class="template-card-title">Retail Hourly</div>
-                    <div class="template-card-meta">Hourly · On-site</div>
-                  </div>
-                </div>
-                <div class="template-card-stats">
-                  <div class="template-stat">
-                    <div class="template-stat-value">4</div>
-                    <div class="template-stat-label">Modules</div>
-                  </div>
-                  <div class="template-stat">
-                    <div class="template-stat-value">7</div>
-                    <div class="template-stat-label">Steps</div>
-                  </div>
-                  <span class="status-pill status-active" style="font-size:10px">Active</span>
-                </div>
-                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="pb-panel">
+              <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#991b1b"></div><div class="pb-panel-info"><div class="pb-panel-title">Retail Hourly</div><div class="pb-panel-meta">Hourly · On-site</div></div></div>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">4</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">7</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
+                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
-              <div class="template-card-body">
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
-                  <span class="module-steps">3 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
-                  <span class="module-steps">2 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (POS)</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
+              <div class="pb-panel-body">
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">3 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div><span class="module-steps">2 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (POS)</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div><span class="module-steps">1 step</span></div>
               </div>
             </div>
 
-            <!-- Finance Template -->
-            <div class="template-card">
-              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
-                <div class="template-card-header-left">
-                  <div class="template-card-dot" style="background:var(--blue)"></div>
-                  <div class="template-card-info">
-                    <div class="template-card-title">Finance</div>
-                    <div class="template-card-meta">Full-time · Remote & On-site</div>
-                  </div>
-                </div>
-                <div class="template-card-stats">
-                  <div class="template-stat">
-                    <div class="template-stat-value">5</div>
-                    <div class="template-stat-label">Modules</div>
-                  </div>
-                  <div class="template-stat">
-                    <div class="template-stat-value">9</div>
-                    <div class="template-stat-label">Steps</div>
-                  </div>
-                  <span class="status-pill status-active" style="font-size:10px">Active</span>
-                </div>
-                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="pb-panel">
+              <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#007AFF"></div><div class="pb-panel-info"><div class="pb-panel-title">Finance</div><div class="pb-panel-meta">Full-time · Remote & On-site</div></div></div>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">9</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-success"><span class="pb-status-dot"></span>Active</span></div>
+                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
-              <div class="template-card-body">
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
-                  <span class="module-steps">3 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (ERP, Netsuite)</span></div>
-                  <span class="module-steps">2 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
-                  <span class="module-steps">2 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
+              <div class="pb-panel-body">
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">3 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (ERP, Netsuite)</span></div><span class="module-steps">2 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div><span class="module-steps">2 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div><span class="module-steps">1 step</span></div>
               </div>
             </div>
 
-            <!-- Customer Success (Draft) -->
-            <div class="template-card">
-              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
-                <div class="template-card-header-left">
-                  <div class="template-card-dot" style="background:var(--amber)"></div>
-                  <div class="template-card-info">
-                    <div class="template-card-title">Customer Success</div>
-                    <div class="template-card-meta">Full-time · Remote</div>
-                  </div>
-                </div>
-                <div class="template-card-stats">
-                  <div class="template-stat">
-                    <div class="template-stat-value">5</div>
-                    <div class="template-stat-label">Modules</div>
-                  </div>
-                  <div class="template-stat">
-                    <div class="template-stat-value">9</div>
-                    <div class="template-stat-label">Steps</div>
-                  </div>
-                  <span class="status-pill status-draft" style="font-size:10px">Draft</span>
-                </div>
-                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="pb-panel">
+              <div class="pb-panel-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="pb-panel-header-left"><div class="pb-panel-dot" style="background:#FF9500"></div><div class="pb-panel-info"><div class="pb-panel-title">Customer Success</div><div class="pb-panel-meta">Full-time · Remote</div></div></div>
+                <div class="pb-panel-stats"><div class="pb-panel-stat"><div class="pb-panel-stat-val">5</div><div class="pb-panel-stat-lbl">Modules</div></div><div class="pb-panel-stat"><div class="pb-panel-stat-val">9</div><div class="pb-panel-stat-lbl">Steps</div></div><span class="pb-status pb-status-warning"><span class="pb-status-dot"></span>Draft</span></div>
+                <svg class="pb-panel-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </div>
-              <div class="template-card-body">
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
-                  <span class="module-steps">3 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
-                  <span class="module-steps">3 steps</span>
-                </div>
-                <div class="module-row">
-                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (CRM, Zendesk)</span></div>
-                  <span class="module-steps">1 step</span>
-                </div>
+              <div class="pb-panel-body">
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div><span class="module-steps">3 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div><span class="module-steps">1 step</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div><span class="module-steps">3 steps</span></div>
+                <div class="module-row"><div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (CRM, Zendesk)</span></div><span class="module-steps">1 step</span></div>
               </div>
             </div>
 
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         TAB 2 — TRACKER (aggregate + chat)
-         ══════════════════════════════════════════ -->
+    <!-- TAB 2 — TRACKER -->
     <div id="tracker-panel" class="tab-panel">
       <div class="tracker-chat-full">
-
         <div class="chat-header">
-          <div class="chat-header-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <div class="chat-header-text">
+          <div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div>
             <div class="chat-header-title">Onboarding Tracker</div>
             <div class="chat-header-sub">AI-powered onboarding progress for all new hires</div>
           </div>
         </div>
-
-        <div class="chat-messages" id="tracker-chat-messages" style="max-width:820px;margin:0 auto;width:100%;">
-          <!-- Populated on tab load by JS -->
+        <div class="chat-messages" id="tracker-chat-messages" style="max-width:880px;margin:0 auto;width:100%;"></div>
+        <div class="chat-suggestions" id="tracker-suggestions" style="max-width:880px;margin:0 auto;width:100%;display:none;">
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Which employees are blocked?</button>
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Escalate all overdue items</button>
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Show only Engineering hires</button>
+          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Who starts this week?</button>
         </div>
-
-        <div class="chat-suggestions" id="tracker-suggestions" style="max-width:820px;margin:0 auto;width:100%;display:none;">
-          <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Which employees are blocked?</div>
-          <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Escalate all overdue items</div>
-          <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Show only Engineering hires</div>
-          <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Who starts this week?</div>
-        </div>
-
-        <div class="chat-input-area" style="max-width:820px;margin:0 auto;width:100%;">
+        <div class="chat-input-area" style="max-width:880px;margin:0 auto;width:100%;">
           <input type="text" class="chat-input" id="tracker-chat-input" placeholder="Ask about onboarding progress...">
-          <button class="chat-send" onclick="sendTrackerMessage()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </button>
+          <button class="pb-btn-send" onclick="sendTrackerMessage()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
         </div>
-
       </div>
     </div>
 
@@ -860,11 +665,10 @@
 </div>
 
 <script>
-  // Tab switching
   let trackerLoaded = false;
-  document.querySelectorAll('.tab').forEach(tab => {
+  document.querySelectorAll('.pb-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pb-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab + '-panel').classList.add('active');
@@ -875,148 +679,116 @@
     });
   });
 
-  // Tracker — simulate background prompt on load
   function runTrackerPrompt() {
-    const container = document.getElementById('tracker-chat-messages');
-
-    // Show typing indicator
+    const c = document.getElementById('tracker-chat-messages');
     const typing = document.createElement('div');
     typing.className = 'chat-msg ai';
-    typing.id = 'tracker-typing';
-    typing.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div><span style="font-size:12px;color:var(--text-secondary)">Pulling onboarding data for 6 active hires...</span></div>`;
-    container.appendChild(typing);
-    container.scrollTop = container.scrollHeight;
+    typing.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div style="display:flex;align-items:center;gap:8px"><div class="pb-spinner"></div><span style="font-size:12px;color:var(--color-on-surface-secondary)">Pulling onboarding data for 6 active hires...</span></div></div>`;
+    c.appendChild(typing);
+    c.scrollTop = c.scrollHeight;
 
     setTimeout(() => {
       typing.remove();
-
-      const reply = document.createElement('div');
-      reply.className = 'chat-msg ai';
-      reply.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble" style="max-width:100%;">
+      const r = document.createElement('div');
+      r.className = 'chat-msg ai';
+      r.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble" style="max-width:100%;">
 Here's the current onboarding status across all <strong>6 active new hires</strong> as of today, Apr 13.
-<div class="chat-table-wrap">
-<table class="chat-table">
-<thead>
-<tr><th style="width:28%">Employee</th><th style="width:28%">Steps Completed</th><th>Blockers</th></tr>
-</thead>
+<div class="pb-table-wrap">
+<table class="pb-table">
+<thead><tr><th>Employee</th><th>Start Date</th><th>Steps Completed</th><th>Blockers</th></tr></thead>
 <tbody>
 <tr>
-<td><span class="emp-name">Alex Kim</span><span class="emp-role">Software Engineer II · Eng · starts Apr 14</span></td>
-<td><div class="steps-bar"><span class="steps-track"><span class="steps-fill" style="width:58%;background:var(--bar-red)"></span></span><span class="steps-label">7 / 12</span></div></td>
-<td><span class="blocker-tag red">Device not shipped</span><span class="blocker-tag red">No onboarding buddy</span></td>
+<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#7c3aed">AK</div><div class="emp-info"><span class="emp-name">Alex Kim</span><span class="emp-role">Software Engineer II · Eng</span></div></div></td>
+<td class="start-date">Apr 14</td>
+<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:58%"></div></div><span class="steps-label">7 / 12</span></div></td>
+<td><div class="blockers-cell"><span class="pb-label pb-label-error">Device not shipped</span><span class="pb-label pb-label-error">No onboarding buddy</span></div></td>
 </tr>
 <tr>
-<td><span class="emp-name">Priya Sharma</span><span class="emp-role">Backend Engineer · Eng · starts Apr 14</span></td>
-<td><div class="steps-bar"><span class="steps-track"><span class="steps-fill" style="width:83%;background:var(--amber)"></span></span><span class="steps-label">10 / 12</span></div></td>
-<td><span class="blocker-tag amber">Benefits enrollment pending</span></td>
+<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#7c3aed">PS</div><div class="emp-info"><span class="emp-name">Priya Sharma</span><span class="emp-role">Backend Engineer · Eng</span></div></div></td>
+<td class="start-date">Apr 14</td>
+<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill warning" style="width:83%"></div></div><span class="steps-label">10 / 12</span></div></td>
+<td><div class="blockers-cell"><span class="pb-label pb-label-warning">Benefits enrollment pending</span></div></td>
 </tr>
 <tr>
-<td><span class="emp-name">Marcus Cole</span><span class="emp-role">Frontend Engineer · Eng · starts Apr 21</span></td>
-<td><div class="steps-bar"><span class="steps-track"><span class="steps-fill" style="width:33%;background:var(--bar-red)"></span></span><span class="steps-label">4 / 12</span></div></td>
-<td><span class="blocker-tag red">IT provisioning not started</span><span class="blocker-tag red">Equity letter unsigned</span><span class="blocker-tag red">Background check pending</span></td>
+<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#7c3aed">MC</div><div class="emp-info"><span class="emp-name">Marcus Cole</span><span class="emp-role">Frontend Engineer · Eng</span></div></div></td>
+<td class="start-date">Apr 21</td>
+<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:33%"></div></div><span class="steps-label">4 / 12</span></div></td>
+<td><div class="blockers-cell"><span class="pb-label pb-label-error">IT provisioning not started</span><span class="pb-label pb-label-error">Equity letter unsigned</span><span class="pb-label pb-label-error">Background check pending</span></div></td>
 </tr>
 <tr>
-<td><span class="emp-name">Dani Reyes</span><span class="emp-role">Account Executive · Sales · starts Apr 14</span></td>
-<td><div class="steps-bar"><span class="steps-track"><span class="steps-fill" style="width:70%;background:var(--bar-red)"></span></span><span class="steps-label">7 / 10</span></div></td>
-<td><span class="blocker-tag red">Territory not assigned</span></td>
+<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#0d9488">DR</div><div class="emp-info"><span class="emp-name">Dani Reyes</span><span class="emp-role">Account Executive · Sales</span></div></div></td>
+<td class="start-date">Apr 14</td>
+<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:70%"></div></div><span class="steps-label">7 / 10</span></div></td>
+<td><div class="blockers-cell"><span class="pb-label pb-label-error">Territory not assigned</span></div></td>
 </tr>
 <tr>
-<td><span class="emp-name">Jordan Lee</span><span class="emp-role">Sales Associate · Retail · started Apr 7</span></td>
-<td><div class="steps-bar"><span class="steps-track"><span class="steps-fill" style="width:100%;background:var(--bar-green)"></span></span><span class="steps-label">7 / 7</span></div></td>
-<td><span class="blocker-tag green">None — fully onboarded</span></td>
+<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#34C759">JL</div><div class="emp-info"><span class="emp-name">Jordan Lee</span><span class="emp-role">Sales Associate · Retail</span></div></div></td>
+<td class="start-date">Apr 7</td>
+<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill success" style="width:100%"></div></div><span class="steps-label">7 / 7</span></div></td>
+<td><div class="blockers-cell"><span class="pb-label pb-label-success">None — fully onboarded</span></div></td>
 </tr>
 <tr>
-<td><span class="emp-name">Sam Ortiz</span><span class="emp-role">Cashier · Retail · starts Apr 14</span></td>
-<td><div class="steps-bar"><span class="steps-track"><span class="steps-fill" style="width:43%;background:var(--bar-red)"></span></span><span class="steps-label">3 / 7</span></div></td>
-<td><span class="blocker-tag red">POS training not scheduled</span><span class="blocker-tag red">Safety training incomplete</span></td>
+<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#991b1b">SO</div><div class="emp-info"><span class="emp-name">Sam Ortiz</span><span class="emp-role">Cashier · Retail</span></div></div></td>
+<td class="start-date">Apr 14</td>
+<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:43%"></div></div><span class="steps-label">3 / 7</span></div></td>
+<td><div class="blockers-cell"><span class="pb-label pb-label-error">POS training not scheduled</span><span class="pb-label pb-label-error">Safety training incomplete</span></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <strong>Summary:</strong> 4 of 6 hires have blockers. 3 start tomorrow and need urgent attention — Alex (device), Dani (territory), and Sam (training). Want me to escalate all overdue items?
 </div>`;
-      container.appendChild(reply);
-      container.scrollTop = container.scrollHeight;
+      c.appendChild(r);
+      c.scrollTop = c.scrollHeight;
       document.getElementById('tracker-suggestions').style.display = 'flex';
     }, 1800);
   }
 
-  // Chat — Explorer
   function sendExplorerMessage() {
     const input = document.getElementById('explorer-chat-input');
     const text = input.value.trim();
     if (!text) return;
-
-    const container = document.getElementById('explorer-chat-messages');
-    const msg = document.createElement('div');
-    msg.className = 'chat-msg user';
-    msg.innerHTML = `<div class="chat-msg-avatar">WS</div><div class="chat-msg-bubble">${escapeHtml(text)}</div>`;
-    container.appendChild(msg);
-    input.value = '';
-    container.scrollTop = container.scrollHeight;
-
-    setTimeout(() => {
-      const reply = document.createElement('div');
-      reply.className = 'chat-msg ai';
-      reply.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble">I'll work on that. Let me analyze your existing templates and suggest the best configuration for your needs.</div>`;
-      container.appendChild(reply);
-      container.scrollTop = container.scrollHeight;
-    }, 800);
+    const c = document.getElementById('explorer-chat-messages');
+    appendUserMsg(c, text); input.value = '';
+    const t = appendTyping(c);
+    setTimeout(() => { t.remove(); appendAiMsg(c, "I'll work on that. Let me analyze your existing templates and suggest the best configuration for your needs."); }, 800);
   }
 
   function sendTrackerMessage() {
     const input = document.getElementById('tracker-chat-input');
     const text = input.value.trim();
     if (!text) return;
-
-    const container = document.getElementById('tracker-chat-messages');
-    const msg = document.createElement('div');
-    msg.className = 'chat-msg user';
-    msg.innerHTML = `<div class="chat-msg-avatar">WS</div><div class="chat-msg-bubble">${escapeHtml(text)}</div>`;
-    container.appendChild(msg);
-    input.value = '';
-    container.scrollTop = container.scrollHeight;
-
-    // Show typing
-    const typing = document.createElement('div');
-    typing.className = 'chat-msg ai';
-    typing.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
-    container.appendChild(typing);
-    container.scrollTop = container.scrollHeight;
-
-    setTimeout(() => {
-      typing.remove();
-      const reply = document.createElement('div');
-      reply.className = 'chat-msg ai';
-      reply.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble">Let me look into that for you. I'm checking the latest status across all active onboardings and will update the table shortly.</div>`;
-      container.appendChild(reply);
-      container.scrollTop = container.scrollHeight;
-    }, 1200);
+    const c = document.getElementById('tracker-chat-messages');
+    appendUserMsg(c, text); input.value = '';
+    const t = appendTyping(c);
+    setTimeout(() => { t.remove(); appendAiMsg(c, "Let me look into that for you. I'm checking the latest status across all active onboardings."); }, 1200);
   }
 
-  function addSuggestion(el) {
-    document.getElementById('explorer-chat-input').value = el.textContent;
-    sendExplorerMessage();
+  function appendUserMsg(c, text) {
+    const m = document.createElement('div');
+    m.className = 'chat-msg user';
+    m.innerHTML = `<div class="pb-avatar sm" style="background:#3a3a3c">WS</div><div class="chat-msg-bubble">${escapeHtml(text)}</div>`;
+    c.appendChild(m); c.scrollTop = c.scrollHeight;
   }
-
-  function addTrackerSuggestion(el) {
-    document.getElementById('tracker-chat-input').value = el.textContent;
-    sendTrackerMessage();
+  function appendAiMsg(c, text) {
+    const m = document.createElement('div');
+    m.className = 'chat-msg ai';
+    m.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble">${text}</div>`;
+    c.appendChild(m); c.scrollTop = c.scrollHeight;
   }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+  function appendTyping(c) {
+    const t = document.createElement('div');
+    t.className = 'chat-msg ai';
+    t.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+    c.appendChild(t); c.scrollTop = c.scrollHeight;
+    return t;
   }
+  function addSuggestion(el) { document.getElementById('explorer-chat-input').value = el.textContent; sendExplorerMessage(); }
+  function addTrackerSuggestion(el) { document.getElementById('tracker-chat-input').value = el.textContent; sendTrackerMessage(); }
+  function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-  // Enter key sends message
-  document.getElementById('explorer-chat-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') sendExplorerMessage();
-  });
-  document.getElementById('tracker-chat-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') sendTrackerMessage();
-  });
+  document.getElementById('explorer-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendExplorerMessage(); });
+  document.getElementById('tracker-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendTrackerMessage(); });
 </script>
 </body>
 </html>
