@@ -153,26 +153,25 @@
     .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; }
 
     /* ─── Content ─── */
-    .content { padding: 36px 48px 40px; display: flex; flex-direction: column; flex: 1; min-height: 0; }
-    .page-title { font-size: 26px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.3px; }
+    .content { padding: 40px 56px 48px; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .page-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.3px; }
 
-    /* ─── Pebble Tabs (SWITCH type) ─── */
+    /* ─── Tabs (underline style) ─── */
     .pb-tabs {
-      display: inline-flex; background: var(--color-neutral-container);
-      border-radius: var(--shape-corner-md); padding: 4px; gap: 2px;
-      flex-shrink: 0;
+      display: inline-flex; gap: 8px; flex-shrink: 0;
+      border-bottom: 1px solid var(--color-outline-variant);
     }
     .pb-tab {
-      padding: var(--space-200) var(--space-500); font-size: 13px; font-weight: 500;
+      padding: 10px 16px; font-size: 15px; font-weight: 500;
       color: var(--color-on-surface-variant); cursor: pointer;
-      border-radius: 6px; transition: all 0.15s; user-select: none;
+      transition: all 0.15s; user-select: none;
       border: none; background: none; font-family: inherit;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
     }
     .pb-tab:hover { color: var(--color-on-surface); }
     .pb-tab.active {
-      background: var(--color-surface); color: var(--color-on-surface);
-      box-shadow: var(--shadow-sm);
-      font-weight: 600;
+      color: var(--color-on-surface); font-weight: 600;
+      border-bottom-color: var(--color-on-surface);
     }
     .tab-panel { display: none; flex: 1; min-height: 0; }
     .tab-panel.active { display: flex; flex-direction: column; }
@@ -228,7 +227,7 @@
     .pb-label-info { background: var(--color-info-container); color: var(--color-on-info-container); }
     .pb-label-neutral { background: var(--color-neutral-container); color: var(--color-on-neutral-container); }
 
-    /* ─── Pebble ProgressBar ─── */
+    /* ─── Pebble ProgressBar (Explorer pane) ─── */
     .pb-progress { width: 100px; height: 4px; background: var(--color-outline-variant); border-radius: 2px; overflow: hidden; }
     .pb-progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
     .pb-progress-fill.success { background: var(--color-success); }
@@ -400,43 +399,83 @@
     .mod-hub { background: #fff7ed; color: #c2410c; }
 
     /* ══════════════════════════════════════════════════
-       TRACKER TAB — Full-width AI chat
+       TRACKER TAB — Direct table view
        ══════════════════════════════════════════════════ */
-    .tracker-chat-full {
-      display: flex; flex-direction: column; flex: 1; min-height: 0;
-      margin-top: 24px;
-      border: 1px solid var(--color-outline-variant);
-      border-radius: var(--shape-corner-lg); overflow: hidden;
-      background: var(--color-surface); box-shadow: var(--shadow-sm);
+    .tracker-content { margin-top: 28px; }
+
+    /* Filter pills */
+    .filter-pills { display: flex; gap: 10px; margin-bottom: 28px; }
+    .filter-pill {
+      padding: 6px 16px; border-radius: var(--shape-corner-full);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--color-outline); background: var(--color-surface);
+      color: var(--color-on-surface); font-family: inherit; transition: all 0.12s;
+    }
+    .filter-pill:hover { border-color: var(--color-on-surface-variant); }
+    .filter-pill.active {
+      background: #0d9488; color: #fff; border-color: #0d9488;
     }
 
-    /* Pebble TableBasic inside chat */
-    .pb-table-wrap {
-      margin: 16px 0 12px; border-radius: var(--shape-corner-md);
-      overflow: hidden; border: 1px solid var(--color-outline-variant);
+    .tracker-section-title {
+      font-size: 16px; font-weight: 600; margin-bottom: 16px;
+      color: var(--color-on-surface);
     }
-    .pb-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+    /* Table */
+    .pb-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .pb-table th {
-      text-align: left; font-size: 11px; font-weight: 600;
+      text-align: left; font-size: 12px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--color-on-surface-variant); padding: 12px 16px;
-      background: var(--color-surface-dim); border-bottom: 1px solid var(--color-outline-variant);
+      color: var(--color-on-surface-variant); padding: 14px 16px 14px 0;
+      border-bottom: 1px solid var(--color-outline-variant);
+      white-space: nowrap;
     }
     .pb-table td {
-      padding: 16px; border-bottom: 1px solid var(--color-outline-variant);
+      padding: 16px 16px 16px 0; border-bottom: 1px solid var(--color-outline-variant);
       vertical-align: middle; line-height: 1.5;
     }
     .pb-table tr:last-child td { border-bottom: none; }
     .pb-table tr:hover td { background: var(--color-surface-bright); }
 
-    .emp-cell { display: flex; align-items: center; gap: 12px; }
-    .emp-info {}
-    .emp-name { font-weight: 600; font-size: 14px; display: block; }
-    .emp-role { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 2px; }
-    .steps-cell { display: flex; align-items: center; gap: 10px; }
-    .steps-label { font-size: 13px; font-weight: 600; color: var(--color-on-surface); white-space: nowrap; }
-    .start-date { font-size: 13.5px; color: var(--color-on-surface); white-space: nowrap; }
-    .blockers-cell { display: flex; flex-wrap: wrap; gap: 6px; }
+    .hire-name { font-size: 14px; font-weight: 500; color: var(--color-on-surface); white-space: nowrap; }
+
+    /* Archetype badges */
+    .archetype-badge {
+      display: inline-flex; align-items: center;
+      padding: 4px 12px; border-radius: var(--shape-corner-full);
+      font-size: 13px; font-weight: 500; white-space: nowrap;
+    }
+    .archetype-engineering { background: #0d9488; color: #fff; }
+    .archetype-sales { background: #16a34a; color: #fff; }
+    .archetype-retail { background: #e11d48; color: #fff; }
+
+    /* Progress */
+    .progress-cell { display: flex; align-items: center; gap: 12px; }
+    .progress-bar-track { width: 120px; height: 6px; background: var(--color-outline-variant); border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+    .progress-bar-fill.red { background: #e11d48; }
+    .progress-bar-fill.amber { background: #f59e0b; }
+    .progress-bar-fill.green { background: #16a34a; }
+    .progress-pct { font-size: 14px; font-weight: 500; color: var(--color-on-surface); white-space: nowrap; }
+    .progress-check { color: #16a34a; display: flex; align-items: center; }
+
+    /* Blocker text */
+    .blocker-text { font-size: 14px; color: #e11d48; }
+    .blocker-none { font-size: 14px; color: var(--color-on-surface-variant); }
+
+    /* Recent activity */
+    .recent-activity {
+      margin-top: 36px; display: flex; align-items: center; gap: 12px;
+    }
+    .recent-activity-title { font-size: 16px; font-weight: 600; }
+    .recent-activity-badge {
+      display: inline-flex; align-items: center; padding: 4px 12px;
+      border-radius: var(--shape-corner-full); font-size: 13px; font-weight: 500;
+      background: var(--color-success-container); color: var(--color-on-success-container);
+    }
+    .recent-activity-chevron {
+      width: 18px; height: 18px; color: var(--color-on-surface-variant); cursor: pointer;
+    }
 
     /* Typing indicator (Pebble Spinner alternative for chat) */
     .typing-indicator {
@@ -462,13 +501,19 @@
   <ul class="sidebar-nav">
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>HR Overview</a></li>
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>Org Chart</a></li>
-    <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Onboarding</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Compliance</a></li>
+    <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>People</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Compliance 360</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Learning</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Time &amp; Attendance</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>Recruiting</a></li>
   </ul>
   <div class="sidebar-section-label">Platform</div>
   <ul class="sidebar-nav">
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Data</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Company Settings</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>App Shop</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help</a></li>
   </ul>
   <div class="sidebar-collapse"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg></div>
 </nav>
@@ -489,7 +534,7 @@
     <h1 class="page-title">Onboarding</h1>
 
     <div class="pb-tabs">
-      <button class="pb-tab active" data-tab="explorer">Explorer</button>
+      <button class="pb-tab active" data-tab="explorer">Designer</button>
       <button class="pb-tab" data-tab="tracker">Tracker</button>
     </div>
 
@@ -647,24 +692,76 @@
 
     <!-- TAB 2 — TRACKER -->
     <div id="tracker-panel" class="tab-panel">
-      <div class="tracker-chat-full">
-        <div class="chat-header">
-          <div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-          <div>
-            <div class="chat-header-title">Onboarding Tracker</div>
-            <div class="chat-header-sub">AI-powered onboarding progress for all new hires</div>
-          </div>
+      <div class="tracker-content">
+        <div class="filter-pills">
+          <button class="filter-pill active">All (6)</button>
+          <button class="filter-pill">Engineering (3)</button>
+          <button class="filter-pill">Sales (1)</button>
+          <button class="filter-pill">Retail Hourly (2)</button>
         </div>
-        <div class="chat-messages" id="tracker-chat-messages" style="max-width:880px;margin:0 auto;width:100%;"></div>
-        <div class="chat-suggestions" id="tracker-suggestions" style="max-width:880px;margin:0 auto;width:100%;display:none;">
-          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Which employees are blocked?</button>
-          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Escalate all overdue items</button>
-          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Show only Engineering hires</button>
-          <button class="pb-chip" onclick="addTrackerSuggestion(this)">Who starts this week?</button>
-        </div>
-        <div class="chat-input-area" style="max-width:880px;margin:0 auto;width:100%;">
-          <input type="text" class="chat-input" id="tracker-chat-input" placeholder="Ask about onboarding progress...">
-          <button class="pb-btn-send" onclick="sendTrackerMessage()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+
+        <div class="tracker-section-title">Active Onboardings</div>
+
+        <table class="pb-table">
+          <thead>
+            <tr>
+              <th>Hire</th>
+              <th>Archetype</th>
+              <th>Start Date</th>
+              <th>Progress</th>
+              <th>Blockers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="hire-name">Alex Kim</span></td>
+              <td><span class="archetype-badge archetype-engineering">Engineering</span></td>
+              <td>Apr 14</td>
+              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:75%"></div></div><span class="progress-pct">75%</span></div></td>
+              <td><span class="blocker-text">Equipment delayed, buddy not assigned</span></td>
+            </tr>
+            <tr>
+              <td><span class="hire-name">Priya Sharma</span></td>
+              <td><span class="archetype-badge archetype-engineering">Engineering</span></td>
+              <td>Apr 14</td>
+              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:95%"></div></div><span class="progress-pct">95%</span></div></td>
+              <td><span class="blocker-text">Benefits enrollment pending</span></td>
+            </tr>
+            <tr>
+              <td><span class="hire-name">Marcus Cole</span></td>
+              <td><span class="archetype-badge archetype-engineering">Engineering</span></td>
+              <td>Apr 21</td>
+              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:40%"></div></div><span class="progress-pct">40%</span></div></td>
+              <td><span class="blocker-text">IT provisioning not started</span></td>
+            </tr>
+            <tr>
+              <td><span class="hire-name">Dani Reyes</span></td>
+              <td><span class="archetype-badge archetype-sales">Sales</span></td>
+              <td>Apr 14</td>
+              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:85%"></div></div><span class="progress-pct">85%</span></div></td>
+              <td><span class="blocker-text">Territory assignment pending</span></td>
+            </tr>
+            <tr>
+              <td><span class="hire-name">Jordan Lee</span></td>
+              <td><span class="archetype-badge archetype-retail">Retail Hourly</span></td>
+              <td>Apr 7</td>
+              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill green" style="width:100%"></div></div><span class="progress-pct">100%</span><span class="progress-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span></div></td>
+              <td><span class="blocker-none">—</span></td>
+            </tr>
+            <tr>
+              <td><span class="hire-name">Sam Ortiz</span></td>
+              <td><span class="archetype-badge archetype-retail">Retail Hourly</span></td>
+              <td>Apr 14</td>
+              <td><div class="progress-cell"><div class="progress-bar-track"><div class="progress-bar-fill red" style="width:60%"></div></div><span class="progress-pct">60%</span></div></td>
+              <td><span class="blocker-text">POS training not scheduled</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="recent-activity">
+          <span class="recent-activity-title">Recent Activity</span>
+          <span class="recent-activity-badge">3 auto-resolved</span>
+          <svg class="recent-activity-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
       </div>
     </div>
@@ -673,85 +770,25 @@
 </div>
 
 <script>
-  let trackerLoaded = false;
+  // Tab switching
   document.querySelectorAll('.pb-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.pb-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab + '-panel').classList.add('active');
-      if (tab.dataset.tab === 'tracker' && !trackerLoaded) {
-        trackerLoaded = true;
-        runTrackerPrompt();
-      }
     });
   });
 
-  function runTrackerPrompt() {
-    const c = document.getElementById('tracker-chat-messages');
-    const typing = document.createElement('div');
-    typing.className = 'chat-msg ai';
-    typing.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div style="display:flex;align-items:center;gap:8px"><div class="pb-spinner"></div><span style="font-size:12px;color:var(--color-on-surface-variant)">Pulling onboarding data for 6 active hires...</span></div></div>`;
-    c.appendChild(typing);
-    c.scrollTop = c.scrollHeight;
+  // Filter pill toggling
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
 
-    setTimeout(() => {
-      typing.remove();
-      const r = document.createElement('div');
-      r.className = 'chat-msg ai';
-      r.innerHTML = `<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble" style="max-width:100%;">
-Here's the current onboarding status across all <strong>6 active new hires</strong> as of today, Apr 13.
-<div class="pb-table-wrap">
-<table class="pb-table">
-<thead><tr><th>Employee</th><th>Start Date</th><th>Steps Completed</th><th>Blockers</th></tr></thead>
-<tbody>
-<tr>
-<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#7c3aed">AK</div><div class="emp-info"><span class="emp-name">Alex Kim</span><span class="emp-role">Software Engineer II · Eng</span></div></div></td>
-<td class="start-date">Apr 14</td>
-<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:58%"></div></div><span class="steps-label">7 / 12</span></div></td>
-<td><div class="blockers-cell"><span class="pb-label pb-label-error">Device not shipped</span><span class="pb-label pb-label-error">No onboarding buddy</span></div></td>
-</tr>
-<tr>
-<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#7c3aed">PS</div><div class="emp-info"><span class="emp-name">Priya Sharma</span><span class="emp-role">Backend Engineer · Eng</span></div></div></td>
-<td class="start-date">Apr 14</td>
-<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill warning" style="width:83%"></div></div><span class="steps-label">10 / 12</span></div></td>
-<td><div class="blockers-cell"><span class="pb-label pb-label-warning">Benefits enrollment pending</span></div></td>
-</tr>
-<tr>
-<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#7c3aed">MC</div><div class="emp-info"><span class="emp-name">Marcus Cole</span><span class="emp-role">Frontend Engineer · Eng</span></div></div></td>
-<td class="start-date">Apr 21</td>
-<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:33%"></div></div><span class="steps-label">4 / 12</span></div></td>
-<td><div class="blockers-cell"><span class="pb-label pb-label-error">IT provisioning not started</span><span class="pb-label pb-label-error">Equity letter unsigned</span><span class="pb-label pb-label-error">Background check pending</span></div></td>
-</tr>
-<tr>
-<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#0d9488">DR</div><div class="emp-info"><span class="emp-name">Dani Reyes</span><span class="emp-role">Account Executive · Sales</span></div></div></td>
-<td class="start-date">Apr 14</td>
-<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:70%"></div></div><span class="steps-label">7 / 10</span></div></td>
-<td><div class="blockers-cell"><span class="pb-label pb-label-error">Territory not assigned</span></div></td>
-</tr>
-<tr>
-<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#34C759">JL</div><div class="emp-info"><span class="emp-name">Jordan Lee</span><span class="emp-role">Sales Associate · Retail</span></div></div></td>
-<td class="start-date">Apr 7</td>
-<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill success" style="width:100%"></div></div><span class="steps-label">7 / 7</span></div></td>
-<td><div class="blockers-cell"><span class="pb-label pb-label-success">None — fully onboarded</span></div></td>
-</tr>
-<tr>
-<td><div class="emp-cell"><div class="pb-avatar sm" style="background:#991b1b">SO</div><div class="emp-info"><span class="emp-name">Sam Ortiz</span><span class="emp-role">Cashier · Retail</span></div></div></td>
-<td class="start-date">Apr 14</td>
-<td><div class="steps-cell"><div class="pb-progress"><div class="pb-progress-fill error" style="width:43%"></div></div><span class="steps-label">3 / 7</span></div></td>
-<td><div class="blockers-cell"><span class="pb-label pb-label-error">POS training not scheduled</span><span class="pb-label pb-label-error">Safety training incomplete</span></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<strong>Summary:</strong> 4 of 6 hires have blockers. 3 start tomorrow and need urgent attention — Alex (device), Dani (territory), and Sam (training). Want me to escalate all overdue items?
-</div>`;
-      c.appendChild(r);
-      c.scrollTop = c.scrollHeight;
-      document.getElementById('tracker-suggestions').style.display = 'flex';
-    }, 1800);
-  }
-
+  // Explorer chat
   function sendExplorerMessage() {
     const input = document.getElementById('explorer-chat-input');
     const text = input.value.trim();
@@ -760,16 +797,6 @@ Here's the current onboarding status across all <strong>6 active new hires</stro
     appendUserMsg(c, text); input.value = '';
     const t = appendTyping(c);
     setTimeout(() => { t.remove(); appendAiMsg(c, "I'll work on that. Let me analyze your existing templates and suggest the best configuration for your needs."); }, 800);
-  }
-
-  function sendTrackerMessage() {
-    const input = document.getElementById('tracker-chat-input');
-    const text = input.value.trim();
-    if (!text) return;
-    const c = document.getElementById('tracker-chat-messages');
-    appendUserMsg(c, text); input.value = '';
-    const t = appendTyping(c);
-    setTimeout(() => { t.remove(); appendAiMsg(c, "Let me look into that for you. I'm checking the latest status across all active onboardings."); }, 1200);
   }
 
   function appendUserMsg(c, text) {
@@ -792,11 +819,9 @@ Here's the current onboarding status across all <strong>6 active new hires</stro
     return t;
   }
   function addSuggestion(el) { document.getElementById('explorer-chat-input').value = el.textContent; sendExplorerMessage(); }
-  function addTrackerSuggestion(el) { document.getElementById('tracker-chat-input').value = el.textContent; sendTrackerMessage(); }
   function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   document.getElementById('explorer-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendExplorerMessage(); });
-  document.getElementById('tracker-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendTrackerMessage(); });
 </script>
 </body>
 </html>
