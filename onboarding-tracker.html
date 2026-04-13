@@ -13,21 +13,21 @@
       --topbar-height: 56px;
       --text-primary: #1a1a2e;
       --text-secondary: #6b7280;
-      --text-blocker: #c0392b;
       --border-color: #e5e7eb;
       --bg-page: #f9fafb;
       --bg-content: #fff;
       --purple: #7c3aed;
       --green: #0d9488;
+      --teal: #0d9488;
       --maroon: #991b1b;
+      --blue: #2563eb;
+      --amber: #d97706;
       --bar-red: #b91c1c;
-      --bar-purple: #7e22ce;
       --bar-green: #16a34a;
       --pill-active-bg: #1a1a2e;
       --pill-active-text: #fff;
-      --blue: #2563eb;
-      --amber: #d97706;
-      --teal: #0d9488;
+      --chat-user-bg: #1a1a2e;
+      --chat-ai-bg: #f0f4ff;
     }
 
     body {
@@ -91,7 +91,6 @@
       padding: 8px 16px; width: 280px;
       color: var(--text-secondary); font-size: 14px;
     }
-    .search-box svg { flex-shrink: 0; opacity: 0.5; }
     .topbar-right { position: absolute; right: 24px; display: flex; align-items: center; gap: 16px; }
     .topbar-icon {
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
@@ -112,11 +111,11 @@
     }
 
     /* ─── Content ─── */
-    .content { padding: 32px 32px 48px; }
+    .content { padding: 24px 32px 0; display: flex; flex-direction: column; flex: 1; min-height: 0; }
     .page-title { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
 
     /* ─── Tabs ─── */
-    .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); margin-bottom: 24px; }
+    .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); margin-bottom: 0; flex-shrink: 0; }
     .tab {
       padding: 8px 0 12px; font-size: 15px; color: var(--text-secondary);
       cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s;
@@ -124,13 +123,10 @@
     }
     .tab:hover { color: var(--text-primary); }
     .tab.active { color: var(--teal); border-bottom-color: var(--teal); font-weight: 500; }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+    .tab-panel { display: none; flex: 1; min-height: 0; }
+    .tab-panel.active { display: flex; flex-direction: column; }
 
-    /* ─── Shared elements ─── */
-    .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-    .section-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; }
-
+    /* ─── Shared ─── */
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px; border-radius: 8px; font-size: 14px;
@@ -144,14 +140,13 @@
     .btn-ghost { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 4px; border-radius: 4px; display: flex; align-items: center; }
     .btn-ghost:hover { background: #f3f4f6; color: var(--text-primary); }
 
-    .pill {
-      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
-      cursor: pointer; border: 1px solid var(--border-color);
-      background: var(--bg-content); color: var(--text-primary); transition: all 0.15s;
-      user-select: none;
+    .status-pill {
+      font-size: 11px; font-weight: 600; padding: 3px 10px;
+      border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+      display: inline-block;
     }
-    .pill:hover { border-color: #9ca3af; }
-    .pill.active { background: var(--pill-active-bg); color: var(--pill-active-text); border-color: var(--pill-active-bg); }
+    .status-active { background: #dcfce7; color: #15803d; }
+    .status-draft { background: #fef3c7; color: #92400e; }
 
     .badge-sm {
       display: inline-block; padding: 2px 8px; border-radius: 4px;
@@ -162,355 +157,277 @@
     .badge-maroon { background: var(--maroon); }
     .badge-blue { background: var(--blue); }
 
-    .status-pill {
-      font-size: 11px; font-weight: 600; padding: 3px 10px;
-      border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-      display: inline-block;
+    .pill {
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--border-color);
+      background: var(--bg-content); color: var(--text-primary); transition: all 0.15s;
+      user-select: none;
     }
-    .status-active { background: #dcfce7; color: #15803d; }
-    .status-draft { background: #fef3c7; color: #92400e; }
-    .status-blocked { background: #fee2e2; color: #991b1b; }
-
-    .toggle {
-      position: relative; width: 32px; height: 18px;
-      background: #d1d5db; border-radius: 9px;
-      cursor: pointer; transition: background 0.2s; flex-shrink: 0;
-    }
-    .toggle.on { background: var(--teal); }
-    .toggle::after {
-      content: ''; position: absolute; top: 2px; left: 2px;
-      width: 14px; height: 14px; background: #fff; border-radius: 50%;
-      transition: transform 0.2s;
-    }
-    .toggle.on::after { transform: translateX(14px); }
+    .pill:hover { border-color: #9ca3af; }
+    .pill.active { background: var(--pill-active-bg); color: var(--pill-active-text); border-color: var(--pill-active-bg); }
 
     /* ══════════════════════════════════════════════════
-       CONFIGURABILITY TAB
+       EXPLORER TAB — Split screen
        ══════════════════════════════════════════════════ */
-
-    .config-hero {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 28px;
+    .explorer-split {
+      display: flex; flex: 1; min-height: 0;
+      border-top: 1px solid var(--border-color);
     }
-    .config-hero p { color: var(--text-secondary); font-size: 14px; max-width: 600px; line-height: 1.5; }
 
-    .config-hero-actions { display: flex; gap: 8px; flex-shrink: 0; }
-
-    /* AI upload strip */
-    .ai-strip {
-      background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-      border: 1px solid #bfdbfe;
-      border-radius: 10px; padding: 16px 20px;
-      display: flex; align-items: center; gap: 14px;
-      margin-bottom: 28px; cursor: pointer;
-      transition: box-shadow 0.2s;
+    /* ── Chat pane (left) ── */
+    .chat-pane {
+      width: 50%; display: flex; flex-direction: column;
+      border-right: 1px solid var(--border-color);
+      background: var(--bg-content);
     }
-    .ai-strip:hover { box-shadow: 0 2px 12px rgba(37,99,235,0.1); }
-    .ai-strip-icon {
-      width: 36px; height: 36px; background: var(--blue); border-radius: 8px;
+    .chat-header {
+      padding: 16px 20px; border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .chat-header-icon {
+      width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #2563eb, #7c3aed);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .ai-strip-text { flex: 1; }
-    .ai-strip-text strong { font-size: 14px; display: block; margin-bottom: 2px; }
-    .ai-strip-text span { font-size: 13px; color: var(--text-secondary); }
-    .ai-strip-arrow { color: var(--blue); }
+    .chat-header-text { flex: 1; }
+    .chat-header-title { font-size: 14px; font-weight: 600; }
+    .chat-header-sub { font-size: 12px; color: var(--text-secondary); }
 
-    /* Journey cards */
-    .journey-grid {
-      display: grid; grid-template-columns: 1fr;
-      gap: 16px; margin-bottom: 32px;
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .chat-msg { display: flex; gap: 10px; max-width: 92%; }
+    .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .chat-msg-avatar {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #fff;
+    }
+    .chat-msg.ai .chat-msg-avatar { background: linear-gradient(135deg, #2563eb, #7c3aed); }
+    .chat-msg.user .chat-msg-avatar { background: var(--chat-user-bg); }
+    .chat-msg-bubble {
+      padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.55;
+    }
+    .chat-msg.ai .chat-msg-bubble {
+      background: var(--chat-ai-bg); color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-msg.user .chat-msg-bubble {
+      background: var(--chat-user-bg); color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-msg-bubble ul { margin: 6px 0 0 16px; }
+    .chat-msg-bubble li { margin-bottom: 3px; }
+    .chat-msg-bubble strong { font-weight: 600; }
+
+    .chat-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px; padding: 0 20px 12px;
+      flex-shrink: 0;
+    }
+    .chat-suggestion {
+      padding: 6px 12px; border-radius: 18px; font-size: 12px;
+      border: 1px solid var(--border-color); color: var(--text-secondary);
+      cursor: pointer; background: #fff; transition: all 0.15s;
+    }
+    .chat-suggestion:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
+
+    .chat-input-area {
+      padding: 12px 16px; border-top: 1px solid var(--border-color);
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+      background: #fff;
+    }
+    .chat-input {
+      flex: 1; padding: 10px 14px; border: 1px solid var(--border-color);
+      border-radius: 10px; font-size: 14px; color: var(--text-primary);
+      background: #f9fafb; outline: none;
+    }
+    .chat-input:focus { border-color: var(--blue); background: #fff; box-shadow: 0 0 0 2px rgba(37,99,235,0.12); }
+    .chat-input::placeholder { color: #9ca3af; }
+    .chat-send {
+      width: 36px; height: 36px; border-radius: 10px; border: none;
+      background: var(--blue); color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s; flex-shrink: 0;
+    }
+    .chat-send:hover { background: #1d4ed8; }
+
+    /* ── Templates pane (right) ── */
+    .templates-pane {
+      width: 50%; display: flex; flex-direction: column;
+      background: var(--bg-page); overflow-y: auto;
+    }
+    .templates-header {
+      padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border-color); background: var(--bg-content);
+      flex-shrink: 0;
+    }
+    .templates-header-left { display: flex; align-items: center; gap: 12px; }
+    .templates-header h2 { font-size: 16px; font-weight: 600; }
+    .templates-count {
+      font-size: 12px; color: var(--text-secondary); background: #f3f4f6;
+      padding: 2px 8px; border-radius: 10px; font-weight: 500;
     }
 
-    .journey-card {
+    .templates-grid {
+      padding: 20px 24px; display: flex; flex-direction: column; gap: 16px;
+      flex: 1; overflow-y: auto;
+    }
+
+    /* Template card */
+    .template-card {
       background: var(--bg-content); border: 1px solid var(--border-color);
       border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s;
     }
-    .journey-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .template-card:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
 
-    .journey-header {
+    .template-card-header {
+      padding: 16px 20px; display: flex; align-items: flex-start; justify-content: space-between;
+      cursor: pointer; user-select: none;
+    }
+    .template-card-header-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+    .template-card-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+    }
+    .template-card-info { flex: 1; }
+    .template-card-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .template-card-meta { font-size: 12px; color: var(--text-secondary); }
+
+    .template-card-stats {
+      display: flex; gap: 16px; align-items: center; flex-shrink: 0;
+    }
+    .template-stat {
+      text-align: center;
+    }
+    .template-stat-value { font-size: 18px; font-weight: 700; line-height: 1; }
+    .template-stat-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+    .template-chevron { transition: transform 0.2s; color: var(--text-secondary); margin-left: 8px; margin-top: 2px; }
+    .template-card.expanded .template-chevron { transform: rotate(90deg); }
+
+    .template-card-body { display: none; border-top: 1px solid var(--border-color); }
+    .template-card.expanded .template-card-body { display: block; }
+
+    /* Module rows inside template */
+    .module-row {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; cursor: pointer; user-select: none;
+      padding: 12px 20px 12px 42px; border-bottom: 1px solid #f3f4f6;
+      font-size: 14px;
     }
-    .journey-header-left { display: flex; align-items: center; gap: 12px; }
-    .journey-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .journey-title { font-size: 15px; font-weight: 600; }
-    .journey-meta { font-size: 12px; color: var(--text-secondary); margin-left: 8px; }
-    .journey-header-right { display: flex; align-items: center; gap: 10px; }
-
-    .journey-chevron { transition: transform 0.2s; color: var(--text-secondary); }
-    .journey-card.expanded .journey-chevron { transform: rotate(90deg); }
-
-    .journey-body { display: none; border-top: 1px solid var(--border-color); }
-    .journey-card.expanded .journey-body { display: block; }
-
-    /* Checkpoint rows */
-    .checkpoint {
-      border-bottom: 1px solid #f3f4f6;
+    .module-row:last-child { border-bottom: none; }
+    .module-row-left { display: flex; align-items: center; gap: 10px; }
+    .module-icon {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0;
     }
-    .checkpoint:last-child { border-bottom: none; }
-
-    .checkpoint-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 20px 14px 32px; cursor: pointer; user-select: none;
-    }
-    .checkpoint-header:hover { background: #fafbfc; }
-    .checkpoint-header-left { display: flex; align-items: center; gap: 10px; }
-    .checkpoint-name { font-size: 14px; font-weight: 600; }
-    .checkpoint-count { font-size: 12px; color: var(--text-secondary); }
-
-    .checkpoint-header-right { display: flex; align-items: center; gap: 12px; }
-    .blocking-tag {
-      font-size: 11px; padding: 2px 8px; border-radius: 4px;
-      font-weight: 600;
-    }
-    .blocking-tag.blocks-active { background: #fee2e2; color: #991b1b; }
-    .blocking-tag.blocks-payroll { background: #fef3c7; color: #92400e; }
-    .blocking-tag.non-blocking { background: #f3f4f6; color: var(--text-secondary); }
-
-    .checkpoint-chevron { transition: transform 0.2s; color: var(--text-secondary); }
-    .checkpoint.expanded .checkpoint-chevron { transform: rotate(90deg); }
-
-    .sub-checkpoints { display: none; padding: 0 20px 12px 52px; }
-    .checkpoint.expanded .sub-checkpoints { display: block; }
-
-    .sub-cp-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 0; border-bottom: 1px solid #f9fafb; font-size: 13px;
-    }
-    .sub-cp-item:last-child { border-bottom: none; }
-    .sub-cp-left { display: flex; align-items: center; gap: 10px; }
-    .sub-cp-right { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--text-secondary); }
-
-    .sub-cp-app {
-      font-size: 11px; padding: 2px 6px; border-radius: 3px;
-      background: #f3f4f6; color: var(--text-secondary); font-weight: 500;
+    .module-name { font-weight: 500; }
+    .module-steps {
+      font-size: 12px; color: var(--text-secondary); background: #f3f4f6;
+      padding: 2px 8px; border-radius: 10px; font-weight: 500; white-space: nowrap;
     }
 
-    /* Action policy section */
-    .policy-table { width: 100%; border-collapse: collapse; }
-    .policy-table th {
-      text-align: left; font-size: 11px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.8px;
-      color: var(--text-secondary); padding: 10px 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-    .policy-table td {
-      padding: 12px 12px; border-bottom: 1px solid #f3f4f6;
-      font-size: 14px; vertical-align: middle;
-    }
-    .policy-table tr:last-child td { border-bottom: none; }
-
-    .policy-select {
-      padding: 5px 8px; border: 1px solid var(--border-color);
-      border-radius: 6px; font-size: 13px; color: var(--text-primary);
-      background: #fff; cursor: pointer;
-    }
-    .policy-select:focus { outline: none; border-color: var(--teal); }
-
-    /* Settings grid */
-    .settings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-    .setting-card {
-      background: var(--bg-content); border: 1px solid var(--border-color);
-      border-radius: 10px; padding: 20px;
-    }
-    .setting-card-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .setting-card-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
-    .setting-value { display: flex; align-items: center; gap: 8px; }
-    .setting-input {
-      padding: 6px 10px; border: 1px solid var(--border-color);
-      border-radius: 6px; font-size: 14px; width: 80px; color: var(--text-primary);
-    }
-    .setting-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 2px rgba(13,148,136,0.15); }
-    .setting-unit { font-size: 13px; color: var(--text-secondary); }
-    .setting-select {
-      padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px;
-      font-size: 14px; color: var(--text-primary); background: #fff; cursor: pointer;
-    }
-
-    .config-section { margin-bottom: 32px; }
-    .config-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-
-    /* Scope badge */
-    .scope-badge {
-      font-size: 11px; padding: 3px 8px; border-radius: 4px;
-      background: #eff6ff; color: #1e40af; font-weight: 500;
-    }
+    /* Module icon colors */
+    .mod-hris { background: #ede9fe; color: #7c3aed; }
+    .mod-workauth { background: #fef3c7; color: #92400e; }
+    .mod-benefits { background: #dcfce7; color: #15803d; }
+    .mod-lms { background: #dbeafe; color: #1d4ed8; }
+    .mod-devices { background: #f3f4f6; color: #374151; }
+    .mod-apps { background: #fce7f3; color: #be185d; }
+    .mod-payroll { background: #ccfbf1; color: #0d9488; }
+    .mod-hub { background: #fff7ed; color: #c2410c; }
 
     /* ══════════════════════════════════════════════════
        TRACKER TAB
        ══════════════════════════════════════════════════ */
+    .tracker-split {
+      display: flex; flex: 1; min-height: 0;
+      border-top: 1px solid var(--border-color);
+    }
 
-    .tracker-filters { display: flex; gap: 8px; margin-bottom: 20px; }
+    .tracker-main {
+      width: 60%; display: flex; flex-direction: column;
+      overflow-y: auto; background: var(--bg-page);
+    }
+    .tracker-main-inner { padding: 20px 24px 48px; }
 
-    /* Summary cards */
+    .tracker-chat-pane {
+      width: 40%; display: flex; flex-direction: column;
+      border-left: 1px solid var(--border-color);
+      background: var(--bg-content);
+    }
+
     .summary-row {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; margin-bottom: 28px;
+      gap: 12px; margin-bottom: 24px;
     }
     .summary-card {
       background: var(--bg-content); border: 1px solid var(--border-color);
-      border-radius: 10px; padding: 16px 20px;
+      border-radius: 10px; padding: 14px 16px;
     }
-    .summary-card-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-    .summary-card-value { font-size: 28px; font-weight: 700; }
-    .summary-card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .summary-card-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .summary-card-value { font-size: 26px; font-weight: 700; }
+    .summary-card-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
-    /* Hire rows */
-    .hire-list { display: flex; flex-direction: column; gap: 12px; }
+    .hire-list { display: flex; flex-direction: column; gap: 10px; }
 
     .hire-card {
       background: var(--bg-content); border: 1px solid var(--border-color);
-      border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s;
+      border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s;
     }
     .hire-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-
     .hire-row {
-      display: grid;
-      grid-template-columns: 180px 120px 100px 1fr 200px;
-      align-items: center; gap: 12px;
-      padding: 16px 20px; cursor: pointer; user-select: none;
+      display: grid; grid-template-columns: 160px 100px 80px 1fr 140px;
+      align-items: center; gap: 10px;
+      padding: 14px 16px; cursor: pointer; user-select: none;
     }
     .hire-name { font-weight: 600; font-size: 14px; }
-    .hire-start { font-size: 13px; color: var(--text-secondary); }
 
-    /* Readiness dots */
-    .readiness-dots { display: flex; gap: 6px; }
+    .readiness-dots { display: flex; gap: 5px; }
     .r-dot {
-      width: 22px; height: 22px; border-radius: 50%;
+      width: 20px; height: 20px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 700; color: #fff;
-      position: relative;
+      font-size: 9px; font-weight: 700; color: #fff;
     }
-    .r-dot[title] { cursor: help; }
     .r-green { background: var(--bar-green); }
     .r-amber { background: var(--amber); }
     .r-red { background: var(--bar-red); }
     .r-gray { background: #d1d5db; }
 
-    /* Checkpoint progress mini */
-    .cp-progress {
-      display: flex; align-items: center; gap: 4px; font-size: 13px;
-    }
-    .cp-bar {
-      flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;
-      min-width: 60px; max-width: 120px;
-    }
-    .cp-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
-
-    .hire-actions-area { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+    .cp-progress { display: flex; align-items: center; gap: 4px; font-size: 13px; }
+    .cp-bar { flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; min-width: 50px; }
+    .cp-bar-fill { height: 100%; border-radius: 3px; }
 
     .hire-chevron { transition: transform 0.2s; color: var(--text-secondary); }
     .hire-card.expanded .hire-chevron { transform: rotate(90deg); }
-
-    .hire-detail { display: none; border-top: 1px solid var(--border-color); padding: 20px; }
+    .hire-detail { display: none; border-top: 1px solid var(--border-color); padding: 16px; }
     .hire-card.expanded .hire-detail { display: block; }
 
-    .detail-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-
+    .detail-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .detail-section-title {
-      font-size: 13px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.8px; color: var(--text-secondary); margin-bottom: 12px;
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-secondary); margin-bottom: 10px;
     }
-
-    /* Checkpoint list in detail */
     .detail-cp-list { list-style: none; }
     .detail-cp-item {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 0; border-bottom: 1px solid #f3f4f6; font-size: 14px;
+      padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px;
     }
     .detail-cp-item:last-child { border-bottom: none; }
     .detail-cp-left { display: flex; align-items: center; gap: 8px; }
-    .detail-cp-icon { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
-
+    .detail-cp-icon { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
     .icon-complete { color: var(--bar-green); }
     .icon-blocked { color: var(--bar-red); }
     .icon-pending { color: var(--amber); }
     .icon-not-started { color: #d1d5db; }
 
-    /* Blocker cards */
     .blocker-card {
       background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
-      padding: 12px 14px; margin-bottom: 8px;
+      padding: 10px 12px; margin-bottom: 8px;
     }
-    .blocker-card-title { font-size: 13px; font-weight: 600; color: #991b1b; margin-bottom: 4px; }
-    .blocker-card-detail { font-size: 13px; color: #7f1d1d; margin-bottom: 8px; line-height: 1.4; }
-    .blocker-meta { display: flex; gap: 16px; font-size: 12px; color: #991b1b; }
-    .blocker-meta span { display: flex; align-items: center; gap: 4px; }
+    .blocker-card-title { font-size: 12px; font-weight: 600; color: #991b1b; margin-bottom: 3px; }
+    .blocker-card-detail { font-size: 12px; color: #7f1d1d; line-height: 1.4; }
 
-    /* Agent recommendation */
-    .agent-rec {
-      background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-      border: 1px solid #bfdbfe; border-radius: 8px;
-      padding: 14px 16px; margin-top: 12px;
-    }
-    .agent-rec-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .agent-rec-label {
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.8px; color: var(--blue);
-    }
-    .agent-rec-text { font-size: 14px; line-height: 1.5; color: var(--text-primary); margin-bottom: 10px; }
-    .agent-rec-actions { display: flex; gap: 8px; }
-
-    /* AI chat bar */
-    .ai-chat-bar {
-      position: sticky; bottom: 0; left: 0; right: 0;
-      background: var(--bg-content); border-top: 1px solid var(--border-color);
-      padding: 12px 20px; display: flex; align-items: center; gap: 10px;
-      box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
-    }
-    .ai-chat-input {
-      flex: 1; padding: 10px 14px; border: 1px solid var(--border-color);
-      border-radius: 8px; font-size: 14px; color: var(--text-primary);
-    }
-    .ai-chat-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
-    .ai-chat-input::placeholder { color: #9ca3af; }
-
-    /* Recent activity */
-    .recent-activity {
-      margin-top: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer;
-    }
-    .recent-activity-title { font-size: 16px; font-weight: 600; }
-    .auto-resolved-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 10px; border-radius: 12px;
-      background: #dcfce7; color: #15803d;
-      font-size: 12px; font-weight: 600;
-    }
-
-    /* Modal */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.4); z-index: 100;
-      align-items: center; justify-content: center;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: #fff; border-radius: 12px; width: 520px;
-      max-height: 85vh; overflow-y: auto; padding: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-    }
-    .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-    .modal-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
-    .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: var(--text-primary); }
-    .form-input {
-      width: 100%; padding: 8px 12px; border: 1px solid var(--border-color);
-      border-radius: 8px; font-size: 14px; color: var(--text-primary);
-    }
-    .form-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 2px rgba(13,148,136,0.15); }
-    .form-row { display: flex; gap: 12px; }
-    .form-row .form-group { flex: 1; }
-    .modal-actions {
-      display: flex; justify-content: flex-end; gap: 8px;
-      margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color);
-    }
-    .color-options { display: flex; gap: 8px; }
-    .color-option {
-      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-      border: 2px solid transparent; transition: all 0.15s;
-    }
-    .color-option:hover { transform: scale(1.15); }
-    .color-option.selected { border-color: var(--text-primary); }
+    .section-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
   </style>
 </head>
 <body>
@@ -522,16 +439,13 @@
   <ul class="sidebar-nav">
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>HR Overview</a></li>
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>Org Chart</a></li>
-    <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>People</a></li>
+    <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Onboarding</a></li>
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Compliance 360</a></li>
   </ul>
   <div class="sidebar-section-label">Platform</div>
   <ul class="sidebar-nav">
     <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Data</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Company Settings</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>App Shop</a></li>
-    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5"/></svg>Help</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li>
   </ul>
   <div class="sidebar-collapse"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg></div>
 </nav>
@@ -541,12 +455,10 @@
   <header class="topbar">
     <div class="search-box">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <span>Search or jump to…</span>
+      <span>Search or jump to...</span>
     </div>
     <div class="topbar-right">
-      <div class="topbar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
       <div class="topbar-icon has-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="badge">3</span></div>
-      <div class="topbar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
       <div class="avatar">WS</div>
     </div>
   </header>
@@ -555,918 +467,627 @@
     <h1 class="page-title">Onboarding</h1>
 
     <div class="tabs">
-      <div class="tab active" data-tab="configurability">Configurability</div>
+      <div class="tab active" data-tab="explorer">Explorer</div>
       <div class="tab" data-tab="tracker">Tracker</div>
     </div>
 
     <!-- ══════════════════════════════════════════
-         TAB 1 — CONFIGURABILITY
+         TAB 1 — EXPLORER (split screen)
          ══════════════════════════════════════════ -->
-    <div id="configurability-panel" class="tab-panel active">
+    <div id="explorer-panel" class="tab-panel active">
+      <div class="explorer-split">
 
-      <div class="config-hero">
-        <div>
-          <p>Define onboarding journeys per cohort — configure checkpoints, sub-checkpoints, blocking classification, and action policies. Each journey becomes a reusable template applied to matching new hires.</p>
+        <!-- Chat pane -->
+        <div class="chat-pane">
+          <div class="chat-header">
+            <div class="chat-header-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="chat-header-text">
+              <div class="chat-header-title">Onboarding Journey Designer</div>
+              <div class="chat-header-sub">Build and customize journeys with AI</div>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="explorer-chat-messages">
+            <div class="chat-msg ai">
+              <div class="chat-msg-avatar">AI</div>
+              <div class="chat-msg-bubble">
+                Hi! I can help you design onboarding journeys for your new hires. I see you already have <strong>5 templates</strong> set up. What would you like to do?
+                <ul>
+                  <li>Create a new journey from scratch</li>
+                  <li>Modify an existing template</li>
+                  <li>Import from an SOP or checklist</li>
+                  <li>Compare journeys across cohorts</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="chat-msg user">
+              <div class="chat-msg-avatar">WS</div>
+              <div class="chat-msg-bubble">I want to create a new journey for our Customer Success team. They're all remote and full-time.</div>
+            </div>
+
+            <div class="chat-msg ai">
+              <div class="chat-msg-avatar">AI</div>
+              <div class="chat-msg-bubble">
+                Got it. I'll scaffold a <strong>Customer Success</strong> journey for remote, full-time hires. Based on your existing templates, here's what I recommend:
+                <br><br>
+                <strong>Modules to include:</strong>
+                <ul>
+                  <li><strong>HRIS</strong> — Registration, I-9 verification, background check (3 steps)</li>
+                  <li><strong>Work Authorization</strong> — E-Verify submission (1 step)</li>
+                  <li><strong>Benefits</strong> — Enrollment within 30 days (1 step)</li>
+                  <li><strong>Learning Management</strong> — Product training, CS playbook, tool certification (3 steps)</li>
+                  <li><strong>Apps</strong> — CRM, Zendesk, Slack provisioning (1 step)</li>
+                </ul>
+                <br>
+                That's <strong>5 modules</strong> with <strong>9 steps</strong> total. Should I add this as a template? You can also see it compared to your existing ones on the right.
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-suggestions">
+            <div class="chat-suggestion" onclick="addSuggestion(this)">Add a Devices module</div>
+            <div class="chat-suggestion" onclick="addSuggestion(this)">Make LMS blocking</div>
+            <div class="chat-suggestion" onclick="addSuggestion(this)">Import from SOP</div>
+            <div class="chat-suggestion" onclick="addSuggestion(this)">Clone from Engineering</div>
+          </div>
+
+          <div class="chat-input-area">
+            <input type="text" class="chat-input" id="explorer-chat-input" placeholder="Describe your onboarding journey needs...">
+            <button class="chat-send" onclick="sendExplorerMessage()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="config-hero-actions">
-          <button class="btn btn-outline" onclick="document.getElementById('new-journey-modal').classList.add('open')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            New Journey
-          </button>
+
+        <!-- Templates pane -->
+        <div class="templates-pane">
+          <div class="templates-header">
+            <div class="templates-header-left">
+              <h2>Journey Templates</h2>
+              <span class="templates-count">5 templates</span>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('explorer-chat-input').focus(); document.getElementById('explorer-chat-input').placeholder='Describe a new journey to create...';">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New
+            </button>
+          </div>
+
+          <div class="templates-grid">
+
+            <!-- Engineering Template -->
+            <div class="template-card expanded">
+              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="template-card-header-left">
+                  <div class="template-card-dot" style="background:var(--purple)"></div>
+                  <div class="template-card-info">
+                    <div class="template-card-title">Engineering</div>
+                    <div class="template-card-meta">Full-time · Remote & On-site</div>
+                  </div>
+                </div>
+                <div class="template-card-stats">
+                  <div class="template-stat">
+                    <div class="template-stat-value">6</div>
+                    <div class="template-stat-label">Modules</div>
+                  </div>
+                  <div class="template-stat">
+                    <div class="template-stat-value">12</div>
+                    <div class="template-stat-label">Steps</div>
+                  </div>
+                  <span class="status-pill status-active" style="font-size:10px">Active</span>
+                </div>
+                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="template-card-body">
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-hris">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+                    </div>
+                    <span class="module-name">HRIS</span>
+                  </div>
+                  <span class="module-steps">4 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-workauth">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <span class="module-name">Work Authorization</span>
+                  </div>
+                  <span class="module-steps">2 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-devices">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <span class="module-name">Devices</span>
+                  </div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-apps">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    </div>
+                    <span class="module-name">Apps</span>
+                  </div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-payroll">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <span class="module-name">Payroll</span>
+                  </div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-benefits">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <span class="module-name">Benefits</span>
+                  </div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-lms">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    </div>
+                    <span class="module-name">Learning Management</span>
+                  </div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left">
+                    <div class="module-icon mod-hub">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </div>
+                    <span class="module-name">Hub (Custom Tasks)</span>
+                  </div>
+                  <span class="module-steps">1 step</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sales Template -->
+            <div class="template-card">
+              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="template-card-header-left">
+                  <div class="template-card-dot" style="background:var(--teal)"></div>
+                  <div class="template-card-info">
+                    <div class="template-card-title">Sales</div>
+                    <div class="template-card-meta">Full-time · On-site</div>
+                  </div>
+                </div>
+                <div class="template-card-stats">
+                  <div class="template-stat">
+                    <div class="template-stat-value">5</div>
+                    <div class="template-stat-label">Modules</div>
+                  </div>
+                  <div class="template-stat">
+                    <div class="template-stat-value">10</div>
+                    <div class="template-stat-label">Steps</div>
+                  </div>
+                  <span class="status-pill status-active" style="font-size:10px">Active</span>
+                </div>
+                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="template-card-body">
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
+                  <span class="module-steps">4 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (CRM)</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-payroll"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="module-name">Payroll</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
+                  <span class="module-steps">3 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Retail Hourly Template -->
+            <div class="template-card">
+              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="template-card-header-left">
+                  <div class="template-card-dot" style="background:var(--maroon)"></div>
+                  <div class="template-card-info">
+                    <div class="template-card-title">Retail Hourly</div>
+                    <div class="template-card-meta">Hourly · On-site</div>
+                  </div>
+                </div>
+                <div class="template-card-stats">
+                  <div class="template-stat">
+                    <div class="template-stat-value">4</div>
+                    <div class="template-stat-label">Modules</div>
+                  </div>
+                  <div class="template-stat">
+                    <div class="template-stat-value">7</div>
+                    <div class="template-stat-label">Steps</div>
+                  </div>
+                  <span class="status-pill status-active" style="font-size:10px">Active</span>
+                </div>
+                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="template-card-body">
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
+                  <span class="module-steps">3 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
+                  <span class="module-steps">2 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (POS)</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Finance Template -->
+            <div class="template-card">
+              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="template-card-header-left">
+                  <div class="template-card-dot" style="background:var(--blue)"></div>
+                  <div class="template-card-info">
+                    <div class="template-card-title">Finance</div>
+                    <div class="template-card-meta">Full-time · Remote & On-site</div>
+                  </div>
+                </div>
+                <div class="template-card-stats">
+                  <div class="template-stat">
+                    <div class="template-stat-value">5</div>
+                    <div class="template-stat-label">Modules</div>
+                  </div>
+                  <div class="template-stat">
+                    <div class="template-stat-value">9</div>
+                    <div class="template-stat-label">Steps</div>
+                  </div>
+                  <span class="status-pill status-active" style="font-size:10px">Active</span>
+                </div>
+                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="template-card-body">
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
+                  <span class="module-steps">3 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (ERP, Netsuite)</span></div>
+                  <span class="module-steps">2 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
+                  <span class="module-steps">2 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Success (Draft) -->
+            <div class="template-card">
+              <div class="template-card-header" onclick="this.parentElement.classList.toggle('expanded')">
+                <div class="template-card-header-left">
+                  <div class="template-card-dot" style="background:var(--amber)"></div>
+                  <div class="template-card-info">
+                    <div class="template-card-title">Customer Success</div>
+                    <div class="template-card-meta">Full-time · Remote</div>
+                  </div>
+                </div>
+                <div class="template-card-stats">
+                  <div class="template-stat">
+                    <div class="template-stat-value">5</div>
+                    <div class="template-stat-label">Modules</div>
+                  </div>
+                  <div class="template-stat">
+                    <div class="template-stat-value">9</div>
+                    <div class="template-stat-label">Steps</div>
+                  </div>
+                  <span class="status-pill status-draft" style="font-size:10px">Draft</span>
+                </div>
+                <svg class="template-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="template-card-body">
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-hris"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div><span class="module-name">HRIS</span></div>
+                  <span class="module-steps">3 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-workauth"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="module-name">Work Authorization</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-benefits"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="module-name">Benefits</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-lms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="module-name">Learning Management</span></div>
+                  <span class="module-steps">3 steps</span>
+                </div>
+                <div class="module-row">
+                  <div class="module-row-left"><div class="module-icon mod-apps"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="module-name">Apps (CRM, Zendesk)</span></div>
+                  <span class="module-steps">1 step</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
+
       </div>
-
-      <!-- AI SOP upload strip -->
-      <div class="ai-strip" onclick="document.getElementById('ai-upload-modal').classList.add('open')">
-        <div class="ai-strip-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        </div>
-        <div class="ai-strip-text">
-          <strong>Import from SOP or checklist</strong>
-          <span>Upload your existing onboarding SOP and the AI agent will parse it into a journey with checkpoints, tasks, owners, and due dates.</span>
-        </div>
-        <svg class="ai-strip-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-
-      <!-- Journey cards -->
-      <div class="config-section">
-        <div class="config-section-header">
-          <h2 class="section-title">Onboarding Journeys</h2>
-          <span style="font-size:13px;color:var(--text-secondary)">3 journeys · <span class="scope-badge">Org default</span></span>
-        </div>
-
-        <div class="journey-grid">
-
-          <!-- ENGINEERING JOURNEY -->
-          <div class="journey-card expanded">
-            <div class="journey-header" onclick="this.parentElement.classList.toggle('expanded')">
-              <div class="journey-header-left">
-                <div class="journey-dot" style="background:var(--purple)"></div>
-                <span class="journey-title">Engineering</span>
-                <span class="journey-meta">Full-time · Remote & On-site · 4 checkpoints · 12 sub-checkpoints</span>
-              </div>
-              <div class="journey-header-right">
-                <span class="status-pill status-active">Active</span>
-                <svg class="journey-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </div>
-            </div>
-            <div class="journey-body">
-
-              <!-- CP: Registered -->
-              <div class="checkpoint expanded">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Registered</span>
-                    <span class="checkpoint-count">2 items</span>
-                  </div>
-                  <div class="checkpoint-header-right">
-                    <span class="blocking-tag blocks-active">Blocks Active</span>
-                    <span style="font-size:12px;color:var(--text-secondary)">Due: offer_expiry_date</span>
-                  </div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Complete employee onboarding flow</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: offer_expiry_date</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Email created / merged (rehire)</div>
-                    <div class="sub-cp-right"><span>Assignee: Automation</span><span>Due: on registration</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- CP: Agreements Signed -->
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Agreements Signed</span>
-                    <span class="checkpoint-count">2 items</span>
-                  </div>
-                  <div class="checkpoint-header-right">
-                    <span class="blocking-tag blocks-active">Blocks Active</span>
-                    <span style="font-size:12px;color:var(--text-secondary)">Due: start_date − 5</span>
-                  </div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Signed offer letter</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: offer_expiry_date</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Signed equity letter</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: start_date − 5</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- CP: Day 1 Ready -->
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Day 1 Ready</span>
-                    <span class="checkpoint-count">5 items</span>
-                  </div>
-                  <div class="checkpoint-header-right">
-                    <span class="blocking-tag blocks-active">Blocks Active</span>
-                    <span style="font-size:12px;color:var(--text-secondary)">Due: start_date</span>
-                  </div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Background check complete</div>
-                    <div class="sub-cp-right"><span>Assignee: 3P</span><span>Due: start_date − 2</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> I-9 verified & E-Verify submitted</div>
-                    <div class="sub-cp-right"><span>Assignee: HR Admin</span><span>Due: start_date + 3</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">Devices</span> Device shipped</div>
-                    <div class="sub-cp-right"><span>Assignee: 3P</span><span>Due: start_date − 3</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">Apps</span> App access provisioned (GitHub, IDE, Slack)</div>
-                    <div class="sub-cp-right"><span>Assignee: IT Admin</span><span>Due: start_date − 3</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">Payroll</span> Bank account & tax setup complete</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: start_date</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- CP: Fully Onboarded -->
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Fully Onboarded</span>
-                    <span class="checkpoint-count">3 items</span>
-                  </div>
-                  <div class="checkpoint-header-right">
-                    <span class="blocking-tag non-blocking">Non-blocking</span>
-                    <span style="font-size:12px;color:var(--text-secondary)">Due: start_date + 30</span>
-                  </div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">Benefits</span> Benefits enrollment complete</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: start_date + 30</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">LMS</span> Required courses completed</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: start_date + 30</span></div>
-                  </div>
-                  <div class="sub-cp-item">
-                    <div class="sub-cp-left"><span class="sub-cp-app">Hub</span> Custom onboarding tasks complete</div>
-                    <div class="sub-cp-right"><span>Assignee: Employee</span><span>Due: start_date + 30</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- SALES JOURNEY -->
-          <div class="journey-card">
-            <div class="journey-header" onclick="this.parentElement.classList.toggle('expanded')">
-              <div class="journey-header-left">
-                <div class="journey-dot" style="background:var(--teal)"></div>
-                <span class="journey-title">Sales</span>
-                <span class="journey-meta">Full-time · On-site · 4 checkpoints · 10 sub-checkpoints</span>
-              </div>
-              <div class="journey-header-right">
-                <span class="status-pill status-active">Active</span>
-                <svg class="journey-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </div>
-            </div>
-            <div class="journey-body">
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Registered</span><span class="checkpoint-count">2 items</span>
-                  </div>
-                  <div class="checkpoint-header-right"><span class="blocking-tag blocks-active">Blocks Active</span></div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Complete onboarding flow</div><div class="sub-cp-right"><span>Employee</span><span>Due: offer_expiry</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Email created</div><div class="sub-cp-right"><span>Automation</span></div></div>
-                </div>
-              </div>
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Day 1 Ready</span><span class="checkpoint-count">4 items</span>
-                  </div>
-                  <div class="checkpoint-header-right"><span class="blocking-tag blocks-active">Blocks Active</span></div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Background check complete</div><div class="sub-cp-right"><span>3P</span><span>Due: start_date − 2</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">Apps</span> CRM access provisioned</div><div class="sub-cp-right"><span>IT Admin</span><span>Due: start_date − 3</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Territory assigned</div><div class="sub-cp-right"><span>VP Sales</span><span>Due: start_date − 1</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">Payroll</span> Bank & tax setup</div><div class="sub-cp-right"><span>Employee</span><span>Due: start_date</span></div></div>
-                </div>
-              </div>
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Fully Onboarded</span><span class="checkpoint-count">4 items</span>
-                  </div>
-                  <div class="checkpoint-header-right"><span class="blocking-tag non-blocking">Non-blocking</span></div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">LMS</span> Product knowledge bootcamp</div><div class="sub-cp-right"><span>Enablement</span><span>Day 1–3</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">LMS</span> Shadow calls with Sr. AE</div><div class="sub-cp-right"><span>Sr. AE</span><span>Day 3–5</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Quota & comp plan review</div><div class="sub-cp-right"><span>Manager</span><span>Day 5</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">Benefits</span> Benefits enrollment</div><div class="sub-cp-right"><span>Employee</span><span>start_date + 30</span></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- RETAIL HOURLY JOURNEY -->
-          <div class="journey-card">
-            <div class="journey-header" onclick="this.parentElement.classList.toggle('expanded')">
-              <div class="journey-header-left">
-                <div class="journey-dot" style="background:var(--maroon)"></div>
-                <span class="journey-title">Retail Hourly</span>
-                <span class="journey-meta">Hourly · On-site · 3 checkpoints · 7 sub-checkpoints</span>
-              </div>
-              <div class="journey-header-right">
-                <span class="status-pill status-active">Active</span>
-                <svg class="journey-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </div>
-            </div>
-            <div class="journey-body">
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Registered</span><span class="checkpoint-count">2 items</span>
-                  </div>
-                  <div class="checkpoint-header-right"><span class="blocking-tag blocks-active">Blocks Active</span></div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Complete onboarding flow</div><div class="sub-cp-right"><span>Employee</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> I-9 & E-Verify</div><div class="sub-cp-right"><span>HR Admin</span><span>Due: start_date + 3</span></div></div>
-                </div>
-              </div>
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Day 1 Ready</span><span class="checkpoint-count">3 items</span>
-                  </div>
-                  <div class="checkpoint-header-right"><span class="blocking-tag blocks-active">Blocks Active</span></div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">HRIS</span> Uniform & badge pickup</div><div class="sub-cp-right"><span>Store Mgr</span><span>Day 1</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">LMS</span> Safety & compliance training</div><div class="sub-cp-right"><span>Store Mgr</span><span>Day 1</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">Apps</span> POS system training</div><div class="sub-cp-right"><span>Store Mgr</span><span>Day 1</span></div></div>
-                </div>
-              </div>
-              <div class="checkpoint">
-                <div class="checkpoint-header" onclick="this.parentElement.classList.toggle('expanded')">
-                  <div class="checkpoint-header-left">
-                    <svg class="checkpoint-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span class="checkpoint-name">Fully Onboarded</span><span class="checkpoint-count">2 items</span>
-                  </div>
-                  <div class="checkpoint-header-right"><span class="blocking-tag non-blocking">Non-blocking</span></div>
-                </div>
-                <div class="sub-checkpoints">
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">LMS</span> Floor shadowing shift</div><div class="sub-cp-right"><span>Sr. Associate</span><span>Day 2</span></div></div>
-                  <div class="sub-cp-item"><div class="sub-cp-left"><span class="sub-cp-app">Benefits</span> Benefits enrollment</div><div class="sub-cp-right"><span>Employee</span><span>start_date + 30</span></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Action Policy -->
-      <div class="config-section">
-        <div class="config-section-header">
-          <h2 class="section-title">Action Policy</h2>
-          <span class="scope-badge">Org default</span>
-        </div>
-        <div style="background:var(--bg-content);border:1px solid var(--border-color);border-radius:12px;overflow:hidden;">
-          <table class="policy-table">
-            <thead>
-              <tr>
-                <th style="width:30%">Action</th>
-                <th style="width:20%">Approval Level</th>
-                <th style="width:20%">Applies To</th>
-                <th style="width:18%">Timing Constraint</th>
-                <th style="width:12%">Enabled</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Resend invite</td>
-                <td><select class="policy-select"><option selected>Auto-execute</option><option>Approval required</option><option>Suggest only</option></select></td>
-                <td>All checkpoints</td>
-                <td>Before start date</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Send reminder to employee</td>
-                <td><select class="policy-select"><option selected>Auto-execute</option><option>Approval required</option><option>Suggest only</option></select></td>
-                <td>All checkpoints</td>
-                <td>Any time</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Notify manager</td>
-                <td><select class="policy-select"><option>Auto-execute</option><option selected>Approval required</option><option>Suggest only</option></select></td>
-                <td>Blocks Active items</td>
-                <td>Any time</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Extend offer expiration</td>
-                <td><select class="policy-select"><option>Auto-execute</option><option selected>Approval required</option><option>Suggest only</option></select></td>
-                <td>Registered</td>
-                <td>Before offer expiry</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Push start date</td>
-                <td><select class="policy-select"><option>Auto-execute</option><option selected>Approval required</option><option>Suggest only</option></select></td>
-                <td>Day 1 Ready</td>
-                <td>Before start date</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Rescind offer</td>
-                <td><select class="policy-select"><option>Auto-execute</option><option>Approval required</option><option selected>Suggest only</option></select></td>
-                <td>Registered</td>
-                <td>start_date + 5</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Assign LMS course</td>
-                <td><select class="policy-select"><option selected>Auto-execute</option><option>Approval required</option><option>Suggest only</option></select></td>
-                <td>Fully Onboarded</td>
-                <td>On start date</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Request missing information</td>
-                <td><select class="policy-select"><option selected>Auto-execute</option><option>Approval required</option><option>Suggest only</option></select></td>
-                <td>All checkpoints</td>
-                <td>Any time</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-              <tr>
-                <td>Escalate to designated owner</td>
-                <td><select class="policy-select"><option>Auto-execute</option><option selected>Approval required</option><option>Suggest only</option></select></td>
-                <td>All checkpoints</td>
-                <td>When overdue</td>
-                <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Reminder & Escalation Settings -->
-      <div class="config-section">
-        <div class="config-section-header">
-          <h2 class="section-title">Reminder &amp; Escalation Settings</h2>
-        </div>
-        <div class="settings-grid">
-          <div class="setting-card">
-            <div class="setting-card-title">Pre-boarding lead time</div>
-            <div class="setting-card-desc">Days before start date to begin triggering pre-boarding tasks</div>
-            <div class="setting-value">
-              <input type="number" class="setting-input" value="7" min="1" max="30">
-              <span class="setting-unit">business days</span>
-            </div>
-          </div>
-          <div class="setting-card">
-            <div class="setting-card-title">Primary assignee reminders</div>
-            <div class="setting-card-desc">Fire before due date, and after due date if still incomplete</div>
-            <div class="setting-value" style="flex-wrap:wrap;gap:6px">
-              <span class="setting-unit">Before:</span>
-              <input type="number" class="setting-input" value="5" style="width:50px"> <span class="setting-unit">days</span>
-              <span class="setting-unit" style="margin-left:8px">After:</span>
-              <input type="text" class="setting-input" value="1, 3, 5" style="width:80px"> <span class="setting-unit">days</span>
-            </div>
-          </div>
-          <div class="setting-card">
-            <div class="setting-card-title">Secondary assignee reminders</div>
-            <div class="setting-card-desc">Escalation reminders to manager / HR when primary doesn't act</div>
-            <div class="setting-value" style="flex-wrap:wrap;gap:6px">
-              <span class="setting-unit">Before:</span>
-              <input type="number" class="setting-input" value="3" style="width:50px"> <span class="setting-unit">days</span>
-              <span class="setting-unit" style="margin-left:8px">After:</span>
-              <input type="text" class="setting-input" value="2, 4, 7" style="width:80px"> <span class="setting-unit">days</span>
-            </div>
-          </div>
-          <div class="setting-card">
-            <div class="setting-card-title">Escalation threshold</div>
-            <div class="setting-card-desc">Escalate to HR if a task is overdue by this many days</div>
-            <div class="setting-value">
-              <input type="number" class="setting-input" value="3" min="1" max="14">
-              <span class="setting-unit">days overdue</span>
-            </div>
-          </div>
-          <div class="setting-card">
-            <div class="setting-card-title">Slack notifications</div>
-            <div class="setting-card-desc">Send task reminders and blocker alerts to Slack channels</div>
-            <div class="setting-value">
-              <div class="toggle on" onclick="this.classList.toggle('on')" style="margin-right:8px"></div>
-              <span class="setting-unit">Enabled</span>
-            </div>
-          </div>
-          <div class="setting-card">
-            <div class="setting-card-title">Manager digest</div>
-            <div class="setting-card-desc">Weekly email to managers summarizing onboarding status for their reports</div>
-            <div class="setting-value">
-              <select class="setting-select"><option>Monday</option><option selected>Tuesday</option><option>Wednesday</option><option>Friday</option><option>Off</option></select>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
     <!-- ══════════════════════════════════════════
-         TAB 2 — TRACKER
+         TAB 2 — TRACKER (aggregate + chat)
          ══════════════════════════════════════════ -->
     <div id="tracker-panel" class="tab-panel">
+      <div class="tracker-split">
 
-      <div class="tracker-filters" style="display:flex;gap:8px;margin-bottom:20px;">
-        <span class="pill active" data-filter="all">All (6)</span>
-        <span class="pill" data-filter="engineering">Engineering (3)</span>
-        <span class="pill" data-filter="sales">Sales (1)</span>
-        <span class="pill" data-filter="retail">Retail Hourly (2)</span>
-      </div>
+        <!-- Tracker main content -->
+        <div class="tracker-main">
+          <div class="tracker-main-inner">
 
-      <!-- Summary cards -->
-      <div class="summary-row">
-        <div class="summary-card">
-          <div class="summary-card-label">Active Onboardings</div>
-          <div class="summary-card-value">6</div>
-          <div class="summary-card-sub">3 starting this week</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-label">Day 1 Ready</div>
-          <div class="summary-card-value" style="color:var(--bar-green)">1</div>
-          <div class="summary-card-sub">Jordan Lee (Retail)</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-label">Blocked</div>
-          <div class="summary-card-value" style="color:var(--bar-red)">4</div>
-          <div class="summary-card-sub">2 start-blocking</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-label">Agent Actions</div>
-          <div class="summary-card-value" style="color:var(--blue)">3</div>
-          <div class="summary-card-sub">2 pending approval</div>
-        </div>
-      </div>
-
-      <h2 class="section-title">Active Onboardings</h2>
-
-      <div class="hire-list">
-
-        <!-- Alex Kim -->
-        <div class="hire-card expanded" data-cohort="engineering">
-          <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
-            <div>
-              <div class="hire-name">Alex Kim</div>
-              <span style="font-size:12px;color:var(--text-secondary)">Software Engineer II</span>
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+              <span class="pill active" data-filter="all">All (6)</span>
+              <span class="pill" data-filter="engineering">Engineering (3)</span>
+              <span class="pill" data-filter="sales">Sales (1)</span>
+              <span class="pill" data-filter="retail">Retail Hourly (2)</span>
             </div>
-            <div><span class="badge-sm badge-purple">Engineering</span></div>
-            <div class="hire-start">Apr 14</div>
-            <div class="readiness-dots">
-              <div class="r-dot r-green" title="Registered">R</div>
-              <div class="r-dot r-green" title="Agreements Signed">A</div>
-              <div class="r-dot r-red" title="Day 1 Ready — 2 blockers">D1</div>
-              <div class="r-dot r-gray" title="Fully Onboarded — not started">F</div>
+
+            <div class="summary-row">
+              <div class="summary-card">
+                <div class="summary-card-label">Active</div>
+                <div class="summary-card-value">6</div>
+                <div class="summary-card-sub">3 starting this week</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-card-label">Day 1 Ready</div>
+                <div class="summary-card-value" style="color:var(--bar-green)">1</div>
+                <div class="summary-card-sub">Jordan Lee</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-card-label">Blocked</div>
+                <div class="summary-card-value" style="color:var(--bar-red)">4</div>
+                <div class="summary-card-sub">2 start-blocking</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-card-label">Agent Actions</div>
+                <div class="summary-card-value" style="color:var(--blue)">3</div>
+                <div class="summary-card-sub">2 pending approval</div>
+              </div>
             </div>
-            <div class="hire-actions-area">
-              <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:58%;background:var(--bar-red)"></span></span>7/12</span>
-              <svg class="hire-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-          <div class="hire-detail">
-            <div class="detail-columns">
-              <div>
-                <div class="detail-section-title">Checkpoint Status</div>
-                <ul class="detail-cp-list">
-                  <li class="detail-cp-item">
-                    <div class="detail-cp-left">
-                      <div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                      Registered
+
+            <h2 class="section-title">Active Onboardings</h2>
+
+            <div class="hire-list">
+
+              <!-- Alex Kim -->
+              <div class="hire-card expanded" data-cohort="engineering">
+                <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
+                  <div><div class="hire-name">Alex Kim</div><span style="font-size:11px;color:var(--text-secondary)">Software Engineer II</span></div>
+                  <div><span class="badge-sm badge-purple">Eng</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Apr 14</div>
+                  <div class="readiness-dots">
+                    <div class="r-dot r-green" title="Registered">R</div>
+                    <div class="r-dot r-green" title="Agreements">A</div>
+                    <div class="r-dot r-red" title="Day 1 Ready">D1</div>
+                    <div class="r-dot r-gray" title="Fully Onboarded">F</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+                    <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:58%;background:var(--bar-red)"></span></span>7/12</span>
+                    <svg class="hire-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </div>
+                <div class="hire-detail">
+                  <div class="detail-columns">
+                    <div>
+                      <div class="detail-section-title">Checkpoint Status</div>
+                      <ul class="detail-cp-list">
+                        <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Registered</div><span class="status-pill status-active" style="font-size:9px">Done</span></li>
+                        <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Agreements Signed</div><span class="status-pill status-active" style="font-size:9px">Done</span></li>
+                        <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-blocked"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>Day 1 Ready</div><span style="font-size:11px;color:var(--bar-red);font-weight:600">2 Blocked</span></li>
+                        <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-not-started"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>Fully Onboarded</div><span style="font-size:11px;color:var(--text-secondary)">0/3</span></li>
+                      </ul>
                     </div>
-                    <span class="status-pill status-active" style="font-size:10px">Complete</span>
-                  </li>
-                  <li class="detail-cp-item">
-                    <div class="detail-cp-left">
-                      <div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                      Agreements Signed
+                    <div>
+                      <div class="detail-section-title">Blockers</div>
+                      <div class="blocker-card">
+                        <div class="blocker-card-title">Device not shipped</div>
+                        <div class="blocker-card-detail">No delivery address on file.</div>
+                      </div>
+                      <div class="blocker-card">
+                        <div class="blocker-card-title">Onboarding buddy not assigned</div>
+                        <div class="blocker-card-detail">Manager has not assigned a buddy. 5 days overdue.</div>
+                      </div>
                     </div>
-                    <span class="status-pill status-active" style="font-size:10px">Complete</span>
-                  </li>
-                  <li class="detail-cp-item">
-                    <div class="detail-cp-left">
-                      <div class="detail-cp-icon icon-blocked"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
-                      Day 1 Ready
-                    </div>
-                    <span class="status-pill status-blocked" style="font-size:10px">2 Blocked</span>
-                  </li>
-                  <li class="detail-cp-item">
-                    <div class="detail-cp-left">
-                      <div class="detail-cp-icon icon-not-started"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>
-                      Fully Onboarded
-                    </div>
-                    <span style="font-size:12px;color:var(--text-secondary)">0 / 3</span>
-                  </li>
-                </ul>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div class="detail-section-title">Blockers</div>
-                <div class="blocker-card">
-                  <div class="blocker-card-title">Device not shipped</div>
-                  <div class="blocker-card-detail">No delivery address on file. Shipment cannot be initiated until the employee provides a shipping address.</div>
-                  <div class="blocker-meta">
-                    <span><strong>Source:</strong> Devices</span>
-                    <span><strong>Next actor:</strong> Employee</span>
-                    <span><strong>Due:</strong> Apr 11</span>
-                  </div>
-                </div>
-                <div class="blocker-card">
-                  <div class="blocker-card-title">Onboarding buddy not assigned</div>
-                  <div class="blocker-card-detail">Manager has not assigned an onboarding buddy. This is a custom task requirement for the Engineering journey.</div>
-                  <div class="blocker-meta">
-                    <span><strong>Source:</strong> Hub</span>
-                    <span><strong>Next actor:</strong> Manager</span>
-                    <span><strong>Due:</strong> Apr 9</span>
-                  </div>
-                </div>
 
-                <div class="agent-rec">
-                  <div class="agent-rec-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    <span class="agent-rec-label">Agent Recommendation</span>
+              <!-- Priya Sharma -->
+              <div class="hire-card" data-cohort="engineering">
+                <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
+                  <div><div class="hire-name">Priya Sharma</div><span style="font-size:11px;color:var(--text-secondary)">Backend Engineer</span></div>
+                  <div><span class="badge-sm badge-purple">Eng</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Apr 14</div>
+                  <div class="readiness-dots">
+                    <div class="r-dot r-green">R</div><div class="r-dot r-green">A</div><div class="r-dot r-amber">D1</div><div class="r-dot r-gray">F</div>
                   </div>
-                  <div class="agent-rec-text">Send a reminder to Alex to provide a shipping address. Separately, notify Alex's manager to assign an onboarding buddy — this is 5 days overdue.</div>
-                  <div class="agent-rec-actions">
-                    <button class="btn btn-primary btn-sm">Approve Both</button>
-                    <button class="btn btn-outline btn-sm">Review Actions</button>
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+                    <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:83%;background:var(--amber)"></span></span>10/12</span>
+                    <svg class="hire-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
                   </div>
                 </div>
+                <div class="hire-detail"><div style="padding:4px 0;font-size:13px;color:var(--text-secondary)">Benefits enrollment pending (non-blocking). Auto-reminder scheduled for Apr 15.</div></div>
               </div>
+
+              <!-- Marcus Cole -->
+              <div class="hire-card" data-cohort="engineering">
+                <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
+                  <div><div class="hire-name">Marcus Cole</div><span style="font-size:11px;color:var(--text-secondary)">Frontend Engineer</span></div>
+                  <div><span class="badge-sm badge-purple">Eng</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Apr 21</div>
+                  <div class="readiness-dots">
+                    <div class="r-dot r-green">R</div><div class="r-dot r-amber">A</div><div class="r-dot r-red">D1</div><div class="r-dot r-gray">F</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+                    <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:33%;background:var(--bar-red)"></span></span>4/12</span>
+                    <svg class="hire-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </div>
+                <div class="hire-detail"><div style="padding:4px 0;font-size:13px;color:var(--text-secondary)">IT provisioning not started. Equity letter unsigned. Start date 8 days away.</div></div>
+              </div>
+
+              <!-- Dani Reyes -->
+              <div class="hire-card" data-cohort="sales">
+                <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
+                  <div><div class="hire-name">Dani Reyes</div><span style="font-size:11px;color:var(--text-secondary)">Account Executive</span></div>
+                  <div><span class="badge-sm badge-green">Sales</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Apr 14</div>
+                  <div class="readiness-dots">
+                    <div class="r-dot r-green">R</div><div class="r-dot r-red">D1</div><div class="r-dot r-gray">F</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+                    <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:70%;background:var(--bar-red)"></span></span>7/10</span>
+                    <svg class="hire-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </div>
+                <div class="hire-detail"><div style="padding:4px 0;font-size:13px;color:var(--text-secondary)">Territory not assigned by VP Sales. Overdue — starts tomorrow.</div></div>
+              </div>
+
+              <!-- Jordan Lee -->
+              <div class="hire-card" data-cohort="retail">
+                <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
+                  <div><div class="hire-name">Jordan Lee</div><span style="font-size:11px;color:var(--text-secondary)">Sales Associate</span></div>
+                  <div><span class="badge-sm badge-maroon">Retail</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Apr 7</div>
+                  <div class="readiness-dots">
+                    <div class="r-dot r-green">R</div><div class="r-dot r-green">D1</div><div class="r-dot r-green">F</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+                    <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:100%;background:var(--bar-green)"></span></span>7/7</span>
+                    <svg class="hire-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </div>
+                <div class="hire-detail"><div style="padding:4px 0;font-size:13px;color:var(--text-secondary)">Fully onboarded on Apr 8. No outstanding items.</div></div>
+              </div>
+
+              <!-- Sam Ortiz -->
+              <div class="hire-card" data-cohort="retail">
+                <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
+                  <div><div class="hire-name">Sam Ortiz</div><span style="font-size:11px;color:var(--text-secondary)">Cashier</span></div>
+                  <div><span class="badge-sm badge-maroon">Retail</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Apr 14</div>
+                  <div class="readiness-dots">
+                    <div class="r-dot r-green">R</div><div class="r-dot r-red">D1</div><div class="r-dot r-gray">F</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+                    <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:43%;background:var(--bar-red)"></span></span>3/7</span>
+                    <svg class="hire-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </div>
+                <div class="hire-detail"><div style="padding:4px 0;font-size:13px;color:var(--text-secondary)">POS training not scheduled. Safety training incomplete. Starts tomorrow.</div></div>
+              </div>
+
             </div>
           </div>
         </div>
 
-        <!-- Priya Sharma -->
-        <div class="hire-card" data-cohort="engineering">
-          <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
-            <div><div class="hire-name">Priya Sharma</div><span style="font-size:12px;color:var(--text-secondary)">Backend Engineer</span></div>
-            <div><span class="badge-sm badge-purple">Engineering</span></div>
-            <div class="hire-start">Apr 14</div>
-            <div class="readiness-dots">
-              <div class="r-dot r-green" title="Registered">R</div>
-              <div class="r-dot r-green" title="Agreements Signed">A</div>
-              <div class="r-dot r-amber" title="Day 1 Ready — 1 pending">D1</div>
-              <div class="r-dot r-gray" title="Fully Onboarded — not started">F</div>
+        <!-- Tracker chat pane -->
+        <div class="tracker-chat-pane">
+          <div class="chat-header">
+            <div class="chat-header-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             </div>
-            <div class="hire-actions-area">
-              <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:83%;background:var(--amber)"></span></span>10/12</span>
-              <svg class="hire-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="chat-header-text">
+              <div class="chat-header-title">Onboarding Agent</div>
+              <div class="chat-header-sub">Ask about progress, blockers, and actions</div>
             </div>
           </div>
-          <div class="hire-detail">
-            <div class="detail-columns">
-              <div>
-                <div class="detail-section-title">Checkpoint Status</div>
-                <ul class="detail-cp-list">
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Registered</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Agreements Signed</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-pending"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>Day 1 Ready</div><span class="status-pill status-draft" style="font-size:10px">1 Pending</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-not-started"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>Fully Onboarded</div><span style="font-size:12px;color:var(--text-secondary)">0 / 3</span></li>
-                </ul>
-              </div>
-              <div>
-                <div class="detail-section-title">Pending Items</div>
-                <div class="blocker-card" style="background:#fffbeb;border-color:#fde68a">
-                  <div class="blocker-card-title" style="color:#92400e">Benefits enrollment pending</div>
-                  <div class="blocker-card-detail" style="color:#78350f">Employee has not completed benefits enrollment. This is non-blocking for Day 1 but due within 30 days of start date.</div>
-                  <div class="blocker-meta" style="color:#92400e">
-                    <span><strong>Source:</strong> Benefits</span>
-                    <span><strong>Next actor:</strong> Employee</span>
-                    <span><strong>Due:</strong> May 14</span>
-                  </div>
-                </div>
-                <div class="agent-rec">
-                  <div class="agent-rec-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    <span class="agent-rec-label">Agent Recommendation</span>
-                  </div>
-                  <div class="agent-rec-text">No action needed before Day 1. A reminder to Priya for benefits enrollment has been auto-scheduled for Apr 15.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Marcus Cole -->
-        <div class="hire-card" data-cohort="engineering">
-          <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
-            <div><div class="hire-name">Marcus Cole</div><span style="font-size:12px;color:var(--text-secondary)">Frontend Engineer</span></div>
-            <div><span class="badge-sm badge-purple">Engineering</span></div>
-            <div class="hire-start">Apr 21</div>
-            <div class="readiness-dots">
-              <div class="r-dot r-green" title="Registered">R</div>
-              <div class="r-dot r-amber" title="Agreements — equity pending">A</div>
-              <div class="r-dot r-red" title="Day 1 Ready — blocked">D1</div>
-              <div class="r-dot r-gray" title="Fully Onboarded">F</div>
-            </div>
-            <div class="hire-actions-area">
-              <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:33%;background:var(--bar-red)"></span></span>4/12</span>
-              <svg class="hire-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-          <div class="hire-detail">
-            <div class="detail-columns">
-              <div>
-                <div class="detail-section-title">Checkpoint Status</div>
-                <ul class="detail-cp-list">
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Registered</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-pending"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>Agreements Signed</div><span class="status-pill status-draft" style="font-size:10px">1 Pending</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-blocked"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>Day 1 Ready</div><span class="status-pill status-blocked" style="font-size:10px">3 Blocked</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-not-started"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>Fully Onboarded</div><span style="font-size:12px;color:var(--text-secondary)">0 / 3</span></li>
+          <div class="chat-messages" id="tracker-chat-messages">
+            <div class="chat-msg ai">
+              <div class="chat-msg-avatar">AI</div>
+              <div class="chat-msg-bubble">
+                Good morning! Here's your onboarding summary for today:
+                <br><br>
+                <strong>3 hires start tomorrow (Apr 14):</strong> Alex Kim, Dani Reyes, and Sam Ortiz. Of these, only Alex has a clear path — but still has <strong>2 blockers</strong> (device not shipped, no buddy assigned).
+                <br><br>
+                <strong>Top risks:</strong>
+                <ul>
+                  <li>Dani's territory assignment is overdue — escalation to VP Sales recommended</li>
+                  <li>Sam's POS and safety training haven't been scheduled by the store manager</li>
                 </ul>
-              </div>
-              <div>
-                <div class="detail-section-title">Blockers</div>
-                <div class="blocker-card">
-                  <div class="blocker-card-title">IT provisioning not started</div>
-                  <div class="blocker-card-detail">App access (GitHub, IDE, Slack) has not been provisioned. IT admin has not been notified.</div>
-                  <div class="blocker-meta"><span><strong>Source:</strong> Apps</span><span><strong>Next actor:</strong> IT Admin</span><span><strong>Due:</strong> Apr 18</span></div>
-                </div>
-                <div class="agent-rec">
-                  <div class="agent-rec-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    <span class="agent-rec-label">Agent Recommendation</span>
-                  </div>
-                  <div class="agent-rec-text">Start date is 8 days away. Notify IT admin to begin app provisioning. Also send a reminder to Marcus to sign the equity letter.</div>
-                  <div class="agent-rec-actions">
-                    <button class="btn btn-primary btn-sm">Approve</button>
-                    <button class="btn btn-outline btn-sm">Dismiss</button>
-                  </div>
-                </div>
+                <br>
+                Want me to send the pending escalation notifications?
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Dani Reyes -->
-        <div class="hire-card" data-cohort="sales">
-          <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
-            <div><div class="hire-name">Dani Reyes</div><span style="font-size:12px;color:var(--text-secondary)">Account Executive</span></div>
-            <div><span class="badge-sm badge-green">Sales</span></div>
-            <div class="hire-start">Apr 14</div>
-            <div class="readiness-dots">
-              <div class="r-dot r-green" title="Registered">R</div>
-              <div class="r-dot r-red" title="Day 1 Ready — 1 blocker">D1</div>
-              <div class="r-dot r-gray" title="Fully Onboarded">F</div>
+            <div class="chat-msg user">
+              <div class="chat-msg-avatar">WS</div>
+              <div class="chat-msg-bubble">Yes, send escalation for Dani and Sam. What about Alex's device?</div>
             </div>
-            <div class="hire-actions-area">
-              <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:70%;background:var(--bar-red)"></span></span>7/10</span>
-              <svg class="hire-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-          <div class="hire-detail">
-            <div class="detail-columns">
-              <div>
-                <div class="detail-section-title">Checkpoint Status</div>
-                <ul class="detail-cp-list">
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Registered</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-blocked"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>Day 1 Ready</div><span class="status-pill status-blocked" style="font-size:10px">1 Blocked</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-not-started"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>Fully Onboarded</div><span style="font-size:12px;color:var(--text-secondary)">0 / 4</span></li>
-                </ul>
-              </div>
-              <div>
-                <div class="detail-section-title">Blockers</div>
-                <div class="blocker-card">
-                  <div class="blocker-card-title">Territory not assigned</div>
-                  <div class="blocker-card-detail">VP Sales has not completed territory assignment. This blocks CRM setup and Day 1 readiness.</div>
-                  <div class="blocker-meta"><span><strong>Source:</strong> HRIS</span><span><strong>Next actor:</strong> VP Sales</span><span><strong>Due:</strong> Apr 13</span></div>
-                </div>
-                <div class="agent-rec">
-                  <div class="agent-rec-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    <span class="agent-rec-label">Agent Recommendation</span>
-                  </div>
-                  <div class="agent-rec-text">Territory assignment is overdue. Escalate to VP Sales with a reminder that Dani starts tomorrow.</div>
-                  <div class="agent-rec-actions">
-                    <button class="btn btn-primary btn-sm">Approve</button>
-                    <button class="btn btn-outline btn-sm">Dismiss</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Jordan Lee -->
-        <div class="hire-card" data-cohort="retail">
-          <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
-            <div><div class="hire-name">Jordan Lee</div><span style="font-size:12px;color:var(--text-secondary)">Sales Associate</span></div>
-            <div><span class="badge-sm badge-maroon">Retail Hourly</span></div>
-            <div class="hire-start">Apr 7</div>
-            <div class="readiness-dots">
-              <div class="r-dot r-green" title="Registered">R</div>
-              <div class="r-dot r-green" title="Day 1 Ready">D1</div>
-              <div class="r-dot r-green" title="Fully Onboarded">F</div>
-            </div>
-            <div class="hire-actions-area">
-              <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:100%;background:var(--bar-green)"></span></span>7/7</span>
-              <svg class="hire-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-          <div class="hire-detail">
-            <div class="detail-columns">
-              <div>
-                <div class="detail-section-title">Checkpoint Status</div>
-                <ul class="detail-cp-list">
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Registered</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Day 1 Ready</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Fully Onboarded</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
+            <div class="chat-msg ai">
+              <div class="chat-msg-avatar">AI</div>
+              <div class="chat-msg-bubble">
+                Done — I've sent:
+                <ul>
+                  <li>Urgent Slack + email to VP Sales about Dani's territory</li>
+                  <li>Urgent Slack to Store Manager about Sam's POS training and safety course</li>
                 </ul>
-              </div>
-              <div>
-                <div class="detail-section-title">Summary</div>
-                <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">All checkpoints complete. Jordan completed onboarding on Apr 8, one day after start date. No outstanding items.</div>
+                <br>
+                For Alex's device: the blocker is a <strong>missing shipping address</strong>. I've already sent Alex a reminder to provide it. If he doesn't respond by EOD, I'll escalate to his manager.
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Sam Ortiz -->
-        <div class="hire-card" data-cohort="retail">
-          <div class="hire-row" onclick="this.parentElement.classList.toggle('expanded')">
-            <div><div class="hire-name">Sam Ortiz</div><span style="font-size:12px;color:var(--text-secondary)">Cashier</span></div>
-            <div><span class="badge-sm badge-maroon">Retail Hourly</span></div>
-            <div class="hire-start">Apr 14</div>
-            <div class="readiness-dots">
-              <div class="r-dot r-green" title="Registered">R</div>
-              <div class="r-dot r-red" title="Day 1 Ready — blocked">D1</div>
-              <div class="r-dot r-gray" title="Fully Onboarded">F</div>
-            </div>
-            <div class="hire-actions-area">
-              <span class="cp-progress"><span class="cp-bar"><span class="cp-bar-fill" style="width:43%;background:var(--bar-red)"></span></span>3/7</span>
-              <svg class="hire-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+          <div class="chat-suggestions">
+            <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Who's at risk this week?</div>
+            <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Show Eng cohort progress</div>
+            <div class="chat-suggestion" onclick="addTrackerSuggestion(this)">Auto-resolve non-blockers</div>
           </div>
-          <div class="hire-detail">
-            <div class="detail-columns">
-              <div>
-                <div class="detail-section-title">Checkpoint Status</div>
-                <ul class="detail-cp-list">
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Registered</div><span class="status-pill status-active" style="font-size:10px">Complete</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-blocked"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>Day 1 Ready</div><span class="status-pill status-blocked" style="font-size:10px">2 Blocked</span></li>
-                  <li class="detail-cp-item"><div class="detail-cp-left"><div class="detail-cp-icon icon-not-started"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>Fully Onboarded</div><span style="font-size:12px;color:var(--text-secondary)">0 / 2</span></li>
-                </ul>
-              </div>
-              <div>
-                <div class="detail-section-title">Blockers</div>
-                <div class="blocker-card">
-                  <div class="blocker-card-title">POS training not scheduled</div>
-                  <div class="blocker-card-detail">Store Manager has not scheduled POS system training. Sam cannot start floor work without this.</div>
-                  <div class="blocker-meta"><span><strong>Source:</strong> Apps</span><span><strong>Next actor:</strong> Store Mgr</span><span><strong>Due:</strong> Apr 14</span></div>
-                </div>
-                <div class="blocker-card">
-                  <div class="blocker-card-title">Safety training incomplete</div>
-                  <div class="blocker-card-detail">Compliance training module has not been assigned in LMS.</div>
-                  <div class="blocker-meta"><span><strong>Source:</strong> LMS</span><span><strong>Next actor:</strong> Store Mgr</span><span><strong>Due:</strong> Apr 14</span></div>
-                </div>
-                <div class="agent-rec">
-                  <div class="agent-rec-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    <span class="agent-rec-label">Agent Recommendation</span>
-                  </div>
-                  <div class="agent-rec-text">Sam starts tomorrow. Send urgent notification to Store Manager to schedule POS training and assign safety compliance course in LMS.</div>
-                  <div class="agent-rec-actions">
-                    <button class="btn btn-primary btn-sm">Approve</button>
-                    <button class="btn btn-outline btn-sm">Dismiss</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+          <div class="chat-input-area">
+            <input type="text" class="chat-input" id="tracker-chat-input" placeholder="Ask about onboarding progress...">
+            <button class="chat-send" onclick="sendTrackerMessage()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
           </div>
         </div>
 
       </div>
-
-      <!-- Recent activity -->
-      <div class="recent-activity">
-        <span class="recent-activity-title">Recent Activity</span>
-        <span class="auto-resolved-badge">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-          3 auto-resolved
-        </span>
-        <svg style="color:var(--text-secondary);margin-left:2px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-
-      <!-- AI chat bar -->
-      <div class="ai-chat-bar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        <input type="text" class="ai-chat-input" placeholder="Ask the onboarding agent…  e.g. &quot;Why isn't Alex ready to start?&quot;  &quot;How do I unblock Dani?&quot;">
-        <button class="btn btn-primary btn-sm">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
-      </div>
     </div>
 
-  </div>
-</div>
-
-<!-- New Journey Modal -->
-<div class="modal-overlay" id="new-journey-modal">
-  <div class="modal">
-    <div class="modal-title">Create Onboarding Journey</div>
-    <div class="modal-subtitle">Define a reusable journey template for a cohort of new hires.</div>
-    <div class="form-group">
-      <label class="form-label">Journey name</label>
-      <input type="text" class="form-input" placeholder="e.g. Customer Success, Finance, Warehouse">
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Employment type</label>
-        <select class="form-input"><option>Full-time</option><option>Part-time</option><option>Hourly</option><option>Contractor</option></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Work model</label>
-        <select class="form-input"><option>On-site</option><option>Remote</option><option>Remote & On-site</option></select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Cohort criteria</label>
-      <input type="text" class="form-input" placeholder="e.g. Department = Customer Success, Location = US">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Color</label>
-      <div class="color-options">
-        <div class="color-option selected" style="background:#7c3aed" onclick="selectColor(this)"></div>
-        <div class="color-option" style="background:#0d9488" onclick="selectColor(this)"></div>
-        <div class="color-option" style="background:#991b1b" onclick="selectColor(this)"></div>
-        <div class="color-option" style="background:#2563eb" onclick="selectColor(this)"></div>
-        <div class="color-option" style="background:#d97706" onclick="selectColor(this)"></div>
-        <div class="color-option" style="background:#db2777" onclick="selectColor(this)"></div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Configuration scope</label>
-      <select class="form-input"><option selected>Org default</option><option>Cohort-specific</option><option>Per-hire override</option></select>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" onclick="document.getElementById('new-journey-modal').classList.remove('open')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('new-journey-modal').classList.remove('open')">Create Journey</button>
-    </div>
-  </div>
-</div>
-
-<!-- AI Upload SOP Modal -->
-<div class="modal-overlay" id="ai-upload-modal">
-  <div class="modal">
-    <div class="modal-title">Import Onboarding SOP</div>
-    <div class="modal-subtitle">Upload your existing SOP or checklist. The AI agent will parse it into a journey with checkpoints, tasks, assignees, and due dates.</div>
-    <div class="form-group">
-      <label class="form-label">Upload SOP document</label>
-      <div style="border:2px dashed var(--border-color);border-radius:10px;padding:32px;text-align:center;color:var(--text-secondary);cursor:pointer;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 8px;display:block;opacity:0.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <span style="font-size:14px">Drop a file here or click to browse</span><br>
-        <span style="font-size:12px;opacity:0.7">PDF, DOCX, TXT, or CSV</span>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Or paste your checklist</label>
-      <textarea class="form-input" rows="5" placeholder="e.g.&#10;1. Complete background check (HR, before start date)&#10;2. Ship laptop (IT, 3 days before start)&#10;3. Assign onboarding buddy (Manager, 5 days before start)&#10;4. Enroll in benefits (Employee, within 30 days)"></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Target cohort</label>
-      <input type="text" class="form-input" placeholder="e.g. Engineering, US hourly workers">
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" onclick="document.getElementById('ai-upload-modal').classList.remove('open')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('ai-upload-modal').classList.remove('open')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        Generate Journey
-      </button>
-    </div>
   </div>
 </div>
 
@@ -1493,17 +1114,73 @@
     });
   });
 
-  // Color picker
-  function selectColor(el) {
-    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
+  // Chat — Explorer
+  function sendExplorerMessage() {
+    const input = document.getElementById('explorer-chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const container = document.getElementById('explorer-chat-messages');
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg user';
+    msg.innerHTML = `<div class="chat-msg-avatar">WS</div><div class="chat-msg-bubble">${escapeHtml(text)}</div>`;
+    container.appendChild(msg);
+    input.value = '';
+    container.scrollTop = container.scrollHeight;
+
+    setTimeout(() => {
+      const reply = document.createElement('div');
+      reply.className = 'chat-msg ai';
+      reply.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble">I'll work on that. Let me analyze your existing templates and suggest the best configuration for your needs.</div>`;
+      container.appendChild(reply);
+      container.scrollTop = container.scrollHeight;
+    }, 800);
   }
 
-  // Close modals on overlay click
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('open');
-    });
+  function sendTrackerMessage() {
+    const input = document.getElementById('tracker-chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const container = document.getElementById('tracker-chat-messages');
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg user';
+    msg.innerHTML = `<div class="chat-msg-avatar">WS</div><div class="chat-msg-bubble">${escapeHtml(text)}</div>`;
+    container.appendChild(msg);
+    input.value = '';
+    container.scrollTop = container.scrollHeight;
+
+    setTimeout(() => {
+      const reply = document.createElement('div');
+      reply.className = 'chat-msg ai';
+      reply.innerHTML = `<div class="chat-msg-avatar">AI</div><div class="chat-msg-bubble">Let me look into that for you. I'm checking the latest status across all active onboardings.</div>`;
+      container.appendChild(reply);
+      container.scrollTop = container.scrollHeight;
+    }, 800);
+  }
+
+  function addSuggestion(el) {
+    document.getElementById('explorer-chat-input').value = el.textContent;
+    sendExplorerMessage();
+  }
+
+  function addTrackerSuggestion(el) {
+    document.getElementById('tracker-chat-input').value = el.textContent;
+    sendTrackerMessage();
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Enter key sends message
+  document.getElementById('explorer-chat-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendExplorerMessage();
+  });
+  document.getElementById('tracker-chat-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendTrackerMessage();
   });
 </script>
 </body>
