@@ -153,8 +153,8 @@
     .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; }
 
     /* ─── Content ─── */
-    .content { padding: var(--space-600) var(--space-800) 0; display: flex; flex-direction: column; flex: 1; min-height: 0; }
-    .page-title { font-size: 22px; font-weight: 700; margin-bottom: var(--space-400); letter-spacing: -0.3px; }
+    .content { padding: var(--space-800) 40px var(--space-800); display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .page-title { font-size: 24px; font-weight: 700; margin-bottom: var(--space-600); letter-spacing: -0.3px; }
 
     /* ─── Pebble Tabs (SWITCH type) ─── */
     .pb-tabs {
@@ -219,8 +219,8 @@
     /* ─── Pebble Label ─── */
     .pb-label {
       display: inline-flex; align-items: center; gap: var(--space-100);
-      padding: 2px var(--space-200); border-radius: var(--shape-corner-sm);
-      font-size: 11px; font-weight: 600;
+      padding: 3px var(--space-300); border-radius: var(--shape-corner-sm);
+      font-size: 11px; font-weight: 600; white-space: nowrap;
     }
     .pb-label-error { background: var(--color-error-container); color: var(--color-on-error-container); }
     .pb-label-warning { background: var(--color-warning-container); color: var(--color-on-warning-container); }
@@ -260,7 +260,7 @@
        ══════════════════════════════════════════════════ */
     .explorer-split {
       display: flex; flex: 1; min-height: 0;
-      margin-top: var(--space-400);
+      margin-top: var(--space-600);
       border: 1px solid var(--color-outline-variant);
       border-radius: var(--shape-corner-lg); overflow: hidden;
       box-shadow: var(--shadow-sm);
@@ -273,8 +273,8 @@
       background: var(--color-surface);
     }
     .chat-header {
-      padding: var(--space-400) var(--space-500); border-bottom: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; gap: var(--space-300); flex-shrink: 0;
+      padding: var(--space-500) var(--space-600); border-bottom: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: var(--space-400); flex-shrink: 0;
     }
     .chat-header-icon {
       width: 32px; height: 32px; border-radius: var(--shape-corner-md);
@@ -285,10 +285,10 @@
     .chat-header-sub { font-size: 12px; color: var(--color-on-surface-variant); }
 
     .chat-messages {
-      flex: 1; overflow-y: auto; padding: var(--space-500);
-      display: flex; flex-direction: column; gap: var(--space-400);
+      flex: 1; overflow-y: auto; padding: var(--space-600);
+      display: flex; flex-direction: column; gap: var(--space-500);
     }
-    .chat-msg { display: flex; gap: var(--space-300); max-width: 92%; }
+    .chat-msg { display: flex; gap: var(--space-300); max-width: 88%; }
     .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
     .chat-msg.ai .pb-avatar { background: var(--color-primary); }
     .chat-msg.user .pb-avatar { background: var(--color-surface-inverse); }
@@ -309,16 +309,16 @@
     .chat-msg-bubble strong { font-weight: 600; }
 
     .chat-suggestions {
-      display: flex; flex-wrap: wrap; gap: 6px; padding: 0 var(--space-500) var(--space-300);
+      display: flex; flex-wrap: wrap; gap: var(--space-300); padding: var(--space-200) var(--space-600) var(--space-400);
       flex-shrink: 0;
     }
     .chat-input-area {
-      padding: var(--space-300) var(--space-400); border-top: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; gap: var(--space-200); flex-shrink: 0;
+      padding: var(--space-400) var(--space-500); border-top: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: var(--space-300); flex-shrink: 0;
       background: var(--color-surface);
     }
     .chat-input {
-      flex: 1; padding: var(--space-200) var(--space-300); border: 1px solid var(--color-outline);
+      flex: 1; padding: var(--space-300) var(--space-400); border: 1px solid var(--color-outline);
       border-radius: var(--shape-corner-md); font-size: 13px; color: var(--color-on-surface);
       background: var(--color-surface-dim); outline: none; font-family: inherit;
     }
@@ -331,19 +331,19 @@
       background: var(--color-surface-bright); overflow-y: auto;
     }
     .templates-header {
-      padding: var(--space-400) var(--space-500); display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-500) var(--space-600); display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid var(--color-outline-variant); background: var(--color-surface);
       flex-shrink: 0;
     }
-    .templates-header-left { display: flex; align-items: center; gap: var(--space-300); }
-    .templates-header h2 { font-size: 14px; font-weight: 600; }
+    .templates-header-left { display: flex; align-items: baseline; gap: var(--space-300); }
+    .templates-header h2 { font-size: 15px; font-weight: 600; }
     .templates-count {
       font-size: 11px; color: var(--color-on-surface-variant);
       background: var(--color-neutral-container);
       padding: 2px var(--space-200); border-radius: var(--shape-corner-full); font-weight: 500;
     }
     .templates-grid {
-      padding: var(--space-400) var(--space-500); display: flex; flex-direction: column; gap: var(--space-300);
+      padding: var(--space-500) var(--space-600); display: flex; flex-direction: column; gap: var(--space-400);
       flex: 1; overflow-y: auto;
     }
 
@@ -354,7 +354,7 @@
     }
     .pb-panel:hover { box-shadow: var(--shadow-md); }
     .pb-panel-header {
-      padding: var(--space-400); display: flex; align-items: center;
+      padding: var(--space-400) var(--space-500); display: flex; align-items: center;
       cursor: pointer; user-select: none; gap: var(--space-400);
     }
     .pb-panel-header-left { display: flex; align-items: center; gap: var(--space-300); flex: 1; min-width: 0; overflow: hidden; }
@@ -376,7 +376,7 @@
 
     .module-row {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-300) var(--space-400) var(--space-300) 40px;
+      padding: var(--space-300) var(--space-500) var(--space-300) 44px;
       border-bottom: 1px solid var(--color-outline-variant); font-size: 13px;
     }
     .module-row:last-child { border-bottom: none; }
@@ -404,7 +404,7 @@
        ══════════════════════════════════════════════════ */
     .tracker-chat-full {
       display: flex; flex-direction: column; flex: 1; min-height: 0;
-      margin-top: var(--space-400);
+      margin-top: var(--space-600);
       border: 1px solid var(--color-outline-variant);
       border-radius: var(--shape-corner-lg); overflow: hidden;
       background: var(--color-surface); box-shadow: var(--shadow-sm);
@@ -412,18 +412,18 @@
 
     /* Pebble TableBasic inside chat */
     .pb-table-wrap {
-      margin: var(--space-300) 0 var(--space-100); border-radius: var(--shape-corner-md);
+      margin: var(--space-400) 0 var(--space-300); border-radius: var(--shape-corner-md);
       overflow: hidden; border: 1px solid var(--color-outline-variant);
     }
     .pb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
     .pb-table th {
       text-align: left; font-size: 11px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.4px;
-      color: var(--color-on-surface-variant); padding: var(--space-200) var(--space-300);
+      color: var(--color-on-surface-variant); padding: var(--space-300) var(--space-400);
       background: var(--color-surface-dim); border-bottom: 1px solid var(--color-outline-variant);
     }
     .pb-table td {
-      padding: var(--space-300); border-bottom: 1px solid var(--color-outline-variant);
+      padding: var(--space-400); border-bottom: 1px solid var(--color-outline-variant);
       vertical-align: middle; line-height: 1.4;
     }
     .pb-table tr:last-child td { border-bottom: none; }
@@ -436,7 +436,7 @@
     .steps-cell { display: flex; align-items: center; gap: var(--space-200); }
     .steps-label { font-size: 12px; font-weight: 600; color: var(--color-on-surface); white-space: nowrap; }
     .start-date { font-size: 13px; color: var(--color-on-surface); white-space: nowrap; }
-    .blockers-cell { display: flex; flex-wrap: wrap; gap: 3px; }
+    .blockers-cell { display: flex; flex-wrap: wrap; gap: 6px; }
 
     /* Typing indicator (Pebble Spinner alternative for chat) */
     .typing-indicator {
