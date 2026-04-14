@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rippling AI Chat</title>
+  <link rel="stylesheet" href="https://static-assets.ripplingcdn.com/webapp-static/rippling-fonts-rebrand.css">
+  <style>
+    @font-face {
+      font-display: swap;
+      font-family: "BaselGrotesk";
+      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Regular.woff2") format("woff2");
+      font-weight: 400;
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "BaselGrotesk";
+      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Book.woff2") format("woff2");
+      font-weight: 500;
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "BaselGrotesk";
+      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Medium.woff2") format("woff2");
+      font-weight: 600;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-primary: #6B2D7B;
+      --color-primary-hover: #5A2568;
+      --color-primary-container: #ede0f0;
+      --color-on-primary: #fff;
+      --color-secondary: #1b6cd9;
+      --color-surface: #fff;
+      --color-surface-dim: #f7f5f3;
+      --color-surface-bright: #fbfafb;
+      --color-on-surface: #182433;
+      --color-on-surface-variant: #6b7280;
+      --color-outline: #d1d1d6;
+      --color-outline-variant: #e5e5ea;
+      --color-neutral-container: #f2f2f7;
+      --color-on-neutral-container: #3a3a3c;
+      --color-on-surface-inverse: #fff;
+      --color-surface-inverse: #182433;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0px 4px 4px rgba(0,0,0,0.16);
+      --shadow-xl: 0 4px 16px rgba(0,0,0,0.12);
+      --shape-corner-sm: 4px;
+      --shape-corner-md: 8px;
+      --shape-corner-lg: 12px;
+      --shape-corner-full: 9999px;
+      --sidebar-width: 200px;
+      --topbar-height: 56px;
+    }
+
+    body {
+      font-family: "BaselGrotesk", "ripplingFontBook", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--color-on-surface);
+      background: var(--color-surface);
+      display: flex;
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Sidebar ─── */
+    .sidebar {
+      width: var(--sidebar-width); background: var(--color-surface-inverse); color: #fff;
+      display: flex; flex-direction: column; flex-shrink: 0;
+      position: fixed; top: 0; left: 0; bottom: 0; z-index: 10;
+    }
+    .sidebar-logo {
+      display: flex; align-items: center; gap: 10px;
+      padding: 20px 20px 24px;
+      font-size: 17px; font-weight: 600; letter-spacing: -0.2px;
+    }
+    .logo-icon {
+      width: 28px; height: 28px; background: var(--color-primary); border-radius: var(--shape-corner-md);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px;
+    }
+    .sidebar-section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.8px; color: rgba(255,255,255,0.38); padding: 0 20px 8px;
+    }
+    .sidebar-nav { list-style: none; margin-bottom: 24px; }
+    .sidebar-nav li a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 20px; color: rgba(255,255,255,0.65);
+      text-decoration: none; font-size: 14px;
+      transition: background 0.12s, color 0.12s;
+    }
+    .sidebar-nav li a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .sidebar-nav li a.active { background: rgba(255,255,255,0.1); color: #fff; font-weight: 500; }
+    .nav-icon { width: 18px; height: 18px; opacity: 0.65; flex-shrink: 0; }
+
+    /* ─── Main ─── */
+    .main { margin-left: var(--sidebar-width); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ─── Topbar ─── */
+    .topbar {
+      height: var(--topbar-height); background: var(--color-surface);
+      border-bottom: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 24px; position: sticky; top: 0; z-index: 5;
+    }
+    .search-box {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--color-neutral-container); border-radius: var(--shape-corner-md);
+      padding: 8px 16px; width: 260px;
+      color: var(--color-on-surface-variant); font-size: 13px;
+    }
+    .topbar-right { position: absolute; right: 24px; display: flex; align-items: center; gap: 16px; }
+    .topbar-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      color: var(--color-on-surface-variant); cursor: pointer; border-radius: var(--shape-corner-md);
+    }
+    .topbar-icon:hover { background: var(--color-neutral-container); }
+    .pb-avatar {
+      width: 32px; height: 32px; border-radius: var(--shape-corner-full);
+      background: var(--color-primary); color: var(--color-on-primary);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; }
+
+    /* ─── Page content (placeholder behind the panel) ─── */
+    .content {
+      padding: 40px 56px 48px; flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--color-on-surface-variant);
+    }
+    .content-placeholder {
+      text-align: center; max-width: 400px;
+    }
+    .content-placeholder h2 {
+      font-size: 22px; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px;
+    }
+    .content-placeholder p { font-size: 14px; line-height: 1.6; }
+
+    /* ─── AI FAB ─── */
+    .ai-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 80;
+      width: 52px; height: 52px; border-radius: var(--shape-corner-full);
+      background: var(--color-primary); color: var(--color-on-primary);
+      border: none; cursor: pointer; box-shadow: var(--shadow-xl);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .ai-fab:hover { background: var(--color-primary-hover); transform: scale(1.06); }
+    .ai-fab.hidden { display: none; }
+
+    /* ─── AI Side Panel ─── */
+    .ai-panel-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 90;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    }
+    .ai-panel-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .ai-panel {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 440px; z-index: 100;
+      background: var(--color-surface); box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+      display: flex; flex-direction: column;
+      transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ai-panel.open { transform: translateX(0); }
+
+    .ai-panel-header {
+      padding: 16px 20px; border-bottom: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .ai-panel-header-icon {
+      width: 34px; height: 34px; border-radius: var(--shape-corner-md);
+      background: var(--color-primary);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .ai-panel-header-info { flex: 1; }
+    .ai-panel-header-title { font-size: 15px; font-weight: 600; }
+    .ai-panel-header-sub { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 1px; }
+    .ai-panel-close {
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      border: none; background: none; color: var(--color-on-surface-variant); cursor: pointer;
+      border-radius: var(--shape-corner-md); transition: background 0.12s;
+    }
+    .ai-panel-close:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
+
+    .ai-panel-messages {
+      flex: 1; overflow-y: auto; padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .chat-msg { display: flex; gap: 10px; max-width: 100%; }
+    .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .chat-msg-bubble {
+      padding: 14px 16px; border-radius: var(--shape-corner-lg);
+      font-size: 13.5px; line-height: 1.6;
+    }
+    .chat-msg.ai .chat-msg-bubble {
+      background: var(--color-surface-dim); color: var(--color-on-surface);
+      border-bottom-left-radius: var(--shape-corner-sm);
+    }
+    .chat-msg.user .chat-msg-bubble {
+      background: var(--color-surface-inverse); color: var(--color-on-surface-inverse);
+      border-bottom-right-radius: var(--shape-corner-sm);
+    }
+
+    .chat-suggestions {
+      display: flex; flex-wrap: wrap; gap: 8px; padding: 0 20px 12px; flex-shrink: 0;
+    }
+    .pb-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 12px; border-radius: var(--shape-corner-full);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--color-outline); background: var(--color-surface);
+      color: var(--color-on-surface-variant); transition: all 0.12s;
+      font-family: inherit;
+    }
+    .pb-chip:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-container); }
+
+    .ai-panel-input-area {
+      padding: 14px 20px; border-top: 1px solid var(--color-outline-variant);
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+      background: var(--color-surface);
+    }
+    .chat-input {
+      flex: 1; padding: 10px 14px; border: 1px solid var(--color-outline);
+      border-radius: var(--shape-corner-md); font-size: 13.5px; color: var(--color-on-surface);
+      background: var(--color-surface-dim); outline: none; font-family: inherit;
+    }
+    .chat-input:focus { border-color: var(--color-primary); background: var(--color-surface); box-shadow: 0 0 0 2px rgba(107,45,123,0.15); }
+    .chat-input::placeholder { color: var(--color-on-surface-variant); }
+
+    .pb-btn-send {
+      width: 36px; height: 36px; border-radius: var(--shape-corner-md); border: none;
+      background: var(--color-primary); color: var(--color-on-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.12s; flex-shrink: 0;
+    }
+    .pb-btn-send:hover { background: var(--color-primary-hover); }
+
+    /* ─── Checkbox Acknowledgement Card ─── */
+    .pb-ack-card {
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--shape-corner-lg);
+      padding: 16px 18px;
+      margin-top: 10px;
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--color-surface);
+      cursor: pointer; user-select: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .pb-ack-card:hover { border-color: var(--color-on-surface-variant); }
+    .pb-ack-card.checked { border-color: var(--color-primary); }
+    .pb-ack-card.checked:hover { border-color: var(--color-primary); }
+
+    .pb-checkbox {
+      flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px;
+      border-radius: var(--shape-corner-sm);
+      border: 2px solid var(--color-outline); background: var(--color-surface);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .pb-checkbox svg { opacity: 0; transition: opacity 0.12s; }
+    .pb-ack-card.checked .pb-checkbox {
+      background: var(--color-primary); border-color: var(--color-primary);
+    }
+    .pb-ack-card.checked .pb-checkbox svg { opacity: 1; }
+
+    .pb-ack-text {
+      font-size: 14px; line-height: 1.65; color: var(--color-on-surface);
+    }
+    .pb-ack-text a {
+      color: var(--color-secondary); text-decoration: underline;
+      text-underline-offset: 2px; font-weight: 500;
+    }
+    .pb-ack-text a:hover { color: var(--color-primary); }
+
+    /* ─── Typing indicator ─── */
+    .typing-indicator {
+      display: flex; gap: 4px; align-items: center; padding: 4px 0;
+    }
+    .typing-dot {
+      width: 6px; height: 6px; border-radius: var(--shape-corner-full); background: var(--color-on-surface-variant);
+      animation: typingBounce 1.2s infinite ease-in-out; opacity: 0.5;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+      30% { transform: translateY(-3px); opacity: 1; }
+    }
+
+    .pb-spinner {
+      width: 18px; height: 18px; border: 2.5px solid var(--color-outline-variant);
+      border-top-color: var(--color-primary); border-radius: var(--shape-corner-full);
+      animation: pbSpin 0.7s linear infinite;
+    }
+    @keyframes pbSpin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo"><div class="logo-icon">R</div><span>Rippling</span></div>
+  <div class="sidebar-section-label">HR</div>
+  <ul class="sidebar-nav">
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>HR Overview</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>Org Chart</a></li>
+    <li><a href="#" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>People</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Compliance 360</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Learning</a></li>
+  </ul>
+  <div class="sidebar-section-label">Platform</div>
+  <ul class="sidebar-nav">
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Company Settings</a></li>
+    <li><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+  <header class="topbar">
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search or jump to...</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+      <div class="pb-avatar">WS</div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="content-placeholder">
+      <h2>EOR Hiring</h2>
+      <p>You're about to add a new hire through Rippling EOR. Click the AI assistant button to get started with compliance checks.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AI FAB -->
+<button class="ai-fab" id="aiFab" onclick="togglePanel(true)">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+</button>
+
+<!-- Overlay -->
+<div class="ai-panel-overlay" id="panelOverlay" onclick="togglePanel(false)"></div>
+
+<!-- AI Side Panel -->
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-panel-header">
+    <div class="ai-panel-header-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="ai-panel-header-info">
+      <div class="ai-panel-header-title">Rippling AI</div>
+      <div class="ai-panel-header-sub">EOR hiring assistant</div>
+    </div>
+    <button class="ai-panel-close" onclick="togglePanel(false)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="ai-panel-messages" id="panelMessages">
+    <!-- Initial AI message with checkbox acknowledgement -->
+    <div class="chat-msg ai">
+      <div class="pb-avatar sm">AI</div>
+      <div class="chat-msg-bubble">
+        Before proceeding with this EOR hire, please review and acknowledge the following eligibility criteria.
+        <div class="pb-ack-card" id="ackCard" onclick="toggleAck()">
+          <div class="pb-checkbox">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="pb-ack-text">
+            For compliance reasons and to make sure Rippling EOR is best able to serve its customers, Rippling EOR has eligibility criteria for using Rippling's EOR services. Please review both the global and country-specific criteria described <a href="#" onclick="event.stopPropagation()">here</a>. By checking this box, you agree that you have read the eligibility criteria, agree to comply, and confirmed this prospective hire's eligibility. If you have questions regarding these criteria, please contact <a href="#" onclick="event.stopPropagation()">Rippling's support team</a> before proceeding.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-suggestions" id="panelSuggestions">
+    <button class="pb-chip" onclick="sendSuggestion(this)">What countries are supported?</button>
+    <button class="pb-chip" onclick="sendSuggestion(this)">Show eligibility criteria</button>
+    <button class="pb-chip" onclick="sendSuggestion(this)">Help with this hire</button>
+  </div>
+
+  <div class="ai-panel-input-area">
+    <input type="text" class="chat-input" id="panelInput" placeholder="Ask about EOR eligibility...">
+    <button class="pb-btn-send" onclick="sendPanelMessage()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  function togglePanel(open) {
+    document.getElementById('aiPanel').classList.toggle('open', open);
+    document.getElementById('panelOverlay').classList.toggle('open', open);
+    document.getElementById('aiFab').classList.toggle('hidden', open);
+    if (open) document.getElementById('panelInput').focus();
+  }
+
+  function toggleAck() {
+    const card = document.getElementById('ackCard');
+    const wasChecked = card.classList.contains('checked');
+    card.classList.toggle('checked');
+
+    if (!wasChecked) {
+      const c = document.getElementById('panelMessages');
+      const typing = appendTyping(c);
+      setTimeout(() => {
+        typing.remove();
+        appendAiMsg(c, "Thanks for confirming. You're now cleared to proceed with the EOR hire. What would you like to do next?");
+      }, 900);
+    }
+  }
+
+  function sendPanelMessage() {
+    const input = document.getElementById('panelInput');
+    const text = input.value.trim();
+    if (!text) return;
+    const c = document.getElementById('panelMessages');
+    appendUserMsg(c, text);
+    input.value = '';
+    const t = appendTyping(c);
+    setTimeout(() => {
+      t.remove();
+      appendAiMsg(c, "Let me look into that for you. I'll check the latest EOR policies and eligibility requirements.");
+    }, 1000);
+  }
+
+  function sendSuggestion(el) {
+    document.getElementById('panelInput').value = el.textContent;
+    sendPanelMessage();
+  }
+
+  function appendUserMsg(c, text) {
+    const m = document.createElement('div');
+    m.className = 'chat-msg user';
+    m.innerHTML = '<div class="pb-avatar sm" style="background:#3a3a3c">WS</div><div class="chat-msg-bubble">' + escapeHtml(text) + '</div>';
+    c.appendChild(m);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  function appendAiMsg(c, html) {
+    const m = document.createElement('div');
+    m.className = 'chat-msg ai';
+    m.innerHTML = '<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble">' + html + '</div>';
+    c.appendChild(m);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  function appendTyping(c) {
+    const t = document.createElement('div');
+    t.className = 'chat-msg ai';
+    t.innerHTML = '<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+    c.appendChild(t);
+    c.scrollTop = c.scrollHeight;
+    return t;
+  }
+
+  function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  document.getElementById('panelInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') sendPanelMessage();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') togglePanel(false);
+  });
+</script>
+</body>
+</html>
