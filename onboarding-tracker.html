@@ -416,6 +416,33 @@
     .pb-btn-tonal { background: var(--color-primary-container); color: var(--color-primary); }
     .pb-btn-tonal:hover { filter: brightness(0.95); }
 
+    /* ─── Prompt widgets strip ─── */
+    .prompt-widgets {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px; padding: 20px 24px 0; margin-top: 24px;
+    }
+    .prompt-widget {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 14px 16px; border-radius: var(--shape-corner-md);
+      border: 1px solid var(--color-outline-variant);
+      background: var(--color-surface);
+      cursor: pointer; transition: all 0.15s;
+      user-select: none;
+    }
+    .prompt-widget:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-container);
+      box-shadow: var(--shadow-sm);
+    }
+    .prompt-widget-icon {
+      width: 32px; height: 32px; border-radius: var(--shape-corner-md);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .prompt-widget-text { flex: 1; min-width: 0; }
+    .prompt-widget-title { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
+    .prompt-widget-desc { font-size: 12px; color: var(--color-on-surface-variant); line-height: 1.4; }
+
     /* ══════════════════════════════════════════════════
        TRACKER TAB — AI chat with embedded table
        ══════════════════════════════════════════════════ */
@@ -536,6 +563,24 @@
 
     <!-- TAB 1 — DESIGNER (full chat) -->
     <div id="explorer-panel" class="tab-panel active">
+      <div class="prompt-widgets">
+        <div class="prompt-widget" onclick="fireDesignerPrompt('Create a new onboarding journey for a cohort')">
+          <div class="prompt-widget-icon" style="background:#ede9fe;color:#7c3aed"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">New journey</div><div class="prompt-widget-desc">Create a template from scratch or clone an existing one</div></div>
+        </div>
+        <div class="prompt-widget" onclick="fireDesignerPrompt('Import our onboarding SOP and turn it into a journey template')">
+          <div class="prompt-widget-icon" style="background:var(--color-info-container);color:var(--color-on-info-container)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">Import SOP</div><div class="prompt-widget-desc">Upload a checklist and auto-generate checkpoints & tasks</div></div>
+        </div>
+        <div class="prompt-widget" onclick="fireDesignerPrompt('Add a new checkpoint to the Engineering journey')">
+          <div class="prompt-widget-icon" style="background:var(--color-warning-container);color:var(--color-on-warning-container)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">Add checkpoint</div><div class="prompt-widget-desc">Insert a new milestone like Payroll Ready or Compliance</div></div>
+        </div>
+        <div class="prompt-widget" onclick="fireDesignerPrompt('Update the action policy for the Engineering journey')">
+          <div class="prompt-widget-icon" style="background:var(--color-success-container);color:var(--color-on-success-container)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">Configure actions</div><div class="prompt-widget-desc">Set approval levels, reminders, and auto-execute rules</div></div>
+        </div>
+      </div>
       <div class="designer-chat-full">
         <div class="chat-header">
           <div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
@@ -683,6 +728,24 @@
 
     <!-- TAB 2 — TRACKER -->
     <div id="tracker-panel" class="tab-panel">
+      <div class="prompt-widgets">
+        <div class="prompt-widget" onclick="fireTrackerPrompt('Which new hires are blocked right now?')">
+          <div class="prompt-widget-icon" style="background:var(--color-error-container);color:var(--color-on-error-container)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">View blockers</div><div class="prompt-widget-desc">See all hires with unresolved blockers and root causes</div></div>
+        </div>
+        <div class="prompt-widget" onclick="fireTrackerPrompt('Show me everyone starting this week and their readiness')">
+          <div class="prompt-widget-icon" style="background:var(--color-warning-container);color:var(--color-on-warning-container)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">This week's starts</div><div class="prompt-widget-desc">Readiness snapshot for hires starting in the next 7 days</div></div>
+        </div>
+        <div class="prompt-widget" onclick="fireTrackerPrompt('Escalate all overdue onboarding items to their owners')">
+          <div class="prompt-widget-icon" style="background:#fef3c7;color:#92400e"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">Escalate overdue</div><div class="prompt-widget-desc">Send nudges to task owners for items past their due date</div></div>
+        </div>
+        <div class="prompt-widget" onclick="fireTrackerPrompt('Give me a summary of onboarding progress by department')">
+          <div class="prompt-widget-icon" style="background:var(--color-success-container);color:var(--color-on-success-container)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="prompt-widget-text"><div class="prompt-widget-title">Dept. summary</div><div class="prompt-widget-desc">Breakdown of onboarding completion by team or archetype</div></div>
+        </div>
+      </div>
       <div class="tracker-chat-full">
         <div class="chat-header">
           <div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
@@ -822,7 +885,17 @@ Here's the current onboarding status across all <strong>6 active new hires</stro
     const c = document.getElementById('tracker-chat-messages');
     appendUserMsg(c, text); input.value = '';
     const t = appendTyping(c);
-    setTimeout(() => { t.remove(); appendAiMsg(c, "Let me look into that for you. I'm checking the latest status across all active onboardings."); }, 1200);
+    setTimeout(() => { t.remove(); appendAiMsg(c, getTrackerResponse(text)); }, 1200);
+  }
+
+  function getTrackerResponse(text) {
+    const q = text.toLowerCase();
+    if (q.includes('block')) return '<strong>4 hires have active blockers:</strong><br><br>• <strong>Alex Kim</strong> — Equipment delayed (vendor: CDW, ordered Apr 3), buddy not assigned<br>• <strong>Priya Sharma</strong> — Benefits enrollment pending (employee action, reminded Apr 11)<br>• <strong>Marcus Cole</strong> — IT provisioning not started (IT Admin, due Apr 18)<br>• <strong>Sam Ortiz</strong> — POS training not scheduled (Ops Manager, due Apr 12 — <span style="color:var(--color-error)">overdue</span>)<br><br>Dani Reyes has a territory assignment pending but it\'s non-blocking. Want me to escalate the overdue items?';
+    if (q.includes('this week') || q.includes('start')) return '<strong>3 hires start this week (Apr 14):</strong><br><br><table class="pb-table" style="margin:8px 0"><thead><tr><th>Hire</th><th>Readiness</th><th>Open Items</th></tr></thead><tbody><tr><td>Alex Kim</td><td><span style="color:var(--color-warning)">At Risk</span></td><td>Equipment, buddy assignment</td></tr><tr><td>Priya Sharma</td><td><span style="color:var(--color-warning)">At Risk</span></td><td>Benefits enrollment</td></tr><tr><td>Dani Reyes</td><td><span style="color:var(--color-success)">On Track</span></td><td>Territory (non-blocking)</td></tr></tbody></table>Alex and Priya need immediate attention — both start tomorrow. Want me to send urgent reminders to their task owners?';
+    if (q.includes('escalat') || q.includes('overdue')) return 'I found <strong>2 overdue items</strong> across active onboardings:<br><br>1. <strong>Sam Ortiz</strong> — POS training (due Apr 12, 1 day overdue) → Ops Manager<br>2. <strong>Marcus Cole</strong> — IT provisioning (due Apr 10, 3 days overdue) → IT Admin<br><br>I\'ve drafted escalation messages for both owners with the specific blocker details and updated timelines. <button class="pb-btn pb-btn-sm" style="margin-top:8px" onclick="this.textContent=\'✓ Escalations sent\';this.disabled=true">Send escalations</button>';
+    if (q.includes('department') || q.includes('summary') || q.includes('dept')) return '<strong>Onboarding progress by department:</strong><br><br><table class="pb-table" style="margin:8px 0"><thead><tr><th>Department</th><th>Active</th><th>Avg Progress</th><th>Blocked</th></tr></thead><tbody><tr><td>Engineering</td><td>3</td><td>70%</td><td>3</td></tr><tr><td>Sales</td><td>1</td><td>85%</td><td>0</td></tr><tr><td>Retail</td><td>2</td><td>80%</td><td>1</td></tr></tbody></table>Engineering has the highest blocker rate (100%). The main bottleneck is IT provisioning — 2 of 3 engineering hires are waiting on device or access setup. Want me to drill into a specific department?';
+    if (q.includes('engineering')) return '<strong>Engineering onboarding detail (3 hires):</strong><br><br>• <strong>Alex Kim</strong> (Apr 14) — 75% complete. Equipment delayed by CDW, buddy not assigned by hiring manager. <span style="color:var(--color-error)">Day 1 at risk.</span><br>• <strong>Priya Sharma</strong> (Apr 14) — 95% complete. Only benefits enrollment outstanding — employee needs to act. <span style="color:var(--color-warning)">Nudge sent Apr 11.</span><br>• <strong>Marcus Cole</strong> (Apr 21) — 40% complete. IT provisioning hasn\'t started; GitHub, IDE, Slack access all pending. Has 7 days.<br><br>Biggest risk: Alex starting tomorrow without equipment. Recommend escalating to CDW + assigning a buddy via Slack.';
+    return 'Let me look into that. I\'m checking the latest status across all active onboardings and will have an answer shortly.';
   }
 
   function appendUserMsg(c, text) {
@@ -847,6 +920,17 @@ Here's the current onboarding status across all <strong>6 active new hires</stro
   function addSuggestion(el) { document.getElementById('explorer-chat-input').value = el.textContent; sendExplorerMessage(); }
   function addTrackerSuggestion(el) { document.getElementById('tracker-chat-input').value = el.textContent; sendTrackerMessage(); }
   function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function fireDesignerPrompt(text) {
+    document.getElementById('explorer-chat-input').value = text;
+    sendExplorerMessage();
+  }
+
+  function fireTrackerPrompt(text) {
+    if (!trackerLoaded) { trackerLoaded = true; runTrackerPrompt(); }
+    document.getElementById('tracker-chat-input').value = text;
+    setTimeout(() => sendTrackerMessage(), trackerLoaded ? 100 : 2000);
+  }
 
   document.getElementById('explorer-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendExplorerMessage(); });
   document.getElementById('tracker-chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendTrackerMessage(); });
