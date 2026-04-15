@@ -3,27 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rippling AI Chat</title>
+  <title>Onboarding — Rippling</title>
   <link rel="stylesheet" href="https://static-assets.ripplingcdn.com/webapp-static/rippling-fonts-rebrand.css">
   <style>
-    @font-face {
-      font-display: swap;
-      font-family: "BaselGrotesk";
-      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Regular.woff2") format("woff2");
-      font-weight: 400;
-    }
-    @font-face {
-      font-display: swap;
-      font-family: "BaselGrotesk";
-      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Book.woff2") format("woff2");
-      font-weight: 500;
-    }
-    @font-face {
-      font-display: swap;
-      font-family: "BaselGrotesk";
-      src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Medium.woff2") format("woff2");
-      font-weight: 600;
-    }
+    @font-face { font-display: swap; font-family: "BaselGrotesk"; src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Regular.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-display: swap; font-family: "BaselGrotesk"; src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Book.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-display: swap; font-family: "BaselGrotesk"; src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Medium.woff2") format("woff2"); font-weight: 600; }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -44,25 +29,27 @@
       --color-on-neutral-container: #3a3a3c;
       --color-on-surface-inverse: #fff;
       --color-surface-inverse: #182433;
+      --color-success: #16a34a;
+      --color-success-container: #dcfce7;
+      --color-warning: #d97706;
+      --color-warning-container: #fef3c7;
+      --color-error: #dc2626;
+      --color-error-container: #fee2e2;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
-      --shadow-md: 0px 4px 4px rgba(0,0,0,0.16);
-      --shadow-xl: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
       --shape-corner-sm: 4px;
       --shape-corner-md: 8px;
       --shape-corner-lg: 12px;
+      --shape-corner-xl: 16px;
       --shape-corner-full: 9999px;
       --sidebar-width: 200px;
       --topbar-height: 56px;
     }
 
     body {
-      font-family: "BaselGrotesk", "ripplingFontBook", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: var(--color-on-surface);
-      background: var(--color-surface);
-      display: flex;
-      min-height: 100vh;
-      font-size: 14px;
-      line-height: 1.5;
+      font-family: "BaselGrotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--color-on-surface); background: var(--color-surface);
+      display: flex; min-height: 100vh; font-size: 14px; line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -72,27 +59,11 @@
       display: flex; flex-direction: column; flex-shrink: 0;
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 10;
     }
-    .sidebar-logo {
-      display: flex; align-items: center; gap: 10px;
-      padding: 20px 20px 24px;
-      font-size: 17px; font-weight: 600; letter-spacing: -0.2px;
-    }
-    .logo-icon {
-      width: 28px; height: 28px; background: var(--color-primary); border-radius: var(--shape-corner-md);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 15px;
-    }
-    .sidebar-section-label {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.8px; color: rgba(255,255,255,0.38); padding: 0 20px 8px;
-    }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 20px 20px 24px; font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
+    .logo-icon { width: 28px; height: 28px; background: var(--color-primary); border-radius: var(--shape-corner-md); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
+    .sidebar-section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.38); padding: 0 20px 8px; }
     .sidebar-nav { list-style: none; margin-bottom: 24px; }
-    .sidebar-nav li a {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 20px; color: rgba(255,255,255,0.65);
-      text-decoration: none; font-size: 14px;
-      transition: background 0.12s, color 0.12s;
-    }
+    .sidebar-nav li a { display: flex; align-items: center; gap: 10px; padding: 8px 20px; color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; transition: background 0.12s, color 0.12s; }
     .sidebar-nav li a:hover { background: rgba(255,255,255,0.06); color: #fff; }
     .sidebar-nav li a.active { background: rgba(255,255,255,0.1); color: #fff; font-weight: 500; }
     .nav-icon { width: 18px; height: 18px; opacity: 0.65; flex-shrink: 0; }
@@ -101,235 +72,233 @@
     .main { margin-left: var(--sidebar-width); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
 
     /* ─── Topbar ─── */
-    .topbar {
-      height: var(--topbar-height); background: var(--color-surface);
-      border-bottom: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; justify-content: center;
-      padding: 0 24px; position: sticky; top: 0; z-index: 5;
-    }
-    .search-box {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--color-neutral-container); border-radius: var(--shape-corner-md);
-      padding: 8px 16px; width: 260px;
-      color: var(--color-on-surface-variant); font-size: 13px;
-    }
+    .topbar { height: var(--topbar-height); background: var(--color-surface); border-bottom: 1px solid var(--color-outline-variant); display: flex; align-items: center; justify-content: center; padding: 0 24px; position: sticky; top: 0; z-index: 5; }
+    .search-box { display: flex; align-items: center; gap: 8px; background: var(--color-neutral-container); border-radius: var(--shape-corner-md); padding: 8px 16px; width: 260px; color: var(--color-on-surface-variant); font-size: 13px; }
     .topbar-right { position: absolute; right: 24px; display: flex; align-items: center; gap: 16px; }
-    .topbar-icon {
-      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-      color: var(--color-on-surface-variant); cursor: pointer; border-radius: var(--shape-corner-md);
-    }
+    .topbar-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: var(--color-on-surface-variant); cursor: pointer; border-radius: var(--shape-corner-md); }
     .topbar-icon:hover { background: var(--color-neutral-container); }
-    .pb-avatar {
-      width: 32px; height: 32px; border-radius: var(--shape-corner-full);
-      background: var(--color-primary); color: var(--color-on-primary);
-      font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; }
+    .pb-avatar { width: 32px; height: 32px; border-radius: var(--shape-corner-full); background: var(--color-primary); color: var(--color-on-primary); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    .pb-avatar.sm { width: 28px; height: 28px; font-size: 11px; flex-shrink: 0; }
 
-    /* ─── Page content (placeholder behind the panel) ─── */
-    .content {
-      padding: 40px 56px 48px; flex: 1;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      color: var(--color-on-surface-variant);
-    }
-    .content-placeholder {
-      text-align: center; max-width: 400px;
-    }
-    .content-placeholder h2 {
-      font-size: 22px; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px;
-    }
-    .content-placeholder p { font-size: 14px; line-height: 1.6; }
+    /* ─── Page header + tabs ─── */
+    .page-header { padding: 28px 32px 0; }
+    .page-title { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
+    .page-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--color-outline-variant); }
+    .page-tab { padding: 8px 0 12px; font-size: 14px; color: var(--color-on-surface-variant); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.12s; user-select: none; font-weight: 500; }
+    .page-tab:hover { color: var(--color-on-surface); }
+    .page-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+    .tab-panel { display: none; flex: 1; flex-direction: column; }
+    .tab-panel.active { display: flex; }
 
-    /* ─── AI FAB ─── */
-    .ai-fab {
-      position: fixed; bottom: 28px; right: 28px; z-index: 80;
-      width: 52px; height: 52px; border-radius: var(--shape-corner-full);
-      background: var(--color-primary); color: var(--color-on-primary);
-      border: none; cursor: pointer; box-shadow: var(--shadow-xl);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, transform 0.15s;
-    }
-    .ai-fab:hover { background: var(--color-primary-hover); transform: scale(1.06); }
-    .ai-fab.hidden { display: none; }
-
-    /* ─── AI Side Panel ─── */
-    .ai-panel-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 90;
-      opacity: 0; pointer-events: none; transition: opacity 0.25s;
-    }
-    .ai-panel-overlay.open { opacity: 1; pointer-events: auto; }
-
-    .ai-panel {
-      position: fixed; top: 0; right: 0; bottom: 0; width: 440px; z-index: 100;
-      background: var(--color-surface); box-shadow: -4px 0 24px rgba(0,0,0,0.12);
-      display: flex; flex-direction: column;
-      transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .ai-panel.open { transform: translateX(0); }
-
-    .ai-panel-header {
-      padding: 16px 20px; border-bottom: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
-    }
-    .ai-panel-header-icon {
-      width: 34px; height: 34px; border-radius: var(--shape-corner-md);
-      background: var(--color-primary);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .ai-panel-header-info { flex: 1; }
-    .ai-panel-header-title { font-size: 15px; font-weight: 600; }
-    .ai-panel-header-sub { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 1px; }
-    .ai-panel-close {
-      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-      border: none; background: none; color: var(--color-on-surface-variant); cursor: pointer;
-      border-radius: var(--shape-corner-md); transition: background 0.12s;
-    }
-    .ai-panel-close:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
-
-    .ai-panel-messages {
-      flex: 1; overflow-y: auto; padding: 20px;
-      display: flex; flex-direction: column; gap: 16px;
-    }
-
+    /* ─── Explorer: full chat ─── */
+    .chat-container { flex: 1; display: flex; flex-direction: column; max-width: 800px; width: 100%; margin: 0 auto; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 24px 32px; display: flex; flex-direction: column; gap: 20px; }
     .chat-msg { display: flex; gap: 10px; max-width: 100%; }
     .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
-    .chat-msg-bubble {
-      padding: 14px 16px; border-radius: var(--shape-corner-lg);
-      font-size: 13.5px; line-height: 1.6;
-    }
-    .chat-msg.ai .chat-msg-bubble {
-      background: var(--color-surface-dim); color: var(--color-on-surface);
-      border-bottom-left-radius: var(--shape-corner-sm);
-    }
-    .chat-msg.user .chat-msg-bubble {
-      background: var(--color-surface-inverse); color: var(--color-on-surface-inverse);
-      border-bottom-right-radius: var(--shape-corner-sm);
+    .chat-msg-bubble { padding: 14px 16px; border-radius: var(--shape-corner-lg); font-size: 13.5px; line-height: 1.65; max-width: 600px; }
+    .chat-msg.ai .chat-msg-bubble { background: var(--color-surface-dim); color: var(--color-on-surface); border-bottom-left-radius: var(--shape-corner-sm); }
+    .chat-msg.user .chat-msg-bubble { background: var(--color-surface-inverse); color: var(--color-on-surface-inverse); border-bottom-right-radius: var(--shape-corner-sm); }
+
+    /* ─── Embedded template card ─── */
+    .template-card {
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--shape-corner-xl);
+      margin-top: 12px; overflow: hidden;
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
     }
 
-    .chat-suggestions {
-      display: flex; flex-wrap: wrap; gap: 8px; padding: 0 20px 12px; flex-shrink: 0;
+    .template-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; background: var(--color-surface);
+      border-bottom: 1px solid var(--color-outline-variant);
     }
+    .template-card-header-left { display: flex; align-items: center; gap: 10px; }
+    .template-dot { width: 10px; height: 10px; border-radius: var(--shape-corner-full); }
+    .template-card-title { font-size: 15px; font-weight: 600; }
+    .template-card-meta { font-size: 12px; color: var(--color-on-surface-variant); }
+    .template-status {
+      font-size: 11px; font-weight: 600; padding: 3px 10px;
+      border-radius: var(--shape-corner-full); background: var(--color-success-container);
+      color: #15803d; text-transform: uppercase; letter-spacing: 0.4px;
+    }
+
+    /* Checkpoint rows */
+    .tpl-checkpoint {
+      border-bottom: 1px solid var(--color-outline-variant);
+    }
+    .tpl-checkpoint:last-child { border-bottom: none; }
+
+    .tpl-cp-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 18px; cursor: pointer; user-select: none;
+      transition: background 0.1s;
+    }
+    .tpl-cp-header:hover { background: var(--color-neutral-container); }
+
+    .tpl-cp-chevron {
+      width: 16px; height: 16px; color: var(--color-on-surface-variant);
+      transition: transform 0.2s; flex-shrink: 0;
+    }
+    .tpl-checkpoint.open .tpl-cp-chevron { transform: rotate(90deg); }
+
+    .tpl-cp-icon {
+      width: 22px; height: 22px; border-radius: var(--shape-corner-full);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 11px; font-weight: 700; color: #fff;
+    }
+    .tpl-cp-icon.green { background: var(--color-success); }
+    .tpl-cp-icon.amber { background: var(--color-warning); }
+    .tpl-cp-icon.red { background: var(--color-error); }
+    .tpl-cp-icon.gray { background: #9ca3af; }
+
+    .tpl-cp-name { font-size: 13.5px; font-weight: 600; flex: 1; }
+
+    .tpl-cp-badges { display: flex; align-items: center; gap: 8px; }
+    .tpl-blocking-tag {
+      font-size: 10px; font-weight: 600; padding: 2px 7px;
+      border-radius: var(--shape-corner-sm); text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .tpl-blocking-tag.blocks { background: var(--color-error-container); color: #991b1b; }
+    .tpl-blocking-tag.non-blocking { background: var(--color-neutral-container); color: var(--color-on-surface-variant); }
+    .tpl-cp-count { font-size: 12px; color: var(--color-on-surface-variant); }
+
+    /* Sub-checkpoint rows */
+    .tpl-sub-list {
+      display: none; padding: 0 18px 10px 66px;
+    }
+    .tpl-checkpoint.open .tpl-sub-list { display: block; }
+
+    .tpl-sub-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 0; border-bottom: 1px solid var(--color-outline-variant);
+      font-size: 13px;
+    }
+    .tpl-sub-item:last-child { border-bottom: none; }
+    .tpl-sub-left { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+    .tpl-sub-app {
+      font-size: 10px; font-weight: 600; padding: 2px 5px;
+      border-radius: 3px; background: var(--color-neutral-container);
+      color: var(--color-on-neutral-container); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .tpl-sub-name { color: var(--color-on-surface); }
+    .tpl-sub-right { display: flex; align-items: center; gap: 14px; font-size: 12px; color: var(--color-on-surface-variant); flex-shrink: 0; margin-left: 12px; }
+    .tpl-sub-right span { white-space: nowrap; }
+
+    /* Template footer */
+    .template-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px; border-top: 1px solid var(--color-outline-variant);
+      background: var(--color-surface-dim);
+    }
+    .template-card-footer-meta {
+      font-size: 12px; color: var(--color-on-surface-variant);
+    }
+    .template-card-footer-actions { display: flex; gap: 8px; }
+
+    /* Buttons */
+    .pb-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: var(--shape-corner-md);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: none; transition: all 0.12s; font-family: inherit;
+    }
+    .pb-btn-filled { background: var(--color-primary); color: var(--color-on-primary); }
+    .pb-btn-filled:hover { background: var(--color-primary-hover); }
+    .pb-btn-tonal { background: var(--color-primary-container); color: var(--color-primary); }
+    .pb-btn-tonal:hover { background: #e0d0e5; }
+    .pb-btn-outline { background: transparent; color: var(--color-on-surface); border: 1px solid var(--color-outline); }
+    .pb-btn-outline:hover { border-color: var(--color-on-surface-variant); background: var(--color-neutral-container); }
+
+    /* Suggestion chips */
+    .chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 32px 12px; flex-shrink: 0; }
     .pb-chip {
       display: inline-flex; align-items: center; gap: 4px;
       padding: 6px 12px; border-radius: var(--shape-corner-full);
       font-size: 12px; font-weight: 500; cursor: pointer;
       border: 1px solid var(--color-outline); background: var(--color-surface);
-      color: var(--color-on-surface-variant); transition: all 0.12s;
-      font-family: inherit;
+      color: var(--color-on-surface-variant); transition: all 0.12s; font-family: inherit;
     }
     .pb-chip:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-container); }
 
-    .ai-panel-input-area {
-      padding: 14px 20px; border-top: 1px solid var(--color-outline-variant);
-      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
-      background: var(--color-surface);
+    /* Input bar */
+    .chat-input-bar {
+      padding: 14px 32px 20px; display: flex; align-items: center; gap: 10px;
+      flex-shrink: 0; max-width: 800px; width: 100%; margin: 0 auto;
     }
     .chat-input {
-      flex: 1; padding: 10px 14px; border: 1px solid var(--color-outline);
-      border-radius: var(--shape-corner-md); font-size: 13.5px; color: var(--color-on-surface);
-      background: var(--color-surface-dim); outline: none; font-family: inherit;
+      flex: 1; padding: 11px 16px; border: 1px solid var(--color-outline);
+      border-radius: var(--shape-corner-md); font-size: 13.5px;
+      color: var(--color-on-surface); background: var(--color-surface); outline: none;
+      font-family: inherit;
     }
-    .chat-input:focus { border-color: var(--color-primary); background: var(--color-surface); box-shadow: 0 0 0 2px rgba(107,45,123,0.15); }
+    .chat-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(107,45,123,0.15); }
     .chat-input::placeholder { color: var(--color-on-surface-variant); }
-
     .pb-btn-send {
-      width: 36px; height: 36px; border-radius: var(--shape-corner-md); border: none;
+      width: 38px; height: 38px; border-radius: var(--shape-corner-md); border: none;
       background: var(--color-primary); color: var(--color-on-primary); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.12s; flex-shrink: 0;
     }
     .pb-btn-send:hover { background: var(--color-primary-hover); }
 
-    /* ─── Checkbox Acknowledgement Card ─── */
-    .pb-ack-card {
-      border: 1px solid var(--color-outline-variant);
-      border-radius: var(--shape-corner-lg);
-      margin-top: 10px;
-      background: var(--color-surface);
-      user-select: none;
-      transition: border-color 0.15s;
-      overflow: hidden;
-    }
-    .pb-ack-card:hover { border-color: var(--color-on-surface-variant); }
-    .pb-ack-card.checked { border-color: var(--color-primary); }
-    .pb-ack-card.checked:hover { border-color: var(--color-primary); }
-
-    .pb-ack-header {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 16px; cursor: pointer;
-    }
-    .pb-ack-header-icon {
-      width: 20px; height: 20px; flex-shrink: 0;
-      color: var(--color-on-surface-variant);
-    }
-    .pb-ack-header-label {
-      flex: 1; font-size: 13.5px; font-weight: 500; color: var(--color-on-surface);
-    }
-    .pb-ack-chevron {
-      width: 16px; height: 16px; flex-shrink: 0;
-      color: var(--color-on-surface-variant);
-      transition: transform 0.2s;
-    }
-    .pb-ack-card.expanded .pb-ack-chevron { transform: rotate(180deg); }
-
-    .pb-ack-body {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      padding: 0 16px;
-    }
-    .pb-ack-card.expanded .pb-ack-body {
-      max-height: 400px;
-      padding: 0 16px 16px;
-    }
-
-    .pb-ack-body-inner {
-      display: flex; gap: 12px; align-items: flex-start; cursor: pointer;
-    }
-
-    .pb-checkbox {
-      flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px;
-      border-radius: var(--shape-corner-sm);
-      border: 2px solid var(--color-outline); background: var(--color-surface);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s;
-    }
-    .pb-checkbox svg { opacity: 0; transition: opacity 0.12s; }
-    .pb-ack-card.checked .pb-checkbox {
-      background: var(--color-primary); border-color: var(--color-primary);
-    }
-    .pb-ack-card.checked .pb-checkbox svg { opacity: 1; }
-
-    .pb-ack-text {
-      font-size: 14px; line-height: 1.65; color: var(--color-on-surface);
-    }
-    .pb-ack-text a {
-      color: var(--color-secondary); text-decoration: underline;
-      text-underline-offset: 2px; font-weight: 500;
-    }
-    .pb-ack-text a:hover { color: var(--color-primary); }
-
-    /* ─── Typing indicator ─── */
-    .typing-indicator {
-      display: flex; gap: 4px; align-items: center; padding: 4px 0;
-    }
-    .typing-dot {
-      width: 6px; height: 6px; border-radius: var(--shape-corner-full); background: var(--color-on-surface-variant);
-      animation: typingBounce 1.2s infinite ease-in-out; opacity: 0.5;
-    }
+    /* Typing indicator */
+    .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .typing-dot { width: 6px; height: 6px; border-radius: var(--shape-corner-full); background: var(--color-on-surface-variant); animation: typingBounce 1.2s infinite ease-in-out; opacity: 0.5; }
     .typing-dot:nth-child(2) { animation-delay: 0.15s; }
     .typing-dot:nth-child(3) { animation-delay: 0.3s; }
-    @keyframes typingBounce {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
-      30% { transform: translateY(-3px); opacity: 1; }
-    }
+    @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.3; } 30% { transform: translateY(-3px); opacity: 1; } }
 
-    .pb-spinner {
-      width: 18px; height: 18px; border: 2.5px solid var(--color-outline-variant);
-      border-top-color: var(--color-primary); border-radius: var(--shape-corner-full);
-      animation: pbSpin 0.7s linear infinite;
+    /* ─── Action policy mini-table inside template ─── */
+    .tpl-policy-section {
+      padding: 12px 18px; border-top: 1px solid var(--color-outline-variant);
     }
-    @keyframes pbSpin { to { transform: rotate(360deg); } }
+    .tpl-policy-title {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--color-on-surface-variant);
+      margin-bottom: 8px;
+    }
+    .tpl-policy-grid {
+      display: grid; grid-template-columns: 1fr auto auto;
+      gap: 0; font-size: 12.5px;
+    }
+    .tpl-policy-grid > div {
+      padding: 6px 0; border-bottom: 1px solid var(--color-outline-variant);
+    }
+    .tpl-policy-grid > div:nth-last-child(-n+3) { border-bottom: none; }
+    .tpl-policy-action { color: var(--color-on-surface); font-weight: 500; }
+    .tpl-policy-level { color: var(--color-on-surface-variant); text-align: right; padding-left: 16px !important; }
+    .tpl-policy-toggle { display: flex; justify-content: flex-end; padding-left: 12px !important; }
+
+    .toggle-mini {
+      position: relative; width: 28px; height: 16px;
+      background: #d1d5db; border-radius: 8px;
+      cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle-mini.on { background: var(--color-success); }
+    .toggle-mini::after {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 12px; height: 12px; background: #fff; border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .toggle-mini.on::after { transform: translateX(12px); }
+
+    /* Reminder config mini */
+    .tpl-reminder-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 0; font-size: 12.5px; color: var(--color-on-surface);
+    }
+    .tpl-reminder-label { color: var(--color-on-surface-variant); min-width: 90px; }
+    .tpl-reminder-values { font-weight: 500; }
+
+    /* Tracker tab placeholder */
+    .tracker-placeholder {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      color: var(--color-on-surface-variant); padding: 40px;
+    }
+    .tracker-placeholder-inner { text-align: center; max-width: 360px; }
+    .tracker-placeholder-inner h3 { font-size: 18px; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px; }
+    .tracker-placeholder-inner p { font-size: 14px; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -363,164 +332,311 @@
     </div>
   </header>
 
-  <div class="content">
-    <div class="content-placeholder">
-      <h2>EOR Hiring</h2>
-      <p>You're about to add a new hire through Rippling EOR. Click the AI assistant button to get started with compliance checks.</p>
+  <div class="page-header">
+    <h1 class="page-title">Onboarding</h1>
+    <div class="page-tabs">
+      <div class="page-tab active" data-tab="explorer">Explorer</div>
+      <div class="page-tab" data-tab="tracker">Tracker</div>
     </div>
   </div>
-</div>
 
-<!-- AI FAB -->
-<button class="ai-fab" id="aiFab" onclick="togglePanel(true)">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-</button>
+  <!-- ═══════════════════════════════════════
+       EXPLORER TAB — Full Chat
+       ═══════════════════════════════════════ -->
+  <div id="explorer-panel" class="tab-panel active">
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages">
 
-<!-- Overlay -->
-<div class="ai-panel-overlay" id="panelOverlay" onclick="togglePanel(false)"></div>
+        <!-- AI intro message -->
+        <div class="chat-msg ai">
+          <div class="pb-avatar sm" style="background:var(--color-primary)">AI</div>
+          <div class="chat-msg-bubble">
+            I'm your onboarding agent. I can help you configure onboarding journeys, understand new hire readiness, and take action on blockers.<br><br>I've loaded your current Engineering journey template below. You can expand each checkpoint to see the full configuration, or ask me to make changes.
 
-<!-- AI Side Panel -->
-<div class="ai-panel" id="aiPanel">
-  <div class="ai-panel-header">
-    <div class="ai-panel-header-icon">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    </div>
-    <div class="ai-panel-header-info">
-      <div class="ai-panel-header-title">Rippling AI</div>
-      <div class="ai-panel-header-sub">EOR hiring assistant</div>
-    </div>
-    <button class="ai-panel-close" onclick="togglePanel(false)">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-
-  <div class="ai-panel-messages" id="panelMessages">
-    <!-- Initial AI message with checkbox acknowledgement -->
-    <div class="chat-msg ai">
-      <div class="pb-avatar sm">AI</div>
-      <div class="chat-msg-bubble">
-        Before proceeding with this EOR hire, please review and acknowledge the following eligibility criteria.
-        <div class="pb-ack-card" id="ackCard">
-          <div class="pb-ack-header" onclick="toggleExpand()">
-            <div class="pb-ack-header-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            </div>
-            <span class="pb-ack-header-label">EOR Eligibility Acknowledgement</span>
-            <svg class="pb-ack-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="pb-ack-body">
-            <div class="pb-ack-body-inner" onclick="toggleAck()">
-              <div class="pb-checkbox">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <!-- ═══ Embedded template card ═══ -->
+            <div class="template-card">
+              <div class="template-card-header">
+                <div class="template-card-header-left">
+                  <div class="template-dot" style="background:#7c3aed"></div>
+                  <div>
+                    <div class="template-card-title">Engineering</div>
+                    <div class="template-card-meta">Full-time · Remote & On-site · Org default</div>
+                  </div>
+                </div>
+                <span class="template-status">Active</span>
               </div>
-              <div class="pb-ack-text">
-                For compliance reasons and to make sure Rippling EOR is best able to serve its customers, Rippling EOR has eligibility criteria for using Rippling's EOR services. Please review both the global and country-specific criteria described <a href="#" onclick="event.stopPropagation()">here</a>. By checking this box, you agree that you have read the eligibility criteria, agree to comply, and confirmed this prospective hire's eligibility. If you have questions regarding these criteria, please contact <a href="#" onclick="event.stopPropagation()">Rippling's support team</a> before proceeding.
+
+              <!-- CP 1: Registered -->
+              <div class="tpl-checkpoint open">
+                <div class="tpl-cp-header" onclick="this.parentElement.classList.toggle('open')">
+                  <svg class="tpl-cp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  <div class="tpl-cp-icon green">1</div>
+                  <span class="tpl-cp-name">Registered</span>
+                  <div class="tpl-cp-badges">
+                    <span class="tpl-blocking-tag blocks">Blocks Active</span>
+                    <span class="tpl-cp-count">2 items</span>
+                  </div>
+                </div>
+                <div class="tpl-sub-list">
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">HRIS</span><span class="tpl-sub-name">Complete onboarding flow</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>offer_expiry</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">HRIS</span><span class="tpl-sub-name">Email created / merged</span></div>
+                    <div class="tpl-sub-right"><span>Automation</span><span>on registration</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CP 2: Agreements Signed -->
+              <div class="tpl-checkpoint">
+                <div class="tpl-cp-header" onclick="this.parentElement.classList.toggle('open')">
+                  <svg class="tpl-cp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  <div class="tpl-cp-icon green">2</div>
+                  <span class="tpl-cp-name">Agreements Signed</span>
+                  <div class="tpl-cp-badges">
+                    <span class="tpl-blocking-tag blocks">Blocks Active</span>
+                    <span class="tpl-cp-count">2 items</span>
+                  </div>
+                </div>
+                <div class="tpl-sub-list">
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">HRIS</span><span class="tpl-sub-name">Signed offer letter</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>offer_expiry</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">HRIS</span><span class="tpl-sub-name">Signed equity letter</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>start − 5d</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CP 3: Day 1 Ready -->
+              <div class="tpl-checkpoint">
+                <div class="tpl-cp-header" onclick="this.parentElement.classList.toggle('open')">
+                  <svg class="tpl-cp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  <div class="tpl-cp-icon amber">3</div>
+                  <span class="tpl-cp-name">Day 1 Ready</span>
+                  <div class="tpl-cp-badges">
+                    <span class="tpl-blocking-tag blocks">Blocks Active</span>
+                    <span class="tpl-cp-count">5 items</span>
+                  </div>
+                </div>
+                <div class="tpl-sub-list">
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">HRIS</span><span class="tpl-sub-name">Background check complete</span></div>
+                    <div class="tpl-sub-right"><span>3P vendor</span><span>start − 2d</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">HRIS</span><span class="tpl-sub-name">I-9 verified & E-Verify submitted</span></div>
+                    <div class="tpl-sub-right"><span>HR Admin</span><span>start + 3d</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">Devices</span><span class="tpl-sub-name">Device shipped</span></div>
+                    <div class="tpl-sub-right"><span>3P vendor</span><span>start − 3d</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">Apps</span><span class="tpl-sub-name">GitHub, IDE, Slack access provisioned</span></div>
+                    <div class="tpl-sub-right"><span>IT Admin</span><span>start − 3d</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">Payroll</span><span class="tpl-sub-name">Bank account & tax setup</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>start date</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CP 4: Fully Onboarded -->
+              <div class="tpl-checkpoint">
+                <div class="tpl-cp-header" onclick="this.parentElement.classList.toggle('open')">
+                  <svg class="tpl-cp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  <div class="tpl-cp-icon gray">4</div>
+                  <span class="tpl-cp-name">Fully Onboarded</span>
+                  <div class="tpl-cp-badges">
+                    <span class="tpl-blocking-tag non-blocking">Non-blocking</span>
+                    <span class="tpl-cp-count">3 items</span>
+                  </div>
+                </div>
+                <div class="tpl-sub-list">
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">Benefits</span><span class="tpl-sub-name">Benefits enrollment complete</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>start + 30d</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">LMS</span><span class="tpl-sub-name">Required courses completed</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>start + 30d</span></div>
+                  </div>
+                  <div class="tpl-sub-item">
+                    <div class="tpl-sub-left"><span class="tpl-sub-app">Hub</span><span class="tpl-sub-name">Custom onboarding tasks</span></div>
+                    <div class="tpl-sub-right"><span>Employee</span><span>start + 30d</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action policy section -->
+              <div class="tpl-policy-section">
+                <div class="tpl-policy-title">Action Policy</div>
+                <div class="tpl-policy-grid">
+                  <div class="tpl-policy-action">Resend invite</div>
+                  <div class="tpl-policy-level">Auto-execute</div>
+                  <div class="tpl-policy-toggle"><div class="toggle-mini on" onclick="this.classList.toggle('on')"></div></div>
+
+                  <div class="tpl-policy-action">Send reminder</div>
+                  <div class="tpl-policy-level">Auto-execute</div>
+                  <div class="tpl-policy-toggle"><div class="toggle-mini on" onclick="this.classList.toggle('on')"></div></div>
+
+                  <div class="tpl-policy-action">Notify manager</div>
+                  <div class="tpl-policy-level">Approval required</div>
+                  <div class="tpl-policy-toggle"><div class="toggle-mini on" onclick="this.classList.toggle('on')"></div></div>
+
+                  <div class="tpl-policy-action">Push start date</div>
+                  <div class="tpl-policy-level">Approval required</div>
+                  <div class="tpl-policy-toggle"><div class="toggle-mini on" onclick="this.classList.toggle('on')"></div></div>
+
+                  <div class="tpl-policy-action">Rescind offer</div>
+                  <div class="tpl-policy-level">Suggest only</div>
+                  <div class="tpl-policy-toggle"><div class="toggle-mini on" onclick="this.classList.toggle('on')"></div></div>
+                </div>
+              </div>
+
+              <!-- Reminder config -->
+              <div class="tpl-policy-section" style="border-top:1px solid var(--color-outline-variant)">
+                <div class="tpl-policy-title">Reminders</div>
+                <div class="tpl-reminder-row">
+                  <span class="tpl-reminder-label">Primary</span>
+                  <span class="tpl-reminder-values">5d before due · then 1, 3, 5d after</span>
+                </div>
+                <div class="tpl-reminder-row">
+                  <span class="tpl-reminder-label">Escalation</span>
+                  <span class="tpl-reminder-values">3d before due · then 2, 4, 7d after</span>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="template-card-footer">
+                <span class="template-card-footer-meta">4 checkpoints · 12 sub-checkpoints · Last edited Apr 10</span>
+                <div class="template-card-footer-actions">
+                  <button class="pb-btn pb-btn-outline" onclick="sendFromTemplate('What would you change about this template?')">Ask AI</button>
+                  <button class="pb-btn pb-btn-tonal">Edit</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+      </div>
+
+      <div class="chat-suggestions" id="chatSuggestions">
+        <button class="pb-chip" onclick="sendSuggestion(this)">Add a checkpoint for Payroll Ready</button>
+        <button class="pb-chip" onclick="sendSuggestion(this)">Import an SOP for Sales</button>
+        <button class="pb-chip" onclick="sendSuggestion(this)">Who is blocked right now?</button>
+        <button class="pb-chip" onclick="sendSuggestion(this)">Change reminder policy</button>
+      </div>
+
+      <div class="chat-input-bar">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about onboarding configuration, journeys, or new hire status...">
+        <button class="pb-btn-send" onclick="sendMessage()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="chat-suggestions" id="panelSuggestions">
-    <button class="pb-chip" onclick="sendSuggestion(this)">What countries are supported?</button>
-    <button class="pb-chip" onclick="sendSuggestion(this)">Show eligibility criteria</button>
-    <button class="pb-chip" onclick="sendSuggestion(this)">Help with this hire</button>
-  </div>
-
-  <div class="ai-panel-input-area">
-    <input type="text" class="chat-input" id="panelInput" placeholder="Ask about EOR eligibility...">
-    <button class="pb-btn-send" onclick="sendPanelMessage()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
+  <!-- ═══════════════════════════════════════
+       TRACKER TAB — Placeholder
+       ═══════════════════════════════════════ -->
+  <div id="tracker-panel" class="tab-panel">
+    <div class="tracker-placeholder">
+      <div class="tracker-placeholder-inner">
+        <h3>Onboarding Tracker</h3>
+        <p>Track new hire readiness across checkpoints, surface blockers, and let the onboarding agent take action.</p>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-  function togglePanel(open) {
-    document.getElementById('aiPanel').classList.toggle('open', open);
-    document.getElementById('panelOverlay').classList.toggle('open', open);
-    document.getElementById('aiFab').classList.toggle('hidden', open);
-    if (open) document.getElementById('panelInput').focus();
-  }
+  // Tab switching
+  document.querySelectorAll('.page-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab + '-panel').classList.add('active');
+    });
+  });
 
-  function toggleExpand() {
-    document.getElementById('ackCard').classList.toggle('expanded');
-  }
-
-  function toggleAck() {
-    const card = document.getElementById('ackCard');
-    const wasChecked = card.classList.contains('checked');
-    card.classList.toggle('checked');
-
-    if (!wasChecked) {
-      const c = document.getElementById('panelMessages');
-      const typing = appendTyping(c);
-      setTimeout(() => {
-        typing.remove();
-        appendAiMsg(c, "Thanks for confirming. You're now cleared to proceed with the EOR hire. What would you like to do next?");
-      }, 900);
-    }
-  }
-
-  function sendPanelMessage() {
-    const input = document.getElementById('panelInput');
+  // Chat
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
     const text = input.value.trim();
     if (!text) return;
-    const c = document.getElementById('panelMessages');
+    const c = document.getElementById('chatMessages');
     appendUserMsg(c, text);
     input.value = '';
     const t = appendTyping(c);
     setTimeout(() => {
       t.remove();
-      appendAiMsg(c, "Let me look into that for you. I'll check the latest EOR policies and eligibility requirements.");
+      appendAiMsg(c, getResponse(text));
     }, 1000);
   }
 
   function sendSuggestion(el) {
-    document.getElementById('panelInput').value = el.textContent;
-    sendPanelMessage();
+    document.getElementById('chatInput').value = el.textContent;
+    sendMessage();
+  }
+
+  function sendFromTemplate(text) {
+    document.getElementById('chatInput').value = text;
+    sendMessage();
+  }
+
+  function getResponse(text) {
+    const q = text.toLowerCase();
+    if (q.includes('payroll')) {
+      return 'I can add a <strong>Payroll Ready</strong> checkpoint between Day 1 Ready and Fully Onboarded. It would include sub-checkpoints for bank account setup, tax withholding forms, and direct deposit verification. The blocking classification would be <strong>Blocks Payroll</strong>. Want me to add it?';
+    }
+    if (q.includes('sop') || q.includes('import') || q.includes('sales')) {
+      return 'Sure — paste your Sales onboarding SOP or checklist here and I\'ll parse it into checkpoints, sub-checkpoints, assignees, and due dates. I can also generate one from a job description if you don\'t have a formal SOP yet.';
+    }
+    if (q.includes('blocked') || q.includes('who')) {
+      return '<strong>4 hires are currently blocked:</strong><br>• Alex Kim — device not shipped (no address on file), buddy not assigned<br>• Marcus Cole — IT provisioning not started, equity letter unsigned<br>• Dani Reyes — territory not assigned by VP Sales<br>• Sam Ortiz — POS training & safety training not scheduled<br><br>Would you like me to send reminders to the blockers?';
+    }
+    if (q.includes('reminder')) {
+      return 'Current reminder policy for Engineering:<br>• <strong>Primary assignee:</strong> 5 days before due, then 1, 3, 5 days after<br>• <strong>Escalation:</strong> 3 days before due, then 2, 4, 7 days after<br><br>What would you like to change? I can adjust the timing, add a Slack channel notification, or switch specific actions to auto-execute.';
+    }
+    if (q.includes('change') || q.includes('improve')) {
+      return 'Looking at your Engineering template, a few suggestions:<br><br>1. <strong>Add a Payroll Ready checkpoint</strong> — bank/tax setup is currently under Day 1 Ready but doesn\'t actually block starting work<br>2. <strong>Move I-9 verification</strong> to a separate compliance checkpoint with its own SLA<br>3. <strong>Add a buddy assignment sub-checkpoint</strong> — this is a common blocker that isn\'t currently tracked<br><br>Want me to apply any of these?';
+    }
+    return 'I can help with that. Let me check the current onboarding configuration and get back to you with specifics.';
   }
 
   function appendUserMsg(c, text) {
     const m = document.createElement('div');
     m.className = 'chat-msg user';
     m.innerHTML = '<div class="pb-avatar sm" style="background:#3a3a3c">WS</div><div class="chat-msg-bubble">' + escapeHtml(text) + '</div>';
-    c.appendChild(m);
-    c.scrollTop = c.scrollHeight;
+    c.appendChild(m); c.scrollTop = c.scrollHeight;
   }
 
   function appendAiMsg(c, html) {
     const m = document.createElement('div');
     m.className = 'chat-msg ai';
-    m.innerHTML = '<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble">' + html + '</div>';
-    c.appendChild(m);
-    c.scrollTop = c.scrollHeight;
+    m.innerHTML = '<div class="pb-avatar sm" style="background:var(--color-primary)">AI</div><div class="chat-msg-bubble">' + html + '</div>';
+    c.appendChild(m); c.scrollTop = c.scrollHeight;
   }
 
   function appendTyping(c) {
     const t = document.createElement('div');
     t.className = 'chat-msg ai';
-    t.innerHTML = '<div class="pb-avatar sm">AI</div><div class="chat-msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
-    c.appendChild(t);
-    c.scrollTop = c.scrollHeight;
+    t.innerHTML = '<div class="pb-avatar sm" style="background:var(--color-primary)">AI</div><div class="chat-msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+    c.appendChild(t); c.scrollTop = c.scrollHeight;
     return t;
   }
 
-  function escapeHtml(s) {
-    const d = document.createElement('div');
-    d.textContent = s;
-    return d.innerHTML;
-  }
+  function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-  document.getElementById('panelInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') sendPanelMessage();
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') togglePanel(false);
-  });
+  document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
 </script>
 </body>
 </html>
