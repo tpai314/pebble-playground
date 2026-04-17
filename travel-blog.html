@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #F5F0E8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+        }
+
+        #map-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .country {
+            cursor: default;
+            transition: fill 0.5s ease, opacity 0.2s ease;
+        }
+
+        .country.clickable {
+            cursor: pointer;
+        }
+
+        .country.clickable:hover {
+            opacity: 0.75;
+            filter: brightness(1.08);
+        }
+
+        .toggle-container {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(60, 30, 45, 0.15);
+        }
+
+        .toggle-btn {
+            padding: 11px 26px;
+            background: #6B4C5E;
+            color: #F0E8E0;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.6px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .toggle-btn:first-child {
+            padding-left: 22px;
+            border-right: 1px solid rgba(240, 230, 220, 0.15);
+        }
+
+        .toggle-btn:last-child {
+            padding-right: 22px;
+        }
+
+        .toggle-btn.active {
+            background: #523A48;
+        }
+
+        .toggle-btn:hover {
+            background: #7D5E6E;
+        }
+
+        .toggle-btn .arrow {
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        .tooltip {
+            position: fixed;
+            background: #3D2B35;
+            color: #F0E8E0;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+
+        .tooltip.visible { opacity: 1; }
+
+        .country-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.92);
+            background: #fff;
+            border-radius: 16px;
+            padding: 36px 44px;
+            box-shadow: 0 8px 40px rgba(60, 30, 45, 0.2);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            text-align: center;
+            min-width: 260px;
+        }
+
+        .country-card.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .country-card .swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+        }
+
+        .country-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2D1F28;
+            margin-bottom: 8px;
+        }
+
+        .country-card p {
+            font-size: 13px;
+            color: #8A7A82;
+            line-height: 1.5;
+        }
+
+        .country-card button {
+            margin-top: 18px;
+            padding: 9px 28px;
+            background: #6B4C5E;
+            color: #F0E8E0;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .country-card button:hover {
+            background: #7D5E6E;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(60, 30, 45, 0.12);
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+
+        .overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #map { animation: fadeIn 0.6s ease; }
+    </style>
+</head>
+<body>
+    <div id="map-container">
+        <svg id="map"></svg>
+
+        <div class="toggle-container">
+            <button class="toggle-btn" data-mode="pareto" onclick="setMode('pareto')">
+                <span class="arrow">&#9664;</span> Pareto
+            </button>
+            <button class="toggle-btn active" data-mode="traveler" onclick="setMode('traveler')">
+                Traveler <span class="arrow">&#9654;</span>
+            </button>
+        </div>
+
+        <div class="tooltip" id="tooltip"></div>
+        <div class="overlay" id="overlay" onclick="closeCard()"></div>
+        <div class="country-card" id="country-card">
+            <div class="swatch" id="card-swatch"></div>
+            <h2 id="card-title"></h2>
+            <p id="card-desc"></p>
+            <button onclick="closeCard()">Close</button>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+    <script>
+        const DEFAULT_LAND = '#D5CEC6';
+
+        const modes = {
+            traveler: {
+                840: { color: '#E87090', name: 'United States', desc: 'Coast-to-coast road trips and city escapes.' },
+                124: { color: '#E89098', name: 'Canada', desc: 'Mountains, lakes, and wide-open skies.' },
+                484: { color: '#80D8C8', name: 'Mexico', desc: 'Tacos, cenotes, and ancient ruins.' },
+                170: { color: '#98C0E0', name: 'Colombia', desc: 'Coffee country and Caribbean vibes.' },
+                604: { color: '#E8A8B8', name: 'Peru', desc: 'Machu Picchu, ceviche, and the Sacred Valley.' },
+                76:  { color: '#E8D88C', name: 'Brazil', desc: 'Carnival, rainforest, and golden beaches.' },
+                68:  { color: '#9078A8', name: 'Bolivia', desc: 'Salt flats and sky-high cities.' },
+                32:  { color: '#E88898', name: 'Argentina', desc: 'Tango, steak, and Patagonian glaciers.' },
+                152: { color: '#E88898', name: 'Chile', desc: 'Deserts, vineyards, and the end of the world.' },
+                380: { color: '#98C0E0', name: 'Italy', desc: 'Art, pasta, and endless dolce vita.' },
+                356: { color: '#E89880', name: 'India', desc: 'Spice markets, temples, and chaos in the best way.' },
+                764: { color: '#D070A0', name: 'Thailand', desc: 'Street food, islands, and golden temples.' },
+                458: { color: '#70C8C0', name: 'Malaysia', desc: 'Melting pot of cultures and flavors.' },
+                144: { color: '#8068A0', name: 'Sri Lanka', desc: 'Tea hills, elephants, and ancient cities.' },
+            },
+            pareto: {
+                840: { color: '#D06878', name: 'United States', desc: 'The country that shaped your worldview.' },
+                76:  { color: '#D8C878', name: 'Brazil', desc: 'Where you learned to slow down.' },
+                356: { color: '#D08870', name: 'India', desc: 'The trip that changed everything.' },
+                380: { color: '#88B0D0', name: 'Italy', desc: 'Where food became a philosophy.' },
+                764: { color: '#C06090', name: 'Thailand', desc: 'Your first real adventure.' },
+            }
+        };
+
+        let currentMode = 'traveler';
+
+        const width = 960;
+        const height = 500;
+
+        const svg = d3.select('#map')
+            .attr('viewBox', `0 0 ${width} ${height}`)
+            .attr('preserveAspectRatio', 'xMidYMid meet');
+
+        const defs = svg.append('defs');
+
+        const dotSize = 4;
+        const dotRadius = 1.5;
+
+        const pattern = defs.append('pattern')
+            .attr('id', 'dot-grid')
+            .attr('width', dotSize)
+            .attr('height', dotSize)
+            .attr('patternUnits', 'userSpaceOnUse');
+
+        pattern.append('rect')
+            .attr('width', dotSize)
+            .attr('height', dotSize)
+            .attr('fill', 'black');
+
+        pattern.append('circle')
+            .attr('cx', dotSize / 2)
+            .attr('cy', dotSize / 2)
+            .attr('r', dotRadius)
+            .attr('fill', 'white');
+
+        const mask = defs.append('mask')
+            .attr('id', 'dot-mask')
+            .attr('maskUnits', 'userSpaceOnUse')
+            .attr('x', 0).attr('y', 0)
+            .attr('width', width).attr('height', height);
+
+        mask.append('rect')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', 'url(#dot-grid)');
+
+        const projection = d3.geoEquirectangular()
+            .scale(width / (2 * Math.PI))
+            .translate([width / 2, height / 2 + 20]);
+
+        const path = d3.geoPath(projection);
+
+        const tooltip = document.getElementById('tooltip');
+        const countryCard = document.getElementById('country-card');
+        const overlay = document.getElementById('overlay');
+        const cardSwatch = document.getElementById('card-swatch');
+        const cardTitle = document.getElementById('card-title');
+        const cardDesc = document.getElementById('card-desc');
+
+        function getCountryInfo(id) {
+            return modes[currentMode][id] || null;
+        }
+
+        function getFill(id) {
+            const info = getCountryInfo(id);
+            return info ? info.color : DEFAULT_LAND;
+        }
+
+        function isClickable(id) {
+            return !!modes[currentMode][id];
+        }
+
+        function updateMap() {
+            svg.selectAll('.country')
+                .attr('class', d => {
+                    const id = +d.id;
+                    return isClickable(id) ? 'country clickable' : 'country';
+                })
+                .transition()
+                .duration(500)
+                .attr('fill', d => getFill(+d.id));
+        }
+
+        window.setMode = function(mode) {
+            if (mode === currentMode) return;
+            currentMode = mode;
+
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+
+            updateMap();
+        };
+
+        window.closeCard = function() {
+            countryCard.classList.remove('visible');
+            overlay.classList.remove('visible');
+        };
+
+        function showCard(info) {
+            cardSwatch.style.background = info.color;
+            cardTitle.textContent = info.name;
+            cardDesc.textContent = info.desc;
+            overlay.classList.add('visible');
+            countryCard.classList.add('visible');
+        }
+
+        d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+            const countries = topojson.feature(world, world.objects.countries);
+
+            svg.selectAll('.country')
+                .data(countries.features)
+                .join('path')
+                .attr('class', d => isClickable(+d.id) ? 'country clickable' : 'country')
+                .attr('d', path)
+                .attr('fill', d => getFill(+d.id))
+                .attr('mask', 'url(#dot-mask)')
+                .attr('stroke', 'none')
+                .on('click', (event, d) => {
+                    const info = getCountryInfo(+d.id);
+                    if (info) showCard(info);
+                })
+                .on('mouseenter', (event, d) => {
+                    const info = getCountryInfo(+d.id);
+                    if (info) {
+                        tooltip.textContent = info.name;
+                        tooltip.classList.add('visible');
+                    }
+                })
+                .on('mousemove', (event) => {
+                    tooltip.style.left = (event.clientX + 12) + 'px';
+                    tooltip.style.top = (event.clientY - 32) + 'px';
+                })
+                .on('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+        });
+    </script>
+</body>
+</html>
