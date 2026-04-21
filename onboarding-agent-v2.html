@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding Agent — Rippling</title>
+  <link rel="stylesheet" href="https://static-assets.ripplingcdn.com/webapp-static/rippling-fonts-rebrand.css">
+  <style>
+    @font-face { font-display: swap; font-family: "BaselGrotesk"; src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Regular.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-display: swap; font-family: "BaselGrotesk"; src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Book.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-display: swap; font-family: "BaselGrotesk"; src: url("https://static-assets.ripplingcdn.com/pebble/fonts/BaselGrotesk/Basel-Grotesk-Medium.woff2") format("woff2"); font-weight: 600; }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-primary: #6B2D7B;
+      --color-primary-hover: #5A2568;
+      --color-primary-container: #ede0f0;
+      --color-on-primary: #fff;
+      --color-surface: #fff;
+      --color-surface-dim: #f7f5f3;
+      --color-surface-bright: #fbfafb;
+      --color-on-surface: #182433;
+      --color-on-surface-variant: #6b7280;
+      --color-outline: #d1d1d6;
+      --color-outline-variant: #e5e5ea;
+      --color-neutral-container: #f2f2f7;
+      --color-on-neutral-container: #3a3a3c;
+      --color-on-surface-inverse: #fff;
+      --color-surface-inverse: #182433;
+      --color-success: #16a34a;
+      --color-success-container: #dcfce7;
+      --color-warning: #d97706;
+      --color-warning-container: #fef3c7;
+      --color-error: #dc2626;
+      --color-error-container: #fee2e2;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+      --shape-corner-sm: 4px;
+      --shape-corner-md: 8px;
+      --shape-corner-lg: 12px;
+      --shape-corner-xl: 16px;
+      --shape-corner-full: 9999px;
+      --icon-sidebar-width: 64px;
+      --topbar-height: 56px;
+      --app-nav-height: 112px;
+    }
+
+    body {
+      font-family: "BaselGrotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--color-on-surface); background: var(--color-surface);
+      min-height: 100vh; font-size: 14px; line-height: 1.5;
+      -webkit-font-smoothing: antialiased; overflow: hidden;
+    }
+
+    /* ─── Top Navigation Bar ─── */
+    .top-nav {
+      height: var(--topbar-height); background: var(--color-surface-inverse);
+      display: flex; align-items: center; padding: 0 16px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    }
+    .top-nav-logo {
+      display: flex; align-items: center; gap: 8px; color: #fff;
+      font-size: 16px; font-weight: 600; letter-spacing: -0.2px;
+      width: var(--icon-sidebar-width); justify-content: center;
+    }
+    .top-nav-logo svg { flex-shrink: 0; }
+    .top-nav-search {
+      flex: 1; max-width: 420px; margin: 0 auto;
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12); border-radius: var(--shape-corner-md);
+      padding: 8px 16px; color: rgba(255,255,255,0.6); font-size: 13px;
+    }
+    .top-nav-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+    .top-nav-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); cursor: pointer; border-radius: var(--shape-corner-md);
+    }
+    .top-nav-icon:hover { background: rgba(255,255,255,0.1); }
+    .top-nav-user {
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 500;
+      cursor: pointer; padding: 4px 8px; border-radius: var(--shape-corner-md);
+    }
+    .top-nav-user:hover { background: rgba(255,255,255,0.08); }
+    .pb-avatar {
+      width: 28px; height: 28px; border-radius: var(--shape-corner-full);
+      background: var(--color-primary); color: var(--color-on-primary);
+      font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── Icon Sidebar ─── */
+    .icon-sidebar {
+      width: var(--icon-sidebar-width); background: var(--color-surface);
+      border-right: 1px solid var(--color-outline-variant);
+      position: fixed; top: var(--topbar-height); left: 0; bottom: 0; z-index: 50;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 12px 0;
+    }
+    .icon-sidebar-item {
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      border-radius: var(--shape-corner-md); cursor: pointer; color: var(--color-on-surface-variant);
+      margin-bottom: 4px; transition: all 0.12s;
+    }
+    .icon-sidebar-item:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
+    .icon-sidebar-item.active { background: var(--color-neutral-container); color: var(--color-on-surface); }
+    .icon-sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+    /* ─── App Nav Bar ─── */
+    .app-nav {
+      position: fixed; top: var(--topbar-height); left: var(--icon-sidebar-width); right: 0; z-index: 40;
+      background: var(--color-surface); border-bottom: 1px solid var(--color-outline-variant);
+    }
+    .app-nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px 12px;
+    }
+    .app-nav-title { font-size: 20px; font-weight: 600; }
+    .app-nav-actions { display: flex; align-items: center; gap: 8px; }
+    .pb-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: var(--shape-corner-md);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: none; transition: all 0.12s; font-family: inherit;
+    }
+    .pb-btn-filled { background: var(--color-primary); color: var(--color-on-primary); }
+    .pb-btn-filled:hover { background: var(--color-primary-hover); }
+    .pb-btn-outline { background: transparent; color: var(--color-on-surface); border: 1px solid var(--color-outline); }
+    .pb-btn-outline:hover { border-color: var(--color-on-surface-variant); background: var(--color-neutral-container); }
+    .pb-btn-sm { padding: 6px 12px; font-size: 12px; }
+
+    .app-nav-tabs {
+      display: flex; gap: 0; padding: 0 24px;
+    }
+    .app-nav-tab {
+      padding: 8px 16px 12px; font-size: 14px; font-weight: 500;
+      color: var(--color-on-surface-variant); cursor: pointer;
+      border-bottom: 2px solid transparent; transition: all 0.12s;
+      user-select: none;
+    }
+    .app-nav-tab:hover { color: var(--color-on-surface); }
+    .app-nav-tab.active { color: var(--color-on-surface); border-bottom-color: var(--color-on-surface); }
+
+    /* Sub-tabs (pill style) */
+    .sub-tabs {
+      display: flex; gap: 8px; padding: 12px 24px;
+      border-bottom: 1px solid var(--color-outline-variant);
+      display: none;
+    }
+    .sub-tabs.visible { display: flex; }
+    .sub-tab {
+      padding: 6px 14px; border-radius: var(--shape-corner-full);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      color: var(--color-on-surface-variant); background: transparent;
+      border: none; font-family: inherit; transition: all 0.12s;
+    }
+    .sub-tab:hover { background: var(--color-neutral-container); }
+    .sub-tab.active { background: var(--color-on-surface); color: var(--color-on-surface-inverse); }
+
+    /* ─── Main Content ─── */
+    .main-content {
+      position: fixed;
+      top: calc(var(--topbar-height) + var(--app-nav-height));
+      left: var(--icon-sidebar-width); right: 0; bottom: 0;
+      overflow-y: auto; transition: right 0.3s ease;
+    }
+    .main-content.with-sub-tabs {
+      top: calc(var(--topbar-height) + var(--app-nav-height) + 48px);
+    }
+    .main-content.with-drawer {
+      right: 504px;
+    }
+
+    /* ─── Welcome State (Screens 1-4) ─── */
+    .welcome-container {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 100%; padding: 40px 24px;
+    }
+    .welcome-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+    }
+    .welcome-ai-icon {
+      width: 40px; height: 40px; border-radius: var(--shape-corner-md);
+      background: linear-gradient(135deg, #6B2D7B, #9b59b6);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .welcome-title { font-size: 24px; font-weight: 600; color: var(--color-on-surface); }
+
+    /* Prompt Box */
+    .prompt-box {
+      width: 100%; max-width: 744px; border: 1px solid var(--color-outline);
+      border-radius: var(--shape-corner-lg); background: var(--color-surface);
+      box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    .prompt-textarea {
+      width: 100%; min-height: 80px; padding: 16px 16px 8px;
+      border: none; outline: none; font-family: inherit;
+      font-size: 14px; line-height: 1.6; color: var(--color-on-surface);
+      resize: none; background: transparent;
+    }
+    .prompt-textarea::placeholder { color: var(--color-on-surface-variant); }
+    .prompt-textarea.has-content { min-height: 140px; }
+    .prompt-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px;
+    }
+    .prompt-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .prompt-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 12px; border-radius: var(--shape-corner-full);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--color-outline); background: var(--color-surface);
+      color: var(--color-on-surface-variant); transition: all 0.12s;
+      font-family: inherit;
+    }
+    .prompt-chip:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-container); }
+    .prompt-chip svg { width: 12px; height: 12px; }
+    .prompt-send {
+      width: 28px; height: 28px; border-radius: var(--shape-corner-md); border: none;
+      background: var(--color-primary); color: var(--color-on-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.12s; flex-shrink: 0;
+    }
+    .prompt-send:hover { background: var(--color-primary-hover); }
+    .prompt-send:disabled { background: var(--color-outline); cursor: not-allowed; }
+
+    /* Suggestion Cards */
+    .suggestion-cards {
+      display: flex; gap: 12px; margin-top: 22px; max-width: 744px; width: 100%;
+    }
+    .suggestion-card {
+      flex: 1; display: flex; align-items: flex-start; gap: 10px;
+      padding: 14px 16px; border-radius: var(--shape-corner-lg);
+      border: 1px solid var(--color-outline-variant);
+      background: var(--color-surface); cursor: pointer;
+      transition: all 0.15s; user-select: none;
+    }
+    .suggestion-card:hover {
+      border-color: var(--color-primary); background: var(--color-primary-container);
+      box-shadow: var(--shadow-sm);
+    }
+    .suggestion-card-icon {
+      width: 24px; height: 24px; border-radius: var(--shape-corner-sm);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .suggestion-card-text { flex: 1; min-width: 0; }
+    .suggestion-card-title { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
+    .suggestion-card-desc { font-size: 12px; color: var(--color-on-surface-variant); line-height: 1.4; }
+
+    .manual-link {
+      margin-top: 16px; font-size: 13px; color: var(--color-on-surface-variant);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .manual-link a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
+    .manual-link a:hover { text-decoration: underline; }
+
+    /* ─── AI Chat Drawer ─── */
+    .drawer-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3); z-index: 59;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .drawer-overlay.visible { opacity: 1; pointer-events: auto; }
+
+    .ai-drawer {
+      position: fixed; top: var(--topbar-height); right: 0; bottom: 0;
+      width: 0; background: var(--color-surface);
+      border-left: 1px solid var(--color-outline-variant);
+      z-index: 60; display: flex; overflow: hidden;
+      transition: width 0.3s ease;
+    }
+    .ai-drawer.open { width: 85%; max-width: 1470px; }
+    .ai-drawer.collapsed { width: 504px; }
+
+    /* Drawer sidebar (recent chats) */
+    .drawer-sidebar {
+      width: 330px; border-right: 1px solid var(--color-outline-variant);
+      display: flex; flex-direction: column; flex-shrink: 0;
+      background: var(--color-surface);
+    }
+    .drawer-sidebar-header {
+      padding: 16px; font-size: 15px; font-weight: 600;
+    }
+    .drawer-sidebar-new {
+      margin: 0 16px 16px; padding: 8px 16px;
+      border: 1px solid var(--color-outline); border-radius: var(--shape-corner-md);
+      background: transparent; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit; color: var(--color-on-surface);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all 0.12s;
+    }
+    .drawer-sidebar-new:hover { background: var(--color-neutral-container); }
+    .drawer-sidebar-section { padding: 0 16px 8px; font-size: 12px; font-weight: 600; color: var(--color-on-surface-variant); }
+    .drawer-sidebar-item {
+      padding: 10px 16px; font-size: 13px; cursor: pointer;
+      color: var(--color-on-surface-variant); transition: all 0.12s;
+      border-radius: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .drawer-sidebar-item:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
+    .drawer-sidebar-item.active {
+      background: var(--color-primary-container); color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    /* Drawer main panel */
+    .drawer-main {
+      flex: 1; display: flex; flex-direction: column; min-width: 0;
+    }
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--color-outline-variant);
+      flex-shrink: 0;
+    }
+    .drawer-header-left { display: flex; align-items: center; gap: 10px; }
+    .drawer-header-icon {
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary);
+    }
+    .drawer-header-title { font-size: 14px; font-weight: 600; }
+    .drawer-header-actions { display: flex; align-items: center; gap: 4px; }
+    .drawer-action-btn {
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      border-radius: var(--shape-corner-sm); border: none; background: transparent;
+      color: var(--color-on-surface-variant); cursor: pointer; transition: all 0.12s;
+    }
+    .drawer-action-btn:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
+
+    /* Chat messages */
+    .drawer-messages {
+      flex: 1; overflow-y: auto; padding: 24px 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .bubble-row { display: flex; }
+    .bubble-row.user { justify-content: flex-end; }
+    .bubble {
+      padding: 12px 16px; border-radius: var(--shape-corner-lg);
+      font-size: 13.5px; line-height: 1.65; max-width: 60%;
+    }
+    .bubble.user-bubble {
+      background: #FFF8E1; color: var(--color-on-surface);
+      border-radius: var(--shape-corner-lg);
+    }
+    .bubble ul { margin: 6px 0 2px 18px; }
+    .bubble li { margin-bottom: 3px; }
+    .bubble strong { font-weight: 600; }
+
+    .status-indicator {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--color-on-surface-variant);
+      padding: 4px 0;
+    }
+    .status-indicator svg { color: var(--color-success); }
+    .status-indicator .status-text { font-weight: 500; }
+    .status-indicator .status-chevron {
+      width: 14px; height: 14px; color: var(--color-on-surface-variant);
+      cursor: pointer;
+    }
+
+    .ai-response-text {
+      font-size: 13.5px; line-height: 1.7; color: var(--color-on-surface);
+    }
+    .ai-response-text ul { margin: 6px 0 6px 18px; }
+    .ai-response-text li { margin-bottom: 4px; }
+
+    /* Drawer composer */
+    .drawer-composer {
+      padding: 12px 20px 8px; flex-shrink: 0;
+    }
+    .composer-box {
+      border: 1px solid var(--color-outline); border-radius: var(--shape-corner-lg);
+      background: var(--color-surface); overflow: hidden;
+    }
+    .composer-input {
+      width: 100%; min-height: 48px; padding: 12px 16px;
+      border: none; outline: none; font-family: inherit;
+      font-size: 13.5px; color: var(--color-on-surface);
+      resize: none; background: transparent;
+    }
+    .composer-input::placeholder { color: var(--color-on-surface-variant); }
+    .composer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 12px;
+    }
+    .composer-left { display: flex; align-items: center; gap: 8px; }
+    .composer-add-btn {
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      border-radius: var(--shape-corner-sm); border: none; background: transparent;
+      color: var(--color-on-surface-variant); cursor: pointer;
+    }
+    .composer-mode {
+      display: flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: var(--shape-corner-full);
+      font-size: 12px; font-weight: 500; color: var(--color-on-surface-variant);
+      border: 1px solid var(--color-outline); background: transparent;
+      cursor: pointer; font-family: inherit;
+    }
+    .composer-right { display: flex; align-items: center; gap: 8px; }
+    .drawer-footer-note {
+      padding: 4px 20px 12px;
+      font-size: 11px; color: var(--color-on-surface-variant);
+      text-align: center;
+    }
+
+    /* ─── Timeline View (Screen 7) ─── */
+    .timeline-container {
+      padding: 32px 40px; display: none;
+    }
+    .timeline-container.visible { display: block; }
+    .timeline-phase { margin-bottom: 24px; position: relative; padding-left: 28px; }
+    .timeline-phase::before {
+      content: ''; position: absolute; left: 7px; top: 24px; bottom: 0;
+      width: 2px; background: var(--color-outline-variant);
+    }
+    .timeline-phase:last-child::before { display: none; }
+    .timeline-phase-dot {
+      width: 16px; height: 16px; border-radius: var(--shape-corner-full);
+      position: absolute; left: 0; top: 4px; border: 3px solid;
+    }
+    .timeline-phase-dot.amber { border-color: var(--color-warning); background: var(--color-warning); }
+    .timeline-phase-dot.green { border-color: var(--color-success); background: var(--color-success); }
+    .timeline-phase-dot.blue { border-color: #3b82f6; background: #3b82f6; }
+    .timeline-phase-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+    .timeline-card {
+      border: 1px solid var(--color-outline-variant); border-radius: var(--shape-corner-lg);
+      padding: 16px 20px; margin-bottom: 12px; background: var(--color-surface);
+      display: flex; align-items: center; justify-content: space-between;
+      transition: box-shadow 0.12s;
+    }
+    .timeline-card:hover { box-shadow: var(--shadow-md); }
+    .timeline-card-left { flex: 1; min-width: 0; }
+    .timeline-card-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .timeline-card-desc { font-size: 13px; color: var(--color-on-surface-variant); }
+    .timeline-card-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: 16px; }
+    .timeline-action-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 12px; border-radius: var(--shape-corner-md);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--color-outline); background: var(--color-surface);
+      color: var(--color-on-surface-variant); font-family: inherit;
+      transition: all 0.12s;
+    }
+    .timeline-action-btn:hover { background: var(--color-neutral-container); color: var(--color-on-surface); }
+    .timeline-add-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: var(--shape-corner-md);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: none; background: var(--color-primary); color: var(--color-on-primary);
+      font-family: inherit; margin-top: 16px; margin-left: 28px;
+      transition: background 0.12s;
+    }
+    .timeline-add-btn:hover { background: var(--color-primary-hover); }
+
+    /* ─── Step indicator (floating) ─── */
+    .step-nav {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 8px;
+      background: var(--color-surface-inverse); color: var(--color-on-surface-inverse);
+      padding: 8px 16px; border-radius: var(--shape-corner-full);
+      z-index: 200; box-shadow: var(--shadow-lg);
+      font-size: 13px; font-weight: 500;
+    }
+    .step-nav-btn {
+      width: 32px; height: 32px; border-radius: var(--shape-corner-full);
+      border: none; background: rgba(255,255,255,0.15); color: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.12s; font-size: 14px;
+    }
+    .step-nav-btn:hover { background: rgba(255,255,255,0.25); }
+    .step-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .step-dots { display: flex; gap: 6px; margin: 0 8px; }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: var(--shape-corner-full);
+      background: rgba(255,255,255,0.3); transition: all 0.2s; cursor: pointer;
+    }
+    .step-dot.active { background: #fff; width: 24px; }
+
+    /* Highlight chip in prompt */
+    .highlight-chip {
+      display: inline; padding: 1px 6px; border-radius: 4px;
+      background: var(--color-primary-container); color: var(--color-primary);
+      font-weight: 500; font-size: 13px;
+    }
+
+    /* Typing animation */
+    .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .typing-dot {
+      width: 6px; height: 6px; border-radius: var(--shape-corner-full);
+      background: var(--color-on-surface-variant); animation: typingBounce 1.2s infinite ease-in-out; opacity: 0.5;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.3; } 30% { transform: translateY(-3px); opacity: 1; } }
+
+    /* Cursor blink */
+    .cursor-blink::after {
+      content: '|'; animation: blink 1s step-end infinite; color: var(--color-primary);
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Hide/show helpers */
+    .hidden { display: none !important; }
+    .fade-in { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     TOP NAV BAR
+     ═══════════════════════════════════ -->
+<nav class="top-nav">
+  <div class="top-nav-logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h7v7H4V4zm9 0h7v7h-7V4zm-9 9h7v7H4v-7zm9 0h7v7h-7v-7z" fill="#fff" opacity="0.9"/></svg>
+    <span>Rippling</span>
+  </div>
+  <div class="top-nav-search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span>Search or jump to...</span>
+  </div>
+  <div class="top-nav-right">
+    <div class="top-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+    <div class="top-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg></div>
+    <div class="top-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+    <div class="top-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+    <div class="top-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="top-nav-user">
+      <span>Acme, Inc.</span>
+      <div class="pb-avatar" style="background:url('') center/cover, var(--color-primary);">TP</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════
+     ICON SIDEBAR
+     ═══════════════════════════════════ -->
+<aside class="icon-sidebar">
+  <div class="icon-sidebar-item active">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+  </div>
+  <div class="icon-sidebar-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  </div>
+  <div class="icon-sidebar-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  </div>
+  <div class="icon-sidebar-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+  </div>
+  <div class="icon-sidebar-bottom">
+    <div class="icon-sidebar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <div class="icon-sidebar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    </div>
+    <div class="icon-sidebar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33"/></svg>
+    </div>
+    <div class="icon-sidebar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════
+     APP NAV BAR
+     ═══════════════════════════════════ -->
+<div class="app-nav" id="appNav">
+  <div class="app-nav-top">
+    <div class="app-nav-title">People</div>
+    <div class="app-nav-actions">
+      <button class="pb-btn pb-btn-outline"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Offboard</button>
+      <button class="pb-btn pb-btn-outline"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Make changes</button>
+      <button class="pb-btn pb-btn-filled"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Hire</button>
+    </div>
+  </div>
+  <div class="app-nav-tabs">
+    <div class="app-nav-tab">People</div>
+    <div class="app-nav-tab active">Onboarding tracker</div>
+  </div>
+  <div class="sub-tabs" id="subTabs">
+    <button class="sub-tab active">Onboarding</button>
+    <button class="sub-tab">Agreements pending</button>
+    <button class="sub-tab">Registration pending</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════ -->
+<div class="main-content" id="mainContent">
+
+  <!-- Welcome / Prompt State -->
+  <div class="welcome-container" id="welcomeContainer">
+    <div class="welcome-header">
+      <div class="welcome-ai-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <h1 class="welcome-title">Welcome to onboarding tracker</h1>
+    </div>
+
+    <div class="prompt-box" id="promptBox">
+      <textarea class="prompt-textarea" id="promptTextarea" placeholder="Create a new onboarding journey for new hires with the following details:
+  · Who does it apply to : Ex- Department or a supergroup
+  · Duration of onboarding : Ex- 60 days
+  · Steps in the journey : Ex- Work authorization, Assign courses, Ship devices"></textarea>
+      <div class="prompt-bottom">
+        <div class="prompt-chips" id="promptChips">
+          <button class="prompt-chip" style="border: none; background: transparent; padding: 2px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+        <button class="prompt-send" id="promptSend">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="suggestion-cards" id="suggestionCards">
+      <div class="suggestion-card" onclick="goToStep(2)">
+        <div class="suggestion-card-icon" style="color: var(--color-primary);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="suggestion-card-text">
+          <div class="suggestion-card-title">Build a new onboarding journey</div>
+          <div class="suggestion-card-desc">Create a template from scratch or clone an existing one</div>
+        </div>
+      </div>
+      <div class="suggestion-card">
+        <div class="suggestion-card-icon" style="color: var(--color-primary);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div class="suggestion-card-text">
+          <div class="suggestion-card-title">Import your SOP</div>
+          <div class="suggestion-card-desc">Upload one or multiple documents with checklists & tasks</div>
+        </div>
+      </div>
+      <div class="suggestion-card">
+        <div class="suggestion-card-icon" style="color: var(--color-primary);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="suggestion-card-text">
+          <div class="suggestion-card-title">Track current employees</div>
+          <div class="suggestion-card-desc">Check ongoing onboarding status for newly hired employees</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="manual-link" id="manualLink">
+      Want to track manually? <a href="#">View all employees</a>
+    </div>
+  </div>
+
+  <!-- Timeline View (Screen 7) -->
+  <div class="timeline-container" id="timelineContainer">
+    <div class="timeline-phase">
+      <div class="timeline-phase-dot amber"></div>
+      <div class="timeline-phase-title">Before start date</div>
+      <div class="timeline-card">
+        <div class="timeline-card-left">
+          <div class="timeline-card-title">HRIS</div>
+          <div class="timeline-card-desc">Description of the workflow</div>
+        </div>
+        <div class="timeline-card-actions">
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View workflow</button>
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Add to chat</button>
+        </div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-card-left">
+          <div class="timeline-card-title">Apps & Device management</div>
+          <div class="timeline-card-desc">Description of the workflow</div>
+        </div>
+        <div class="timeline-card-actions">
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View workflow</button>
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Add to chat</button>
+        </div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-card-left">
+          <div class="timeline-card-title">Assign courses with LMS</div>
+          <div class="timeline-card-desc">Description of the workflow</div>
+        </div>
+        <div class="timeline-card-actions">
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View workflow</button>
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Add to chat</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="timeline-phase-dot green"></div>
+      <div class="timeline-phase-title">Day of joining</div>
+      <div class="timeline-card">
+        <div class="timeline-card-left">
+          <div class="timeline-card-title">Uniform fitting</div>
+          <div class="timeline-card-desc">Description of the workflow</div>
+        </div>
+        <div class="timeline-card-actions">
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View workflow</button>
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Add to chat</button>
+        </div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-card-left">
+          <div class="timeline-card-title">Assign @Nish as onboarding buddy</div>
+          <div class="timeline-card-desc">Description of the workflow</div>
+        </div>
+        <div class="timeline-card-actions">
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View workflow</button>
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Add to chat</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="timeline-phase-dot blue"></div>
+      <div class="timeline-phase-title">After start date</div>
+      <div class="timeline-card">
+        <div class="timeline-card-left">
+          <div class="timeline-card-title">Benefits enrollment</div>
+          <div class="timeline-card-desc">Description of the workflow</div>
+        </div>
+        <div class="timeline-card-actions">
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> Add trigger & custom outputs</button>
+          <button class="timeline-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Add to chat</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="timeline-add-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     AI CHAT DRAWER
+     ═══════════════════════════════════ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="ai-drawer" id="aiDrawer">
+  <div class="drawer-sidebar" id="drawerSidebar">
+    <div class="drawer-sidebar-header">Chats</div>
+    <button class="drawer-sidebar-new">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Start a new chat
+    </button>
+    <div class="drawer-sidebar-section">Recent</div>
+    <div class="drawer-sidebar-item active">New onboarding journey</div>
+    <div class="drawer-sidebar-item">What is the status of the project?</div>
+    <div class="drawer-sidebar-item">Have we received feedback from the client?</div>
+    <div class="drawer-sidebar-item">What is our current employee satisfactio...</div>
+    <div class="drawer-sidebar-item">Are there any compliance issues I should be awa...</div>
+    <div class="drawer-sidebar-item">How is the Q3 budget progressing?</div>
+    <div class="drawer-sidebar-item">When is the deadline for performance reviews?</div>
+    <div class="drawer-sidebar-item">What is the status of the annual audit?</div>
+    <div class="drawer-sidebar-item">What are the latest employee engagement scores?</div>
+    <div class="drawer-sidebar-item">Can you summarize the latest sales repo...</div>
+    <div class="drawer-sidebar-item">What are the key priorities for the marketing tea...</div>
+  </div>
+
+  <div class="drawer-main">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <div class="drawer-header-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </div>
+        <div class="drawer-header-title">Profile changes</div>
+      </div>
+      <div class="drawer-header-actions">
+        <button class="drawer-action-btn" title="Pop out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></button>
+        <button class="drawer-action-btn" title="Expand" onclick="toggleDrawerSize()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        <button class="drawer-action-btn" title="Close" onclick="closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+    </div>
+
+    <div class="drawer-messages" id="drawerMessages">
+      <!-- Messages will be injected by JS per step -->
+    </div>
+
+    <div class="drawer-composer">
+      <div class="composer-box">
+        <textarea class="composer-input" placeholder="Ask, make, or searching anything..."></textarea>
+        <div class="composer-bottom">
+          <div class="composer-left">
+            <button class="composer-add-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button class="composer-mode">Fast <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          </div>
+          <div class="composer-right">
+            <button class="composer-add-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg></button>
+            <button class="prompt-send" style="width: 24px; height: 24px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-footer-note">Rippling AI results may be inaccurate. Review before acting.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     STEP NAV (FLOATING)
+     ═══════════════════════════════════ -->
+<div class="step-nav">
+  <button class="step-nav-btn" onclick="prevStep()" id="prevBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="step-dots" id="stepDots"></div>
+  <button class="step-nav-btn" onclick="nextStep()" id="nextBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <span id="stepLabel" style="margin-left: 8px; font-size: 12px; opacity: 0.7;"></span>
+</div>
+
+<script>
+const TOTAL_STEPS = 7;
+let currentStep = 1;
+
+const STEP_LABELS = [
+  'Welcome — Empty prompt',
+  'Prompt — Chip buttons visible',
+  'Prompt — Partially filled',
+  'Prompt — Fully filled',
+  'AI Panel — First response',
+  'AI Panel — Draft ready',
+  'Timeline — Journey view'
+];
+
+const PROMPT_STATES = {
+  1: {
+    text: '',
+    placeholder: `Create a new onboarding journey for new hires with the following details:\n  \u00b7 Who does it apply to : Ex- Department or a supergroup\n  \u00b7 Duration of onboarding : Ex- 60 days\n  \u00b7 Steps in the journey : Ex- Work authorization, Assign courses, Ship devices`,
+    chips: 'initial',
+    showSuggestions: true,
+    showManualLink: true,
+    showSubTabs: false
+  },
+  2: {
+    text: `Create a new onboarding journey for new hires with the following details:\n  \u00b7 Who does it apply to :\n  \u00b7 Duration of onboarding :\n  \u00b7 Steps in the journey :`,
+    placeholder: '',
+    chips: 'action',
+    showSuggestions: false,
+    showManualLink: false,
+    showSubTabs: true
+  },
+  3: {
+    text: `Create a new onboarding journey for new hires with the following details:\n  \u00b7 Who does it apply to : Department @Customer success\n  \u00b7 Duration of onboarding : 30 days\n  \u00b7 Steps in the journey :`,
+    placeholder: '',
+    chips: 'action',
+    showSuggestions: false,
+    showManualLink: false,
+    showSubTabs: true
+  },
+  4: {
+    text: `Create a new onboarding journey for new hires with the following details:\n  \u00b7 Who does it apply to : Department @Customer success\n  \u00b7 Duration of onboarding : 30 days\n  \u00b7 Steps in the journey :\n      HRIS \u2014 Registration, I-9, background check\n      Apps \u2014 CRM, Zendesk, Slack provisioning\n      LMS \u2014 Product training, CS playbook, tool cert\n      Custom \u2014 Uniform fitting on start date, Assign onboarding buddy @Nish`,
+    placeholder: '',
+    chips: 'partial',
+    showSuggestions: false,
+    showManualLink: false,
+    showSubTabs: true
+  }
+};
+
+const DRAWER_STEP5_HTML = `
+  <div class="bubble-row user">
+    <div class="bubble user-bubble">
+      Create a new onboarding journey for new hires with the following details:<br>
+      <ul>
+        <li>Who does it apply to : Department <span class="highlight-chip">@Customer success</span></li>
+        <li>Duration of onboarding : 30 days</li>
+        <li>Steps in the journey :
+          <ul>
+            <li>HRIS \u2014 Registration, I-9, background check</li>
+            <li>Apps \u2014 CRM, Zendesk, Slack provisioning</li>
+            <li>LMS \u2014 Product training, CS playbook, tool cert</li>
+            <li>Custom \u2014 Uniform fitting on start date, Assign onboarding buddy <span class="highlight-chip">@Nish</span></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div style="padding: 4px 0;">
+    <div class="status-indicator">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="status-text">Thinking Completed</span>
+      <svg class="status-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+  <div class="ai-response-text fade-in">
+    Got it. I'll scaffold a Customer Success journey for remote, full-time hires. I'd recommend:
+    <ul>
+      <li><strong>HRIS</strong> \u2014 Registration, I-9, background check (3 items)</li>
+      <li><strong>Apps</strong> \u2014 CRM, Zendesk, Slack provisioning (1 item)</li>
+      <li><strong>LMS</strong> \u2014 Product training, CS playbook, tool cert (3 items)</li>
+      <li><strong>Benefits</strong> \u2014 Enrollment within 30 days (1 item)</li>
+      <li><strong>Custom</strong> \u2014 Uniform fitting on start date (1 item)</li>
+      <li><strong>Custom</strong> \u2014 Assign onboarding buddy @Nish (1 item)</li>
+    </ul>
+    <br>That's 6 checkpoints with 10 sub-checkpoints. Should I generate the full template?
+  </div>
+`;
+
+const DRAWER_STEP6_HTML = DRAWER_STEP5_HTML + `
+  <div class="bubble-row user" style="margin-top: 12px;">
+    <div class="bubble user-bubble">Yes, go ahead</div>
+  </div>
+  <div style="padding: 4px 0;">
+    <div class="status-indicator">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="status-text">Thinking Completed</span>
+      <svg class="status-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+  <div class="ai-response-text fade-in">
+    Draft onboarding journey is ready.
+  </div>
+  <div style="margin-top: 8px;">
+    <button class="pb-btn pb-btn-filled" onclick="goToStep(7)" style="font-size: 13px;">Review journey</button>
+  </div>
+`;
+
+function initStepDots() {
+  const container = document.getElementById('stepDots');
+  container.innerHTML = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'step-dot' + (i === currentStep ? ' active' : '');
+    dot.onclick = () => goToStep(i);
+    container.appendChild(dot);
+  }
+  document.getElementById('stepLabel').textContent = STEP_LABELS[currentStep - 1];
+  document.getElementById('prevBtn').disabled = currentStep === 1;
+  document.getElementById('nextBtn').disabled = currentStep === TOTAL_STEPS;
+}
+
+function renderStep(step) {
+  const welcome = document.getElementById('welcomeContainer');
+  const timeline = document.getElementById('timelineContainer');
+  const drawer = document.getElementById('aiDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const mainContent = document.getElementById('mainContent');
+  const subTabs = document.getElementById('subTabs');
+  const sidebar = document.getElementById('drawerSidebar');
+  const drawerMessages = document.getElementById('drawerMessages');
+  const textarea = document.getElementById('promptTextarea');
+  const chips = document.getElementById('promptChips');
+  const suggestions = document.getElementById('suggestionCards');
+  const manualLink = document.getElementById('manualLink');
+
+  welcome.style.display = 'none';
+  timeline.classList.remove('visible');
+  drawer.classList.remove('open', 'collapsed');
+  overlay.classList.remove('visible');
+  mainContent.classList.remove('with-drawer', 'with-sub-tabs');
+  subTabs.classList.remove('visible');
+
+  if (step >= 1 && step <= 4) {
+    welcome.style.display = 'flex';
+    const state = PROMPT_STATES[step];
+
+    textarea.value = state.text;
+    textarea.placeholder = state.placeholder;
+    textarea.className = 'prompt-textarea' + (state.text ? ' has-content' : '');
+    autoResizeTextarea();
+
+    if (state.showSubTabs) {
+      subTabs.classList.add('visible');
+      mainContent.classList.add('with-sub-tabs');
+    }
+
+    if (state.chips === 'initial') {
+      chips.innerHTML = `<button class="prompt-chip" style="border:none;background:transparent;padding:2px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>`;
+    } else if (state.chips === 'action') {
+      chips.innerHTML = `
+        <button class="prompt-chip" onclick="appendChip('HRIS steps')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> HRIS steps</button>
+        <button class="prompt-chip" onclick="appendChip('Benefit enrollment')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Benefit enrollment</button>
+        <button class="prompt-chip" onclick="appendChip('Device tracking')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Device tracking</button>
+        <button class="prompt-chip" onclick="appendChip('Custom task')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Custom task</button>
+      `;
+    } else if (state.chips === 'partial') {
+      chips.innerHTML = `
+        <button class="prompt-chip" onclick="appendChip('Benefit enrollment')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Benefit enrollment</button>
+        <button class="prompt-chip" onclick="appendChip('Custom task')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Custom task</button>
+      `;
+    }
+
+    suggestions.style.display = state.showSuggestions ? 'flex' : 'none';
+    manualLink.style.display = state.showManualLink ? 'flex' : 'none';
+  }
+
+  if (step === 5) {
+    subTabs.classList.add('visible');
+    mainContent.classList.add('with-sub-tabs');
+    welcome.style.display = 'flex';
+    const state = PROMPT_STATES[4];
+    textarea.value = state.text;
+    textarea.className = 'prompt-textarea has-content';
+    chips.innerHTML = state.chips === 'partial' ? `
+      <button class="prompt-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Benefit enrollment</button>
+      <button class="prompt-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Custom task</button>
+    ` : '';
+    suggestions.style.display = 'none';
+    manualLink.style.display = 'none';
+    autoResizeTextarea();
+
+    drawer.classList.add('open');
+    overlay.classList.add('visible');
+    sidebar.style.display = 'flex';
+    drawerMessages.innerHTML = DRAWER_STEP5_HTML;
+  }
+
+  if (step === 6) {
+    subTabs.classList.add('visible');
+    mainContent.classList.add('with-sub-tabs');
+    welcome.style.display = 'flex';
+    const state = PROMPT_STATES[4];
+    textarea.value = state.text;
+    textarea.className = 'prompt-textarea has-content';
+    chips.innerHTML = `
+      <button class="prompt-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Benefit enrollment</button>
+      <button class="prompt-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Custom task</button>
+    `;
+    suggestions.style.display = 'none';
+    manualLink.style.display = 'none';
+    autoResizeTextarea();
+
+    drawer.classList.add('open');
+    overlay.classList.add('visible');
+    sidebar.style.display = 'flex';
+    drawerMessages.innerHTML = DRAWER_STEP6_HTML;
+  }
+
+  if (step === 7) {
+    subTabs.classList.add('visible');
+    mainContent.classList.add('with-sub-tabs', 'with-drawer');
+    timeline.classList.add('visible');
+
+    drawer.classList.add('collapsed');
+    sidebar.style.display = 'none';
+    drawerMessages.innerHTML = DRAWER_STEP6_HTML;
+  }
+}
+
+function goToStep(step) {
+  if (step < 1 || step > TOTAL_STEPS) return;
+  currentStep = step;
+  renderStep(step);
+  initStepDots();
+}
+
+function nextStep() { goToStep(currentStep + 1); }
+function prevStep() { goToStep(currentStep - 1); }
+
+function closeDrawer() {
+  document.getElementById('aiDrawer').classList.remove('open', 'collapsed');
+  document.getElementById('drawerOverlay').classList.remove('visible');
+  document.getElementById('mainContent').classList.remove('with-drawer');
+}
+
+function toggleDrawerSize() {
+  const drawer = document.getElementById('aiDrawer');
+  const sidebar = document.getElementById('drawerSidebar');
+  const mainContent = document.getElementById('mainContent');
+  if (drawer.classList.contains('collapsed')) {
+    drawer.classList.remove('collapsed');
+    drawer.classList.add('open');
+    sidebar.style.display = 'flex';
+    mainContent.classList.remove('with-drawer');
+  } else {
+    drawer.classList.remove('open');
+    drawer.classList.add('collapsed');
+    sidebar.style.display = 'none';
+    mainContent.classList.add('with-drawer');
+  }
+}
+
+function appendChip(text) {
+  const textarea = document.getElementById('promptTextarea');
+  textarea.value += '\n      ' + text;
+  autoResizeTextarea();
+}
+
+function autoResizeTextarea() {
+  const textarea = document.getElementById('promptTextarea');
+  textarea.style.height = 'auto';
+  textarea.style.height = Math.max(80, textarea.scrollHeight) + 'px';
+}
+
+document.getElementById('promptTextarea').addEventListener('input', autoResizeTextarea);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextStep();
+  if (e.key === 'ArrowLeft') prevStep();
+});
+
+initStepDots();
+renderStep(1);
+</script>
+</body>
+</html>
