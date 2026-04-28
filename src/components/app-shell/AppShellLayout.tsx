@@ -70,8 +70,7 @@ const MainContent = styled.main<{
   bottom: 0;
   transition: ${({ isResizing }) =>
     isResizing ? 'left 200ms ease' : 'left 200ms ease, right 250ms ease-out'};
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
 `;
 
 const PageContentContainer = styled.div`

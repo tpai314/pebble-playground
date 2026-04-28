@@ -11,6 +11,9 @@ import AppShellTemplate from './demos/app-shell-template';
 import IndexPage from './demos/index-page';
 import GettingStartedPage from './demos/getting-started-page';
 import DocViewerPage from './demos/doc-viewer-page';
+import JourneyGalleryDemo from './demos/journey-gallery-demo';
+import JourneyBuilderDemo from './demos/journey-builder-demo';
+import JourneyTrackerDemo from './demos/journey-tracker-demo';
 
 oneUiService.init({} as any);
 
@@ -54,6 +57,9 @@ init().then(() => {
             <Route path="/getting-started" element={<GettingStartedPage />} />
             <Route path="/docs" element={<DocViewerPage />} />
             <Route path="/app-shell-template" element={<AppShellTemplate />} />
+            <Route path="/journey-gallery" element={<JourneyGalleryDemo />} />
+            <Route path="/journey-builder" element={<JourneyBuilderDemo />} />
+            <Route path="/journey-tracker" element={<JourneyTrackerDemo />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </ThemeProvider>

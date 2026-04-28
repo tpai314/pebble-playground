@@ -15,7 +15,7 @@ import { HStack } from '@rippling/pebble/Layout/Stack';
 
 /**
  * Index Page
- * 
+ *
  * Landing page for the Pebble Playground showing all available demos.
  */
 
@@ -31,21 +31,45 @@ interface DemoCard {
 
 // All demos in the playground
 const ALL_DEMOS: DemoCard[] = [
+  {
+    title: 'Onboarding Journey Gallery',
+    description:
+      'Browse active onboarding journeys and Rippling templates. Entry point for the Journey Builder.',
+    path: '/journey-gallery',
+    icon: Icon.TYPES.PEOPLE_HEART_OUTLINE,
+    category: 'prototype',
+  },
+  {
+    title: 'Onboarding Journey Builder',
+    description:
+      'Compose onboarding journeys from a typed step library — alternative to the AI chat builder in PRD v2.',
+    path: '/journey-builder',
+    icon: Icon.TYPES.HIERARCHY_HORIZONTAL_OUTLINE,
+    category: 'prototype',
+  },
+  {
+    title: 'Onboarding Journey Tracker',
+    description: 'Cohort-specific tracker. Per-step status matrix with a "what\'s blocked" rail.',
+    path: '/journey-tracker',
+    icon: Icon.TYPES.CLIPBOARD_CROSS_CHECK_OUTLINE,
+    category: 'prototype',
+  },
   // Templates - starting points you copy
   {
     title: 'App Shell Template',
-    description: 'The main template to copy when creating a new demo. Includes navigation, sidebar, and content areas.',
+    description:
+      'The main template to copy when creating a new demo. Includes navigation, sidebar, and content areas.',
     path: '/app-shell-template',
     icon: Icon.TYPES.HIERARCHY_HORIZONTAL_OUTLINE,
     category: 'template',
   },
 ];
 
-
 const PageContainer = styled.div`
   min-height: 100vh;
   background-color: ${({ theme }) => (theme as StyledTheme).colorSurface};
-  padding: ${({ theme }) => (theme as StyledTheme).space1600} ${({ theme }) => (theme as StyledTheme).space800};
+  padding: ${({ theme }) => (theme as StyledTheme).space1600}
+    ${({ theme }) => (theme as StyledTheme).space800};
 `;
 
 const ContentWrapper = styled.div`
@@ -82,11 +106,11 @@ const Description = styled.div`
   color: ${({ theme }) => (theme as StyledTheme).colorOnSurfaceVariant};
   max-width: 800px;
   line-height: 1.6;
-  
+
   a {
     color: ${({ theme }) => (theme as StyledTheme).colorPrimary};
     text-decoration: none;
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -117,15 +141,14 @@ const ViewToggleButton = styled.button<{ isActive: boolean }>`
   border-radius: ${({ theme }) => (theme as StyledTheme).shapeCornerLg};
   cursor: pointer;
   transition: background-color 150ms ease;
-  background-color: ${({ theme, isActive }) => 
+  background-color: ${({ theme, isActive }) =>
     isActive ? (theme as StyledTheme).colorSurfaceContainerHigh : 'transparent'};
   color: ${({ theme }) => (theme as StyledTheme).colorOnSurface};
-  
+
   &:hover {
     background-color: ${({ theme }) => (theme as StyledTheme).colorSurfaceContainerLow};
   }
 `;
-
 
 const DemoGrid = styled.div`
   display: grid;
@@ -135,11 +158,11 @@ const DemoGrid = styled.div`
 
 const DemoTableWrapper = styled.div`
   margin-top: ${({ theme }) => (theme as StyledTheme).space200};
-  
+
   /* Hover effect for table rows */
   tr {
     transition: background-color 150ms ease;
-    
+
     &:hover {
       background-color: ${({ theme }) => (theme as StyledTheme).colorSurfaceContainerLow};
     }
@@ -159,16 +182,15 @@ const DemoTableDescription = styled.span`
 const DemoCardWrapper = styled.div`
   cursor: pointer;
   transition: transform 150ms ease;
-  
+
   &:hover {
     transform: translateY(-4px);
   }
-  
+
   &:active {
     transform: translateY(-2px);
   }
 `;
-
 
 const CardContent = styled.div`
   display: flex;
@@ -200,12 +222,11 @@ const CardDescription = styled.p`
   line-height: 1.5;
 `;
 
-
 const DrawerContent = styled.div``;
 
 const InstructionSection = styled.div`
   margin-bottom: ${({ theme }) => (theme as StyledTheme).space800};
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -227,13 +248,13 @@ const InstructionText = styled.p`
 const CodeSnippet = styled.code`
   ${({ theme }) => (theme as StyledTheme).typestyleV2CodeMedium};
   background-color: ${({ theme }) => (theme as StyledTheme).colorSurfaceContainerLow};
-  padding: ${({ theme }) => (theme as StyledTheme).space200} ${({ theme }) => (theme as StyledTheme).space300};
+  padding: ${({ theme }) => (theme as StyledTheme).space200}
+    ${({ theme }) => (theme as StyledTheme).space300};
   border-radius: ${({ theme }) => (theme as StyledTheme).shapeCornerM};
   color: ${({ theme }) => (theme as StyledTheme).colorPrimary};
   display: inline-block;
   margin: ${({ theme }) => (theme as StyledTheme).space200} 0;
 `;
-
 
 const StepNumber = styled.span`
   ${({ theme }) => (theme as StyledTheme).typestyleV2LabelLarge};
@@ -241,7 +262,6 @@ const StepNumber = styled.span`
   font-weight: 600;
   margin-right: ${({ theme }) => (theme as StyledTheme).space200};
 `;
-
 
 const EmptyStateWrapper = styled.div`
   border: 2px dashed ${({ theme }) => (theme as StyledTheme).colorOutlineVariant};
@@ -260,7 +280,9 @@ const CreateNewCard = styled.div`
   border: 2px dashed ${({ theme }) => (theme as StyledTheme).colorOutlineVariant};
   border-radius: ${({ theme }) => (theme as StyledTheme).shapeCorner2xl};
   cursor: pointer;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 
   &:hover {
     border-color: ${({ theme }) => (theme as StyledTheme).colorOutline};
@@ -330,7 +352,11 @@ const GuideLink = styled.button`
   }
 `;
 
-const DemoTableView: React.FC<{ demos: DemoCard[]; navigate: (path: string) => void; theme: any }> = ({ demos, navigate, theme }) => (
+const DemoTableView: React.FC<{
+  demos: DemoCard[];
+  navigate: (path: string) => void;
+  theme: any;
+}> = ({ demos, navigate, theme }) => (
   <DemoTableWrapper>
     <TableBasic>
       <TableBasic.THead>
@@ -340,7 +366,7 @@ const DemoTableView: React.FC<{ demos: DemoCard[]; navigate: (path: string) => v
         </TableBasic.Tr>
       </TableBasic.THead>
       <TableBasic.TBody>
-        {demos.map((demo) => (
+        {demos.map(demo => (
           <TableBasic.Tr
             key={demo.path}
             onClick={() => navigate(demo.path)}
@@ -372,7 +398,9 @@ const IndexPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
   const [copied, setCopied] = useState(false);
 
-  const shareableUrl = import.meta.env.VITE_DEPLOY_URL || (window.location.hostname.includes('localhost') ? '' : window.location.origin);
+  const shareableUrl =
+    import.meta.env.VITE_DEPLOY_URL ||
+    (window.location.hostname.includes('localhost') ? '' : window.location.origin);
   const hasShareableUrl = !!shareableUrl;
 
   const copyPlaygroundUrl = useCallback(() => {
@@ -392,7 +420,7 @@ const IndexPage: React.FC = () => {
 
   // Get user preferences from environment (with safe fallbacks)
   const userName = import.meta.env.VITE_USER_NAME;
-  
+
   // Create personalized greeting with fallback to "Rippler"
   const firstName = userName ? userName.split(' ')[0] : 'Rippler';
 
@@ -424,7 +452,10 @@ const IndexPage: React.FC = () => {
                   </Tip>
                 </>
               ) : (
-                <Tip content="Push to GitHub, then run: npm run preview-url" placement={Tip.PLACEMENTS.BOTTOM}>
+                <Tip
+                  content="Push to GitHub, then run: npm run preview-url"
+                  placement={Tip.PLACEMENTS.BOTTOM}
+                >
                   <span>
                     <Status
                       appearance={Status.APPEARANCES.WARNING}
@@ -439,32 +470,31 @@ const IndexPage: React.FC = () => {
           </GreetingRow>
           <Title theme={theme}>Welcome to your playground</Title>
           <Description theme={theme}>
-            A prototyping environment for exploring and building with Rippling's Pebble Design System. 
-            Experiment with components, tokens, and patterns in an interactive sandbox.
-            {' '}
+            A prototyping environment for exploring and building with Rippling's Pebble Design
+            System. Experiment with components, tokens, and patterns in an interactive sandbox.{' '}
             <GuideLink onClick={() => setIsGettingStartedOpen(true)}>
               Learn how to get started
-            </GuideLink>
-            {' '}creating your own demos.
+            </GuideLink>{' '}
+            creating your own demos.
           </Description>
         </Header>
 
         {/* Tabs and View Toggle */}
         <SectionHeader theme={theme}>
-          <Tabs.SWITCH 
-            activeIndex={activeTabIndex} 
-            onChange={(index) => setActiveTabIndex(Number(index))}
+          <Tabs.SWITCH
+            activeIndex={activeTabIndex}
+            onChange={index => setActiveTabIndex(Number(index))}
           >
             <Tabs.Tab title="Prototypes" />
             <Tabs.Tab title="Templates" />
             <Tabs.Tab title="Design System" />
           </Tabs.SWITCH>
-          
+
           {(activeTab === 'prototype' || activeTab === 'template') && (
             <HStack gap="0.25rem">
               <Tip content="Grid view" placement={Tip.PLACEMENTS.BOTTOM}>
-                <ViewToggleButton 
-                  theme={theme} 
+                <ViewToggleButton
+                  theme={theme}
                   isActive={viewMode === 'grid'}
                   onClick={() => setViewMode('grid')}
                   aria-label="Grid view"
@@ -473,8 +503,8 @@ const IndexPage: React.FC = () => {
                 </ViewToggleButton>
               </Tip>
               <Tip content="Table view" placement={Tip.PLACEMENTS.BOTTOM}>
-                <ViewToggleButton 
-                  theme={theme} 
+                <ViewToggleButton
+                  theme={theme}
                   isActive={viewMode === 'table'}
                   onClick={() => setViewMode('table')}
                   aria-label="Table view"
@@ -487,13 +517,13 @@ const IndexPage: React.FC = () => {
         </SectionHeader>
 
         {/* Prototypes Tab */}
-        {activeTab === 'prototype' && (
-          prototypes.length === 0 ? (
+        {activeTab === 'prototype' &&
+          (prototypes.length === 0 ? (
             <EmptyStateWrapper theme={theme}>
               <ActionCard
                 icon={Icon.TYPES.ADD_CIRCLE_OUTLINE}
                 title="No prototypes yet"
-                caption="Create your first prototype by copying the app shell template. Ask your AI tool: &quot;Create a new demo called My Feature&quot;"
+                caption='Create your first prototype by copying the app shell template. Ask your AI tool: "Create a new demo called My Feature"'
                 primaryAction={{
                   title: 'How to create a prototype',
                   onClick: () => setIsDrawerOpen(true),
@@ -504,7 +534,7 @@ const IndexPage: React.FC = () => {
             <>
               {viewMode === 'grid' ? (
                 <DemoGrid theme={theme}>
-                  {prototypes.map((demo) => (
+                  {prototypes.map(demo => (
                     <DemoCardWrapper key={demo.path} onClick={() => navigate(demo.path)}>
                       <Card.Layout padding={Card.Layout.PADDINGS.PX_24}>
                         <CardContent>
@@ -520,21 +550,22 @@ const IndexPage: React.FC = () => {
                   <CreateNewCard onClick={() => setIsDrawerOpen(true)} theme={theme}>
                     <Icon type={Icon.TYPES.ADD_CIRCLE_OUTLINE} size={24} />
                     <CreateNewTitle theme={theme}>New prototype</CreateNewTitle>
-                    <CreateNewCaption theme={theme}>Copy the template to start building</CreateNewCaption>
+                    <CreateNewCaption theme={theme}>
+                      Copy the template to start building
+                    </CreateNewCaption>
                   </CreateNewCard>
                 </DemoGrid>
               ) : (
                 <DemoTableView demos={prototypes} navigate={navigate} theme={theme} />
               )}
             </>
-          )
-        )}
+          ))}
 
         {/* Templates Tab */}
-        {activeTab === 'template' && (
-          viewMode === 'grid' ? (
+        {activeTab === 'template' &&
+          (viewMode === 'grid' ? (
             <DemoGrid theme={theme}>
-              {templates.map((demo) => (
+              {templates.map(demo => (
                 <DemoCardWrapper key={demo.path} onClick={() => navigate(demo.path)}>
                   <Card.Layout padding={Card.Layout.PADDINGS.PX_24}>
                     <CardContent>
@@ -550,31 +581,48 @@ const IndexPage: React.FC = () => {
             </DemoGrid>
           ) : (
             <DemoTableView demos={templates} navigate={navigate} theme={theme} />
-          )
-        )}
+          ))}
 
         {/* Design System Tab */}
         {activeTab === 'design-system' && (
           <DemoGrid theme={theme}>
-            <DemoCardWrapper onClick={() => window.open('https://rippling.design/pebble?path=/docs/overview-design-tokens-tokens--docs', '_blank')}>
+            <DemoCardWrapper
+              onClick={() =>
+                window.open(
+                  'https://rippling.design/pebble?path=/docs/overview-design-tokens-tokens--docs',
+                  '_blank',
+                )
+              }
+            >
               <Card.Layout padding={Card.Layout.PADDINGS.PX_24}>
                 <CardContent>
                   <CardIcon theme={theme}>
-                    <Icon type={Icon.TYPES.PAINT_ROLLER_OUTLINE} size={24} color={theme.colorPrimary} />
+                    <Icon
+                      type={Icon.TYPES.PAINT_ROLLER_OUTLINE}
+                      size={24}
+                      color={theme.colorPrimary}
+                    />
                   </CardIcon>
                   <CardTitle theme={theme}>Tokens</CardTitle>
                   <CardDescription theme={theme}>
-                    Design tokens for colors, spacing, typography, and shape. The foundation of all Pebble styling.
+                    Design tokens for colors, spacing, typography, and shape. The foundation of all
+                    Pebble styling.
                   </CardDescription>
                 </CardContent>
               </Card.Layout>
             </DemoCardWrapper>
 
-            <DemoCardWrapper onClick={() => window.open('https://rippling.design/pebble', '_blank')}>
+            <DemoCardWrapper
+              onClick={() => window.open('https://rippling.design/pebble', '_blank')}
+            >
               <Card.Layout padding={Card.Layout.PADDINGS.PX_24}>
                 <CardContent>
                   <CardIcon theme={theme}>
-                    <Icon type={Icon.TYPES.PUZZLE_PIECE_OUTLINE} size={24} color={theme.colorPrimary} />
+                    <Icon
+                      type={Icon.TYPES.PUZZLE_PIECE_OUTLINE}
+                      size={24}
+                      color={theme.colorPrimary}
+                    />
                   </CardIcon>
                   <CardTitle theme={theme}>Web Components</CardTitle>
                   <CardDescription theme={theme}>
@@ -584,7 +632,9 @@ const IndexPage: React.FC = () => {
               </Card.Layout>
             </DemoCardWrapper>
 
-            <DemoCardWrapper onClick={() => window.open('https://rippling.design/pebble-mobile', '_blank')}>
+            <DemoCardWrapper
+              onClick={() => window.open('https://rippling.design/pebble-mobile', '_blank')}
+            >
               <Card.Layout padding={Card.Layout.PADDINGS.PX_24}>
                 <CardContent>
                   <CardIcon theme={theme}>
@@ -604,18 +654,35 @@ const IndexPage: React.FC = () => {
         <GuidesSection theme={theme}>
           <GuidesTitle theme={theme}>Guides</GuidesTitle>
           <GuidesList>
-            <li><GuideLink onClick={() => setIsGettingStartedOpen(true)}>Getting started</GuideLink></li>
-            <li><GuideLink onClick={() => setIsDrawerOpen(true)}>Creating a prototype</GuideLink></li>
-            <li><GuideLink onClick={() => setIsDeployDrawerOpen(true)}>Deploying &amp; sharing</GuideLink></li>
+            <li>
+              <GuideLink onClick={() => setIsGettingStartedOpen(true)}>Getting started</GuideLink>
+            </li>
+            <li>
+              <GuideLink onClick={() => setIsDrawerOpen(true)}>Creating a prototype</GuideLink>
+            </li>
+            <li>
+              <GuideLink onClick={() => setIsDeployDrawerOpen(true)}>
+                Deploying &amp; sharing
+              </GuideLink>
+            </li>
           </GuidesList>
         </GuidesSection>
 
         <SkillsSection theme={theme}>
           <GuidesTitle theme={theme}>Skills</GuidesTitle>
           <SkillsList theme={theme}>
-            <li>New playground — <strong>"Start a new playground for Q2 explorations"</strong> or <strong>"Create a workspace for the Benefits Redesign"</strong></li>
-            <li>New prototype — <strong>"Add a prototype called Employee Onboarding"</strong> or <strong>"Build me a benefits dashboard"</strong></li>
-            <li>Deploy — <strong>"Deploy my playground"</strong> or <strong>"Share my workspace"</strong></li>
+            <li>
+              New playground — <strong>"Start a new playground for Q2 explorations"</strong> or{' '}
+              <strong>"Create a workspace for the Benefits Redesign"</strong>
+            </li>
+            <li>
+              New prototype — <strong>"Add a prototype called Employee Onboarding"</strong> or{' '}
+              <strong>"Build me a benefits dashboard"</strong>
+            </li>
+            <li>
+              Deploy — <strong>"Deploy my playground"</strong> or{' '}
+              <strong>"Share my workspace"</strong>
+            </li>
           </SkillsList>
         </SkillsSection>
       </ContentWrapper>
@@ -629,76 +696,81 @@ const IndexPage: React.FC = () => {
       >
         <DrawerContent theme={theme}>
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              What is the Playground?
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>What is the Playground?</InstructionTitle>
             <InstructionText theme={theme}>
-              The Playground is a space where anyone can build interactive prototypes using real Rippling components. You describe what you want in plain English, and an AI assistant builds it for you — no coding experience required.
+              The Playground is a space where anyone can build interactive prototypes using real
+              Rippling components. You describe what you want in plain English, and an AI assistant
+              builds it for you — no coding experience required.
             </InstructionText>
           </InstructionSection>
 
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              Playgrounds and prototypes
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>Playgrounds and prototypes</InstructionTitle>
             <InstructionText theme={theme}>
-              Two concepts to know:<br/><br/>
-              A <strong>playground</strong> (also called a workspace) is your personal space for a project or theme — like "Q2 Explorations" or "Benefits Redesign". It's a branch that gets its own shareable URL when deployed.<br/><br/>
-              A <strong>prototype</strong> is a single demo page within your playground — like "Employee Onboarding" or "Time-Off Dashboard". You can have many prototypes in one playground, and they all share the same deploy URL.
+              Two concepts to know:
+              <br />
+              <br />A <strong>playground</strong> (also called a workspace) is your personal space
+              for a project or theme — like "Q2 Explorations" or "Benefits Redesign". It's a branch
+              that gets its own shareable URL when deployed.
+              <br />
+              <br />A <strong>prototype</strong> is a single demo page within your playground — like
+              "Employee Onboarding" or "Time-Off Dashboard". You can have many prototypes in one
+              playground, and they all share the same deploy URL.
             </InstructionText>
           </InstructionSection>
 
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              What you need
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>What you need</InstructionTitle>
             <InstructionText theme={theme}>
-              • <strong>Cursor</strong> or <strong>Claude Code</strong> — your AI-powered editor<br/>
-              • This project cloned to your computer (ask your team if you need help)<br/>
-              • That's it. The AI handles everything else.
+              • <strong>Cursor</strong> or <strong>Claude Code</strong> — your AI-powered editor
+              <br />
+              • This project cloned to your computer (ask your team if you need help)
+              <br />• That's it. The AI handles everything else.
             </InstructionText>
           </InstructionSection>
 
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              Your first 5 minutes
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>Your first 5 minutes</InstructionTitle>
             <InstructionText theme={theme}>
-              <strong>1.</strong> Open this project in Cursor or Claude Code.<br/><br/>
-              <strong>2.</strong> Create a playground for your project:<br/>
+              <strong>1.</strong> Open this project in Cursor or Claude Code.
+              <br />
+              <br />
+              <strong>2.</strong> Create a playground for your project:
+              <br />
             </InstructionText>
-            <CodeSnippet theme={theme}>
-              Create a workspace for the Benefits Redesign
-            </CodeSnippet>
+            <CodeSnippet theme={theme}>Create a workspace for the Benefits Redesign</CodeSnippet>
             <InstructionText theme={theme}>
-              <strong>3.</strong> Add your first prototype:<br/>
+              <strong>3.</strong> Add your first prototype:
+              <br />
             </InstructionText>
             <CodeSnippet theme={theme}>
               Build me a prototype called "Plan Comparison Dashboard"
             </CodeSnippet>
             <InstructionText theme={theme}>
-              <strong>4.</strong> The AI scaffolds a page with Rippling's navigation, sidebar, and content area. Now describe what you want to see:
+              <strong>4.</strong> The AI scaffolds a page with Rippling's navigation, sidebar, and
+              content area. Now describe what you want to see:
             </InstructionText>
             <CodeSnippet theme={theme}>
               Show a dashboard with cards for medical, dental, and vision plans
             </CodeSnippet>
             <InstructionText theme={theme}>
-              <strong>5.</strong> Keep iterating. Add more prototypes to the same playground anytime:
+              <strong>5.</strong> Keep iterating. Add more prototypes to the same playground
+              anytime:
             </InstructionText>
-            <CodeSnippet theme={theme}>
-              Add another prototype called "Enrollment Flow"
-            </CodeSnippet>
+            <CodeSnippet theme={theme}>Add another prototype called "Enrollment Flow"</CodeSnippet>
           </InstructionSection>
 
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              Tips for great prompts
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>Tips for great prompts</InstructionTitle>
             <InstructionText theme={theme}>
-              • <strong>Be specific:</strong> "Show a table of employees with name, department, and start date" works better than "add a table"<br/>
-              • <strong>Reference real features:</strong> "Make it look like Rippling's time-off request page" gives the AI helpful context<br/>
-              • <strong>Iterate freely:</strong> You can always say "undo that" or "try a different approach"<br/>
-              • <strong>Share a screenshot:</strong> Paste a Figma screenshot and say "build this" — the AI can work from visual references
+              • <strong>Be specific:</strong> "Show a table of employees with name, department, and
+              start date" works better than "add a table"
+              <br />• <strong>Reference real features:</strong> "Make it look like Rippling's
+              time-off request page" gives the AI helpful context
+              <br />• <strong>Iterate freely:</strong> You can always say "undo that" or "try a
+              different approach"
+              <br />• <strong>Share a screenshot:</strong> Paste a Figma screenshot and say "build
+              this" — the AI can work from visual references
             </InstructionText>
           </InstructionSection>
         </DrawerContent>
@@ -718,16 +790,15 @@ const IndexPage: React.FC = () => {
               Start a playground
             </InstructionTitle>
             <InstructionText theme={theme}>
-              A playground (or workspace) is your personal space for a project — a branch where you can build one or more prototypes. Start by telling the AI:
+              A playground (or workspace) is your personal space for a project — a branch where you
+              can build one or more prototypes. Start by telling the AI:
             </InstructionText>
-            <CodeSnippet theme={theme}>
-              Start a new playground for Q2 explorations
-            </CodeSnippet>
-            <CodeSnippet theme={theme}>
-              Create a workspace for the Onboarding Redesign
-            </CodeSnippet>
+            <CodeSnippet theme={theme}>Start a new playground for Q2 explorations</CodeSnippet>
+            <CodeSnippet theme={theme}>Create a workspace for the Onboarding Redesign</CodeSnippet>
             <InstructionText theme={theme}>
-              The AI creates a branch like <strong>proto/yourname/q2-explorations</strong> and you're ready to go. If you already have a playground, skip this step — just keep building on it.
+              The AI creates a branch like <strong>proto/yourname/q2-explorations</strong> and
+              you're ready to go. If you already have a playground, skip this step — just keep
+              building on it.
             </InstructionText>
           </InstructionSection>
 
@@ -736,14 +807,14 @@ const IndexPage: React.FC = () => {
               <StepNumber theme={theme}>Step 2:</StepNumber>
               Add a prototype
             </InstructionTitle>
-            <InstructionText theme={theme}>
-              Tell the AI what you want to build:
-            </InstructionText>
+            <InstructionText theme={theme}>Tell the AI what you want to build:</InstructionText>
             <CodeSnippet theme={theme}>
               Create a new prototype called "Employee Onboarding Flow"
             </CodeSnippet>
             <InstructionText theme={theme}>
-              The AI scaffolds a new page with Rippling's app shell (navigation, sidebar, content area) and wires it up. You can add as many prototypes as you want to the same playground.
+              The AI scaffolds a new page with Rippling's app shell (navigation, sidebar, content
+              area) and wires it up. You can add as many prototypes as you want to the same
+              playground.
             </InstructionText>
           </InstructionSection>
 
@@ -762,7 +833,8 @@ const IndexPage: React.FC = () => {
               Show a form for the first step with fields for name, email, and department
             </CodeSnippet>
             <InstructionText theme={theme}>
-              You can paste Figma screenshots, reference existing Rippling pages, or just describe the experience you're going for.
+              You can paste Figma screenshots, reference existing Rippling pages, or just describe
+              the experience you're going for.
             </InstructionText>
           </InstructionSection>
 
@@ -772,11 +844,10 @@ const IndexPage: React.FC = () => {
               Keep iterating
             </InstructionTitle>
             <InstructionText theme={theme}>
-              Prototyping is all about iteration. Refine the layout, swap components, add interactions — just keep the conversation going:
+              Prototyping is all about iteration. Refine the layout, swap components, add
+              interactions — just keep the conversation going:
             </InstructionText>
-            <CodeSnippet theme={theme}>
-              Make the sidebar collapsible
-            </CodeSnippet>
+            <CodeSnippet theme={theme}>Make the sidebar collapsible</CodeSnippet>
             <CodeSnippet theme={theme}>
               Add a success confirmation when the form is submitted
             </CodeSnippet>
@@ -786,12 +857,15 @@ const IndexPage: React.FC = () => {
           </InstructionSection>
 
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              Playgrounds vs. prototypes
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>Playgrounds vs. prototypes</InstructionTitle>
             <InstructionText theme={theme}>
-              A <strong>playground</strong> is a branch — your personal workspace that gets its own deploy URL. A <strong>prototype</strong> is a demo page within that branch. One playground can hold many prototypes, all sharing the same shareable link.<br/><br/>
-              When you're ready to share, just say "deploy my playground" and the AI handles the rest.
+              A <strong>playground</strong> is a branch — your personal workspace that gets its own
+              deploy URL. A <strong>prototype</strong> is a demo page within that branch. One
+              playground can hold many prototypes, all sharing the same shareable link.
+              <br />
+              <br />
+              When you're ready to share, just say "deploy my playground" and the AI handles the
+              rest.
             </InstructionText>
           </InstructionSection>
         </DrawerContent>
@@ -806,11 +880,11 @@ const IndexPage: React.FC = () => {
       >
         <DrawerContent theme={theme}>
           <InstructionSection theme={theme}>
-            <InstructionTitle theme={theme}>
-              Why deploy?
-            </InstructionTitle>
+            <InstructionTitle theme={theme}>Why deploy?</InstructionTitle>
             <InstructionText theme={theme}>
-              Deploying gives you a shareable link that anyone can open in their browser — no setup needed on their end. Perfect for design reviews, stakeholder feedback, or async collaboration across timezones.
+              Deploying gives you a shareable link that anyone can open in their browser — no setup
+              needed on their end. Perfect for design reviews, stakeholder feedback, or async
+              collaboration across timezones.
             </InstructionText>
           </InstructionSection>
 
@@ -822,11 +896,10 @@ const IndexPage: React.FC = () => {
             <InstructionText theme={theme}>
               Ask the AI to deploy for you — it handles the technical details:
             </InstructionText>
-            <CodeSnippet theme={theme}>
-              Deploy my playground
-            </CodeSnippet>
+            <CodeSnippet theme={theme}>Deploy my playground</CodeSnippet>
             <InstructionText theme={theme}>
-              The AI will save your changes, push them to GitHub, and kick off an automatic deploy. You can also do this manually by committing and pushing your branch.
+              The AI will save your changes, push them to GitHub, and kick off an automatic deploy.
+              You can also do this manually by committing and pushing your branch.
             </InstructionText>
           </InstructionSection>
 
@@ -836,7 +909,8 @@ const IndexPage: React.FC = () => {
               Wait a couple of minutes
             </InstructionTitle>
             <InstructionText theme={theme}>
-              The deploy takes about 2 minutes. The AI will let you know when it's done and give you the link. You'll also see "Preview URL ready" appear at the top of this page.
+              The deploy takes about 2 minutes. The AI will let you know when it's done and give you
+              the link. You'll also see "Preview URL ready" appear at the top of this page.
             </InstructionText>
           </InstructionSection>
 
@@ -846,8 +920,13 @@ const IndexPage: React.FC = () => {
               Share the link
             </InstructionTitle>
             <InstructionText theme={theme}>
-              Copy the preview URL from the top of this page and share it anywhere — Slack, email, a design doc, or a presentation. The link is public, so anyone with it can view your prototype.<br/><br/>
-              Every time you push new changes, the link automatically updates with your latest version.
+              Copy the preview URL from the top of this page and share it anywhere — Slack, email, a
+              design doc, or a presentation. The link is public, so anyone with it can view your
+              prototype.
+              <br />
+              <br />
+              Every time you push new changes, the link automatically updates with your latest
+              version.
             </InstructionText>
           </InstructionSection>
         </DrawerContent>
@@ -857,4 +936,3 @@ const IndexPage: React.FC = () => {
 };
 
 export default IndexPage;
-
